@@ -1,0 +1,508 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="cwza&#39;s blog">
+    <title>git指令筆記 - cwza&#39;s blog</title>
+    <meta name="author" content="Cwza">
+    
+    
+        <link rel="alternative" type="application/atom+xml" title="RSS" href="/my_blog/atom.xml">
+    
+    <meta name="description" content="基本上一版本：HEAD^, 上兩版本HEAD~2, 上三版本HEAD~3…etc1234git add [file]git add -Agit commit -m [comment]git push">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="git指令筆記">
+<meta property="og:url" content="http://cwza.github.io/my_blog/2015/12/03/git指令筆記/index.html">
+<meta property="og:site_name" content="cwza's blog">
+<meta property="og:description" content="基本上一版本：HEAD^, 上兩版本HEAD~2, 上三版本HEAD~3…etc1234git add [file]git add -Agit commit -m [comment]git push">
+<meta property="og:updated_time" content="2017-03-10T02:26:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git指令筆記">
+<meta name="twitter:description" content="基本上一版本：HEAD^, 上兩版本HEAD~2, 上三版本HEAD~3…etc1234git add [file]git add -Agit commit -m [comment]git push">
+    
+    
+    
+        <meta property="og:image" content="https://www.gravatar.com/avatar/f563bb5ba525d2aa148cd22fb4c2db26?s=640"/>
+    
+    
+    
+    
+
+    <!--add google search console verification-->
+    
+
+    <!--STYLES-->
+    <link rel="stylesheet" href="/my_blog/assets/css/style.min.css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-70916999-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/my_blog/ ">cwza&#39;s blog</a>
+    </h1>
+    
+        
+            <a  class="header-right-icon st-search-show-outputs"
+                href="#search">
+        
+        
+            <i class="fa fa-lg fa-search"></i>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/my_blog/#about">
+                    <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/f563bb5ba525d2aa148cd22fb4c2db26?s=110"/>
+            </a>
+            <span class="sidebar-profile-name">Cwza</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">Home</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">Categories</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">Tags</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">Archives</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">Search</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">About</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/cwza" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://facebook.com/profile.php?id=100001791342932" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-facebook"></i>
+                    <span class="sidebar-button-desc">Facebook</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:cwz0205a@gmail.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">Mail</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            git指令筆記
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Thu Dec 03 2015 19:09:01 GMT+0800">
+	
+		    Dec 03, 2015
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/git/">git</a>
+
+
+    
+</div>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本"><span class="toc-text">基本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fetch"><span class="toc-text">fetch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tag"><span class="toc-text">tag</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#branch"><span class="toc-text">branch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#merge"><span class="toc-text">merge</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rebase"><span class="toc-text">rebase</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#remote"><span class="toc-text">remote</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stash"><span class="toc-text">stash</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reset"><span class="toc-text">reset</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改commit（包含合併、重排、拆分）"><span class="toc-text">修改commit（包含合併、重排、拆分）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看檔案各行最新commit"><span class="toc-text">查看檔案各行最新commit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料復原"><span class="toc-text">資料復原</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git執行在case-insensitive系統下（ex-mac），要改變folder名稱的大小寫的話需要執行以下："><span class="toc-text">git執行在case insensitive系統下（ex: mac），要改變folder名稱的大小寫的話需要執行以下：</span></a></li></ol>
+<h2 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h2><p>上一版本：HEAD^, 上兩版本HEAD~2, 上三版本HEAD~3…etc<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git add [file]</div><div class="line">git add -A</div><div class="line">git commit -m [comment]</div><div class="line">git push</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#比較unstaged &amp; staged的檔案</span></div><div class="line">git diff</div><div class="line"></div><div class="line"><span class="comment">#比較staged &amp; committed檔案</span></div><div class="line">git diff --cached</div><div class="line"></div><div class="line">git rm file</div><div class="line">git mv &lt;file_name&gt; &lt;new_file_name&gt;</div><div class="line"></div><div class="line"><span class="comment">#更動最後一筆commit(message 或 add file)</span></div><div class="line">git commit --amend</div><div class="line"></div><div class="line"><span class="comment">#staged to unstaged</span></div><div class="line">git reset HEAD &lt;file&gt;</div><div class="line"></div><div class="line"><span class="comment">#modified to staged</span></div><div class="line">git checkout -- &lt;file&gt;</div><div class="line"></div><div class="line">git pull origin == git fetch + git merge</div><div class="line">git fetch origin master</div><div class="line">git push origin master</div><div class="line"></div><div class="line">git status</div><div class="line">git <span class="built_in">log</span></div><div class="line">git show &lt;SHA-1&gt;</div><div class="line">git reflog</div><div class="line">git <span class="built_in">log</span> -g</div></pre></td></tr></table></figure>
+<h2 id="fetch"><a href="#fetch" class="headerlink" title="fetch"></a>fetch</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git fetch &lt;remote&gt; &lt;rbranch&gt;:&lt;lbranch&gt;</div></pre></td></tr></table></figure>
+<h2 id="tag"><a href="#tag" class="headerlink" title="tag"></a>tag</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git tag <span class="_">-a</span> v1.4</div><div class="line">git show v1.4</div><div class="line">git tag <span class="_">-a</span> v1.2 9fceb02</div><div class="line">git push origin v1.5</div><div class="line">git push origin --tags</div></pre></td></tr></table></figure>
+<h2 id="branch"><a href="#branch" class="headerlink" title="branch"></a>branch</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">git branch testing</div><div class="line">git checkout testing</div><div class="line"></div><div class="line">create branch and checkout to it</div><div class="line">git checkout -b testing</div><div class="line"></div><div class="line">git branch <span class="_">-d</span> testing</div><div class="line">git branch -D testing</div></pre></td></tr></table></figure>
+<h2 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h2><p>根據兩個branch最新commit物件與共同parent的commit物件合併後，再建立新commit物件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git merge testing</div><div class="line">git mergetool</div><div class="line"><span class="comment">#merge若遇到conflict，需要手動修改檔案後再add &gt; commit</span></div></pre></td></tr></table></figure></p>
+<h2 id="rebase"><a href="#rebase" class="headerlink" title="rebase"></a>rebase</h2><p>根據兩個branch共同parent的commit物件作patch，再將patch打在rebase對象的最新commit上<br><strong>一旦分支中的提交物件發佈到公共倉庫，就千萬不要對該分支進行衍合操作</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git rebase master</div><div class="line"><span class="comment">#rebase若遇到conflict，需要手動修改檔案後再git rebase --continue，或git rebase --abort放棄rebase</span></div></pre></td></tr></table></figure></p>
+<h2 id="remote"><a href="#remote" class="headerlink" title="remote"></a>remote</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">git remote add &lt;name&gt; https://xxxx/xxx.git</div><div class="line">git fetch origin</div><div class="line">git checkout -b develop origin/develop</div><div class="line">git push remote [master]:[master]</div><div class="line"></div><div class="line"><span class="comment">#刪除remote的branch</span></div><div class="line">git push origin --delete &lt;branch_name&gt;</div></pre></td></tr></table></figure>
+<h2 id="stash"><a href="#stash" class="headerlink" title="stash"></a>stash</h2><p>暫存所有未commit的變更至stash(is a stack)<br>在欲切換branch又不想commit時好用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">git stash</div><div class="line">git stash list</div><div class="line">git stash apply</div><div class="line">git stash drop</div><div class="line">git stash pop == apply + drop</div><div class="line"></div><div class="line"><span class="comment">#取消apply</span></div><div class="line">git stash show -p | git apply -R</div></pre></td></tr></table></figure></p>
+<h2 id="reset"><a href="#reset" class="headerlink" title="reset"></a>reset</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#全部返回上一commit，並將變更留在working tree</span></div><div class="line">git reset HEAD^</div><div class="line"></div><div class="line"><span class="comment">#全部返回上一commit，什麼都不留</span></div><div class="line">git reset --hard HEAD^</div><div class="line"></div><div class="line">git reset --hard &lt;SHA-1&gt;</div></pre></td></tr></table></figure>
+<h2 id="修改commit（包含合併、重排、拆分）"><a href="#修改commit（包含合併、重排、拆分）" class="headerlink" title="修改commit（包含合併、重排、拆分）"></a>修改commit（包含合併、重排、拆分）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git rebase -i HEAD~3</div><div class="line"><span class="comment">#將pick改為squash, edit</span></div></pre></td></tr></table></figure>
+<h2 id="查看檔案各行最新commit"><a href="#查看檔案各行最新commit" class="headerlink" title="查看檔案各行最新commit"></a>查看檔案各行最新commit</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git blame -C -L 141,153 GITPackUpload.m</div></pre></td></tr></table></figure>
+<h2 id="資料復原"><a href="#資料復原" class="headerlink" title="資料復原"></a>資料復原</h2><p>例如執行了這個：git reset –hard<br>事實上commit物件還在，只是沒有ref物件指向它而已<br>所以可以救<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#找到丟失的commit的SHA-1</span></div><div class="line">git <span class="built_in">log</span> -g</div><div class="line"></div><div class="line"><span class="comment">#若上面那個找不到用這個</span></div><div class="line">git fsck --full</div><div class="line"></div><div class="line">git branch recover-branch &lt;丟失的commit物件的SHA-1&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="git執行在case-insensitive系統下（ex-mac），要改變folder名稱的大小寫的話需要執行以下："><a href="#git執行在case-insensitive系統下（ex-mac），要改變folder名稱的大小寫的話需要執行以下：" class="headerlink" title="git執行在case insensitive系統下（ex: mac），要改變folder名稱的大小寫的話需要執行以下："></a>git執行在case insensitive系統下（ex: mac），要改變folder名稱的大小寫的話需要執行以下：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git mv foo foo2</div><div class="line">git mv foo2 FOO</div><div class="line">git commit -m <span class="string">"changed case of dir"</span></div></pre></td></tr></table></figure>
+
+            
+                
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/git/">git</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2015/12/03/PyCharm-import-django-project/"  data-tooltip="PyCharm import django project">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2015/12/03/Github筆記/" data-tooltip="Github筆記">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 Cwza. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2015/12/03/PyCharm-import-django-project/"  data-tooltip="PyCharm import django project">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2015/12/03/Github筆記/" data-tooltip="Github筆記">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+                <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+                <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+                <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        <!-- Define author's picture -->
+
+
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="https://www.gravatar.com/avatar/f563bb5ba525d2aa148cd22fb4c2db26?s=110"/>
+        
+            <h4 id="about-card-name">Cwza</h4>
+        
+            <h5 id="about-card-bio"><p>Hello everyone.</br> I’m cwza.</br> Welcome to my blog.</br></p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Taiwan/Taipei
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/my_blog/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/my_blog/assets/js/script.min.js"></script>
+<!--SCRIPTS END-->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'cwzablog';
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+
+    <script type="text/javascript">
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+            e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','rxPzK7_9dZFEqRaWyGy2','2.0.0');
+    </script>
+
+
+</html>

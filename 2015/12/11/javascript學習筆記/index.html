@@ -1,0 +1,1341 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="cwza&#39;s blog">
+    <title>javascript學習筆記 - cwza&#39;s blog</title>
+    <meta name="author" content="Cwza">
+    
+    
+        <link rel="alternative" type="application/atom+xml" title="RSS" href="/my_blog/atom.xml">
+    
+    <meta name="description" content="Table of Contents
+
+
+1. Javascript built-in types
+2. Hoisting
+3. Closure
+4. Immediately Invoked Function Expressions (IIFEs)
+5. Modules
+
+5.1. Modern Modules
+5.2. Future Modules
+
+
+6. This
+
+6.1. Default">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="javascript學習筆記">
+<meta property="og:url" content="http://cwza.github.io/my_blog/2015/12/11/javascript學習筆記/index.html">
+<meta property="og:site_name" content="cwza's blog">
+<meta property="og:description" content="Table of Contents
+
+
+1. Javascript built-in types
+2. Hoisting
+3. Closure
+4. Immediately Invoked Function Expressions (IIFEs)
+5. Modules
+
+5.1. Modern Modules
+5.2. Future Modules
+
+
+6. This
+
+6.1. Default">
+<meta property="og:updated_time" content="2017-03-10T02:26:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript學習筆記">
+<meta name="twitter:description" content="Table of Contents
+
+
+1. Javascript built-in types
+2. Hoisting
+3. Closure
+4. Immediately Invoked Function Expressions (IIFEs)
+5. Modules
+
+5.1. Modern Modules
+5.2. Future Modules
+
+
+6. This
+
+6.1. Default">
+    
+    
+    
+        <meta property="og:image" content="https://www.gravatar.com/avatar/f563bb5ba525d2aa148cd22fb4c2db26?s=640"/>
+    
+    
+    
+    
+
+    <!--add google search console verification-->
+    
+
+    <!--STYLES-->
+    <link rel="stylesheet" href="/my_blog/assets/css/style.min.css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-70916999-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/my_blog/ ">cwza&#39;s blog</a>
+    </h1>
+    
+        
+            <a  class="header-right-icon st-search-show-outputs"
+                href="#search">
+        
+        
+            <i class="fa fa-lg fa-search"></i>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/my_blog/#about">
+                    <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/f563bb5ba525d2aa148cd22fb4c2db26?s=110"/>
+            </a>
+            <span class="sidebar-profile-name">Cwza</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">Home</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">Categories</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">Tags</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">Archives</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">Search</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">About</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/cwza" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://facebook.com/profile.php?id=100001791342932" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-facebook"></i>
+                    <span class="sidebar-button-desc">Facebook</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:cwz0205a@gmail.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">Mail</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            javascript學習筆記
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Fri Dec 11 2015 18:28:00 GMT+0800">
+	
+		    Dec 11, 2015
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/javascript/">javascript</a>
+
+
+    
+</div>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Javascript built-in types</a></li>
+<li><a href="#sec-2">2. Hoisting</a></li>
+<li><a href="#sec-3">3. Closure</a></li>
+<li><a href="#sec-4">4. Immediately Invoked Function Expressions (IIFEs)</a></li>
+<li><a href="#sec-5">5. Modules</a>
+<ul>
+<li><a href="#sec-5-1">5.1. Modern Modules</a></li>
+<li><a href="#sec-5-2">5.2. Future Modules</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6. This</a>
+<ul>
+<li><a href="#sec-6-1">6.1. Default Binding</a></li>
+<li><a href="#sec-6-2">6.2. Implicit Binding</a></li>
+<li><a href="#sec-6-3">6.3. Explicit Binding</a></li>
+<li><a href="#sec-6-4">6.4. New Binding</a></li>
+<li><a href="#sec-6-5">6.5. So How To Determine This</a></li>
+<li><a href="#sec-6-6">6.6. Safer this</a></li>
+<li><a href="#sec-6-7">6.7. arrow function</a></li>
+</ul>
+</li>
+<li><a href="#sec-7">7. Object</a>
+<ul>
+<li><a href="#sec-7-1">7.1. Computed Property Names</a></li>
+<li><a href="#sec-7-2">7.2. Duplicating Objects</a></li>
+<li><a href="#sec-7-3">7.3. Property Descriptors</a></li>
+<li><a href="#sec-7-4">7.4. Immutability</a>
+<ul>
+<li><a href="#sec-7-4-1">7.4.1. Object Constant</a></li>
+<li><a href="#sec-7-4-2">7.4.2. Prevent Extensions</a></li>
+<li><a href="#sec-7-4-3">7.4.3. Seal</a></li>
+<li><a href="#sec-7-4-4">7.4.4. Freeze</a></li>
+</ul>
+</li>
+<li><a href="#sec-7-5">7.5. Getters & Setters</a></li>
+<li><a href="#sec-7-6">7.6. Existence</a></li>
+<li><a href="#sec-7-7">7.7. Enumeration</a></li>
+<li><a href="#sec-7-8">7.8. Iteration</a></li>
+</ul>
+</li>
+<li><a href="#sec-8">8. Mixing (Up) "Class" Objects</a>
+<ul>
+<li><a href="#sec-8-1">8.1. Explicit Mixins</a></li>
+<li><a href="#sec-8-2">8.2. Implicit Mixins</a></li>
+<li><a href="#sec-8-3">8.3. Conclusion</a></li>
+</ul>
+</li>
+<li><a href="#sec-9">9. Prototype</a>
+<ul>
+<li><a href="#sec-9-1">9.1. Setting & Shadowing Properties</a></li>
+<li><a href="#sec-9-2">9.2. New(Constructor Call)</a></li>
+<li><a href="#sec-9-3">9.3. constructor</a></li>
+<li><a href="#sec-9-4">9.4. (Prototypal) Inheritance</a></li>
+</ul>
+</li>
+<li><a href="#sec-10">10. Behavior Delegation</a></li>
+<li><a href="#sec-11">11. Asynchrony</a></li>
+<li><a href="#sec-12">12. Callbacks</a></li>
+<li><a href="#sec-13">13. ES6新東東</a></li>
+<li><a href="#sec-14">14. Reference</a></li>
+</ul>
+</div>
+</div>
+<p>
+隨筆亂記<br>
+陸續增加中<br>
+</p>
+<a id="more"></a>
+
+
+<p>
+<code>The function of javascript is just an Object so it can has properties or functions in it.</code><br>
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Javascript built-in types</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><code>string</code><br>
+</li>
+<li><code>number</code><br>
+</li>
+<li><code>boolean</code><br>
+</li>
+<li><code>null</code> and <code>undefined</code><br>
+</li>
+<li><code>object</code><br>
+</li>
+<li><code>symbol</code> (new to ES6)<br>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Hoisting</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+可以想像成所有宣告時機(var a)都被提升到function最開始，更精確的說是scope的最開始<br>
+實際上是javascript interpreter將var a = 2分成兩個步驟<br>
+declaration(var a)，assignment(a = 2)<br>
+所有declaration在compile time完成，assignment在runtime執行<br>
+須注意的是ES6新增的block scope variable =let & const=，沒有hoisting機制<br>
+當然eval("var a = 2;");這種用法也會破壞hoisting，不過為了效能本來就該避免eval這東西了<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">foo();                                  <span class="comment">// works because `foo()`</span></span><br><span class="line">						<span class="comment">// declaration is "hoisted"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>{</span><br><span class="line">	a = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">console</span>.log( a );       <span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> a;                          <span class="comment">// declaration is "hoisted"</span></span><br><span class="line">						<span class="comment">// to the top of `foo()`</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log( a );       <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Closure</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<code>Closure is when a function is able to remember and access its lexical scope even when that function is executing outside its lexical scope.</code><br>
+</p>
+
+<p>
+foo()執行完後，local variable a沒被回收的原因是因為baz -> bar還擁有reference to foo，所以a不會被GC回收<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>{</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>{</span><br><span class="line">	<span class="built_in">console</span>.log( a );</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> bar;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> baz = foo();</span><br><span class="line"></span><br><span class="line">baz(); <span class="comment">// 2 -- Whoa, closure was just observed, man.</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+some useful snippet<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wait</span>(<span class="params">message</span>) </span>{</span><br><span class="line"></span><br><span class="line">    setTimeout( <span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>)</span>{</span><br><span class="line">	<span class="built_in">console</span>.log( message );</span><br><span class="line">    }, <span class="number">1000</span> );</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">wait( <span class="string">"Hello, closure!"</span> );</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Immediately Invoked Function Expressions (IIFEs)</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> <span class="title">IIFE</span>(<span class="params"></span>)</span>{</span><br><span class="line">	<span class="built_in">console</span>.log( <span class="string">"Hello!"</span> );</span><br><span class="line">})();</span><br><span class="line"><span class="comment">// "Hello!"</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Modules</h2>
+<div class="outline-text-2" id="text-5">
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = (<span class="function"><span class="keyword">function</span> <span class="title">CoolModule</span>(<span class="params">id</span>) </span>{</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">change</span>(<span class="params"></span>) </span>{</span><br><span class="line">	<span class="comment">// modifying the public API</span></span><br><span class="line">	publicAPI.identify = identify2;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">identify1</span>(<span class="params"></span>) </span>{</span><br><span class="line">	<span class="built_in">console</span>.log( id );</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">identify2</span>(<span class="params"></span>) </span>{</span><br><span class="line">	<span class="built_in">console</span>.log( id.toUpperCase() );</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> publicAPI = {</span><br><span class="line">	change: change,</span><br><span class="line">	identify: identify1</span><br><span class="line">    };</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> publicAPI;</span><br><span class="line">})( <span class="string">"foo module"</span> );</span><br><span class="line"></span><br><span class="line">foo.identify(); <span class="comment">// foo module</span></span><br><span class="line">foo.change();</span><br><span class="line">foo.identify(); <span class="comment">// FOO MODULE</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Modern Modules</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+module dependency loaders/managers<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> MyModules = (<span class="function"><span class="keyword">function</span> <span class="title">Manager</span>(<span class="params"></span>) </span>{</span><br><span class="line">    <span class="keyword">var</span> modules = {};</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">define</span>(<span class="params">name, deps, impl</span>) </span>{</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;deps.length; i++) {</span><br><span class="line">	    deps[i] = modules[deps[i]];</span><br><span class="line">	}</span><br><span class="line">	modules[name] = impl.apply( impl, deps );</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params">name</span>) </span>{</span><br><span class="line">	<span class="keyword">return</span> modules[name];</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> {</span><br><span class="line">	define: define,</span><br><span class="line">	get: get</span><br><span class="line">    };</span><br><span class="line">})();</span><br></pre></td></tr></table></figure>
+</div>
+<p>
+use above<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">MyModules.define( <span class="string">"bar"</span>, [], <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">hello</span>(<span class="params">who</span>) </span>{</span><br><span class="line">	<span class="keyword">return</span> <span class="string">"Let me introduce: "</span> + who;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> {</span><br><span class="line">	hello: hello</span><br><span class="line">    };</span><br><span class="line">} );</span><br><span class="line"></span><br><span class="line">MyModules.define( <span class="string">"foo"</span>, [<span class="string">"bar"</span>], <span class="function"><span class="keyword">function</span>(<span class="params">bar</span>)</span>{</span><br><span class="line">    <span class="keyword">var</span> hungry = <span class="string">"hippo"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">awesome</span>(<span class="params"></span>) </span>{</span><br><span class="line">	<span class="built_in">console</span>.log( bar.hello( hungry ).toUpperCase() );</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> {</span><br><span class="line">	awesome: awesome</span><br><span class="line">    };</span><br><span class="line">} );</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar = MyModules.get( <span class="string">"bar"</span> );</span><br><span class="line"><span class="keyword">var</span> foo = MyModules.get( <span class="string">"foo"</span> );</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(</span><br><span class="line">    bar.hello( <span class="string">"hippo"</span> )</span><br><span class="line">); <span class="comment">// Let me introduce: hippo</span></span><br><span class="line"></span><br><span class="line">foo.awesome(); <span class="comment">// LET ME INTRODUCE: HIPPO</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Future Modules</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+ES6新語法，支援File based Modules<br>
+</p>
+
+<p>
+bar.js<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hello</span>(<span class="params">who</span>) </span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Let me introduce: "</span> + who;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> hello;</span><br></pre></td></tr></table></figure>
+</div>
+<p>
+foo.js<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// import only `hello()` from the "bar" module</span></span><br><span class="line"><span class="keyword">import</span> hello <span class="keyword">from</span> <span class="string">"bar"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> hungry = <span class="string">"hippo"</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">awesome</span>(<span class="params"></span>) </span>{</span><br><span class="line">    <span class="built_in">console</span>.log(</span><br><span class="line">	hello( hungry ).toUpperCase()</span><br><span class="line">    );</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> awesome;</span><br></pre></td></tr></table></figure>
+</div>
+<p>
+use above<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// import the entire "foo" and "bar" modules</span></span><br><span class="line"><span class="built_in">module</span> foo from <span class="string">"foo"</span>;</span><br><span class="line"><span class="built_in">module</span> bar from <span class="string">"bar"</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(</span><br><span class="line">    bar.hello( <span class="string">"rhino"</span> )</span><br><span class="line">); <span class="comment">// Let me introduce: rhino</span></span><br><span class="line"></span><br><span class="line">foo.awesome(); <span class="comment">// LET ME INTRODUCE: HIPPO</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> This</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+javascript的this與一般OO的this很不一樣，他是runtime時才決定指向哪裡的<br>
+詳細決定規則請見以下<br>
+</p>
+</div>
+<div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Default Binding</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+當不滿足以下三種狀況時，this會自動指向global，strict mode下則是undefined<br>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Implicit Binding</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+this指向obj2<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>{</span><br><span class="line">    <span class="built_in">console</span>.log( <span class="keyword">this</span>.a );</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj2 = {</span><br><span class="line">    a: <span class="number">42</span>,</span><br><span class="line">    foo: foo</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj1 = {</span><br><span class="line">    a: <span class="number">2</span>,</span><br><span class="line">    obj2: obj2</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">obj1.obj2.foo(); <span class="comment">// 42</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+在callback下，容易發生implicitly lost<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>{</span><br><span class="line">    <span class="built_in">console</span>.log( <span class="keyword">this</span>.a );</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = {</span><br><span class="line">    a: <span class="number">2</span>,</span><br><span class="line">    foo: foo</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="string">"oops, global"</span>; <span class="comment">// `a` also property on global object</span></span><br><span class="line"></span><br><span class="line">setTimeout( obj.foo, <span class="number">100</span> ); <span class="comment">// "oops, global"</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> Explicit Binding</h3>
+<div class="outline-text-3" id="text-6-3">
+<p>
+可利用call、apply來強制綁定this物件，解決上述的implicitly lost<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">something</span>) </span>{</span><br><span class="line">    <span class="built_in">console</span>.log( <span class="keyword">this</span>.a, something );</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.a + something;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// simple `bind` helper</span></span><br><span class="line"><span class="comment">// bind obj to this of fn</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bind</span>(<span class="params">fn, obj</span>) </span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">	<span class="keyword">return</span> fn.apply( obj, <span class="built_in">arguments</span> );</span><br><span class="line">    };</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = {</span><br><span class="line">    a: <span class="number">2</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar = bind( foo, obj );</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = bar( <span class="number">3</span> ); <span class="comment">// 2 3</span></span><br><span class="line"><span class="built_in">console</span>.log( b ); <span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+ES5內建bind方法可簡單達成上述<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">something</span>) </span>{</span><br><span class="line">    <span class="built_in">console</span>.log( <span class="keyword">this</span>.a, something );</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.a + something;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = {</span><br><span class="line">    a: <span class="number">2</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar = foo.bind( obj );</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = bar( <span class="number">3</span> ); <span class="comment">// 2 3</span></span><br><span class="line"><span class="built_in">console</span>.log( b ); <span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="section-number-3">6.4</span> New Binding</h3>
+<div class="outline-text-3" id="text-6-4">
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a</span>) </span>{</span><br><span class="line">    <span class="keyword">this</span>.a = a;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar = <span class="keyword">new</span> foo( <span class="number">2</span> ); <span class="comment">// this is binding to bar</span></span><br><span class="line"><span class="built_in">console</span>.log( bar.a ); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-5" class="outline-3">
+<h3 id="sec-6-5"><span class="section-number-3">6.5</span> So How To Determine This</h3>
+<div class="outline-text-3" id="text-6-5">
+<ol class="org-ol">
+<li>Is the function called with <code>new</code> (<b>new binding</b>)? If so, <code>this</code> is the newly constructed object.<br>
+
+<p>
+<code>var bar = new foo()</code><br>
+</p>
+</li>
+
+<li>Is the function called with <code>call</code> or <code>apply</code> (<b>explicit binding</b>), even hidden inside a <code>bind</code> <b>hard binding</b>? If so, <code>this</code> is the explicitly specified object.<br>
+
+<p>
+<code>var bar = foo.call( obj2 )</code><br>
+</p>
+</li>
+
+<li>Is the function called with a context (<b>implicit binding</b>), otherwise known as an owning or containing object? If so, <code>this</code> is <b>that</b> context object.<br>
+
+<p>
+<code>var bar = obj1.foo()</code><br>
+</p>
+</li>
+
+<li>Otherwise, default the <code>this</code> (<b>default binding</b>). If in <code>strict mode</code>, pick <code>undefined</code>, otherwise pick the <code>global</code> object.<br>
+
+<p>
+<code>var bar = foo()</code><br>
+</p>
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-6-6" class="outline-3">
+<h3 id="sec-6-6"><span class="section-number-3">6.6</span> Safer this</h3>
+<div class="outline-text-3" id="text-6-6">
+<p>
+如果你發現你需要apply或bind的parameter spread、currying功能<br>
+但卻不care this到底是什麼，你可能會想用apply(null, [2, 3])<br>
+這可能導致this指向global(default binding)<br>
+底下是一種比較好的方式，create一個empty object來取代null<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a,b</span>) </span>{</span><br><span class="line">    <span class="built_in">console</span>.log( <span class="string">"a:"</span> + a + <span class="string">", b:"</span> + b );</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// our DMZ empty object</span></span><br><span class="line"><span class="keyword">var</span> ø = <span class="built_in">Object</span>.create( <span class="literal">null</span> );</span><br><span class="line"></span><br><span class="line"><span class="comment">// spreading out array as parameters</span></span><br><span class="line">foo.apply( ø, [<span class="number">2</span>, <span class="number">3</span>] ); <span class="comment">// a:2, b:3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// currying with `bind(..)`</span></span><br><span class="line"><span class="keyword">var</span> bar = foo.bind( ø, <span class="number">2</span> );</span><br><span class="line">bar( <span class="number">3</span> ); <span class="comment">// a:2, b:3</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-7" class="outline-3">
+<h3 id="sec-6-7"><span class="section-number-3">6.7</span> arrow function</h3>
+<div class="outline-text-3" id="text-6-7">
+<p>
+ES6新增的arrow function，有著跟一般function不一樣的this行為<br>
+其this永遠指向包圍它的function的this，使其在callback中很有用<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>{</span><br><span class="line">    setTimeout(() =&gt; {</span><br><span class="line">	<span class="comment">// `this` here is lexically adopted from `foo()`</span></span><br><span class="line">	<span class="built_in">console</span>.log( <span class="keyword">this</span>.a );</span><br><span class="line">    },<span class="number">100</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = {</span><br><span class="line">    a: <span class="number">2</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">foo.call( obj ); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+然而在不用arrow function時就已經有好解法了：<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>{</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>; <span class="comment">// lexical capture of `this`</span></span><br><span class="line">    setTimeout( <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span><br><span class="line">	<span class="built_in">console</span>.log( self.a );</span><br><span class="line">    }, <span class="number">100</span> );</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = {</span><br><span class="line">    a: <span class="number">2</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">foo.call( obj ); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+當然你也能用bind來處理callback的this，這三種方法就是程式風格的不同而已，儘量統一就好<br>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Object</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Computed Property Names</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+ES6 adds computed property names, where you can specify an expression, surrounded by a [ ] pair, in the key-name position of an object-literal declaration:<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> prefix = <span class="string">"foo"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myObject = {</span><br><span class="line">    [prefix + <span class="string">"bar"</span>]: <span class="string">"hello"</span>,</span><br><span class="line">    [prefix + <span class="string">"baz"</span>]: <span class="string">"world"</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">myObject[<span class="string">"foobar"</span>]; <span class="comment">// hello</span></span><br><span class="line">myObject[<span class="string">"foobaz"</span>]; <span class="comment">// world</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+常配合ES6新增的Symbol使用<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = {</span><br><span class="line">    [<span class="built_in">Symbol</span>.Something]: <span class="string">"hello world"</span></span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Duplicating Objects</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+Copy Object分成shallow copy and deep copy，其中deep copy可能會出現某些問題<br>
+例如以下例子，deep copy將造成infinite circular duplication<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">anotherFunction</span>(<span class="params"></span>) </span>{ <span class="comment">/*..*/</span> }</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> anotherObject = {</span><br><span class="line">    c: <span class="literal">true</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> anotherArray = [];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myObject = {</span><br><span class="line">    a: <span class="number">2</span>,</span><br><span class="line">    b: anotherObject,   <span class="comment">// reference, not a copy!</span></span><br><span class="line">    c: anotherArray,    <span class="comment">// another reference!</span></span><br><span class="line">    d: anotherFunction</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">anotherArray.push( anotherObject, myObject );</span><br></pre></td></tr></table></figure>
+</div>
+<p>
+若欲複製的object是JSON-safe (that is, can be serialized to a JSON string and then re-parsed to an object with the same structure and values)，我們可以用以下方式做到deep copy<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> newObj = <span class="built_in">JSON</span>.parse( <span class="built_in">JSON</span>.stringify( someObj ) );</span><br></pre></td></tr></table></figure>
+</div>
+<p>
+shallow copy比較沒有爭議，所以ES6提供以下方式：<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> newObj = <span class="built_in">Object</span>.assign( {}, myObject );</span><br><span class="line"></span><br><span class="line">newObj.a;                       <span class="comment">// 2</span></span><br><span class="line">newObj.b === anotherObject;     <span class="comment">// true</span></span><br><span class="line">newObj.c === anotherArray;      <span class="comment">// true</span></span><br><span class="line">newObj.d === anotherFunction;   <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7-3" class="outline-3">
+<h3 id="sec-7-3"><span class="section-number-3">7.3</span> Property Descriptors</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+ES5以後才有的功能<br>
+</p>
+<ul class="org-ul">
+<li>writable(可否modify)<br>
+</li>
+<li>enumerable(可否用for&#x2026;in遍歷)<br>
+</li>
+<li>configurable(可否用difineProperty重新定義 and 可否用delete刪除)<br>
+</li>
+</ul>
+
+<p>
+Get Property Descriptors<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = {</span><br><span class="line">    a: <span class="number">2</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.getOwnPropertyDescriptor( myObject, <span class="string">"a"</span> );</span><br><span class="line"><span class="comment">// {</span></span><br><span class="line"><span class="comment">//    value: 2,</span></span><br><span class="line"><span class="comment">//    writable: true,</span></span><br><span class="line"><span class="comment">//    enumerable: true,</span></span><br><span class="line"><span class="comment">//    configurable: true</span></span><br><span class="line"><span class="comment">// }</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+Modify Property Descriptors<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = {};</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty( myObject, <span class="string">"a"</span>, {</span><br><span class="line">    value: <span class="number">2</span>,</span><br><span class="line">    writable: <span class="literal">false</span>, <span class="comment">// not writable!</span></span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line">    enumerable: <span class="literal">true</span></span><br><span class="line">} );</span><br><span class="line"></span><br><span class="line">myObject.a = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">myObject.a; <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+若是在strict mode，上述會扔出TypeError<br>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7-4" class="outline-3">
+<h3 id="sec-7-4"><span class="section-number-3">7.4</span> Immutability</h3>
+<div class="outline-text-3" id="text-7-4">
+<p>
+以下方式均只能做到shallow immutability. That is, they affect only the object and its direct property characteristics. If an object has a reference to another object (array, object, function, etc), the contents of that object are not affected, and remain mutable.<br>
+</p>
+</div>
+<div id="outline-container-sec-7-4-1" class="outline-4">
+<h4 id="sec-7-4-1"><span class="section-number-4">7.4.1</span> Object Constant</h4>
+<div class="outline-text-4" id="text-7-4-1">
+<p>
+Use writable:false and configurable:false to construct Constant Property<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = {};</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty( myObject, <span class="string">"FAVORITE_NUMBER"</span>, {</span><br><span class="line">    value: <span class="number">42</span>,</span><br><span class="line">    writable: <span class="literal">false</span>,</span><br><span class="line">    configurable: <span class="literal">false</span></span><br><span class="line">} );</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7-4-2" class="outline-4">
+<h4 id="sec-7-4-2"><span class="section-number-4">7.4.2</span> Prevent Extensions</h4>
+<div class="outline-text-4" id="text-7-4-2">
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = {</span><br><span class="line">    a: <span class="number">2</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.preventExtensions( myObject );</span><br><span class="line"></span><br><span class="line">myObject.b = <span class="number">3</span>;</span><br><span class="line">myObject.b; <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7-4-3" class="outline-4">
+<h4 id="sec-7-4-3"><span class="section-number-4">7.4.3</span> Seal</h4>
+<div class="outline-text-4" id="text-7-4-3">
+<p>
+Object.seal(..) creates a "sealed" object, which means it takes an existing object and essentially calls Object.preventExtensions(..) on it, but also marks all its existing properties as configurable:false.<br>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7-4-4" class="outline-4">
+<h4 id="sec-7-4-4"><span class="section-number-4">7.4.4</span> Freeze</h4>
+<div class="outline-text-4" id="text-7-4-4">
+<p>
+Object.freeze(..) creates a frozen object, which means it takes an existing object and essentially calls Object.seal(..) on it, but it also marks all "data accessor" properties as writable:false, so that their values cannot be changed.<br>
+</p>
+
+<p>
+若需要deep freeze，可自行recursive Object.freeze()<br>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7-5" class="outline-3">
+<h3 id="sec-7-5"><span class="section-number-3">7.5</span> Getters & Setters</h3>
+<div class="outline-text-3" id="text-7-5">
+<p>
+You will almost certainly want to always declare both getter and setter (having only one or the other often leads to unexpected/surprising behavior)<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = {</span><br><span class="line">    <span class="comment">// define a getter for `a`</span></span><br><span class="line">    get a() {</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span>._a_;</span><br><span class="line">    },</span><br><span class="line"></span><br><span class="line">    <span class="comment">// define a setter for `a`</span></span><br><span class="line">    set a(val) {</span><br><span class="line">	<span class="keyword">this</span>._a_ = val * <span class="number">2</span>;</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">myObject.a = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">myObject.a; <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7-6" class="outline-3">
+<h3 id="sec-7-6"><span class="section-number-3">7.6</span> Existence</h3>
+<div class="outline-text-3" id="text-7-6">
+<p>
+如何check object是否有某個property<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = {</span><br><span class="line">    a: <span class="number">2</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">(<span class="string">"a"</span> <span class="keyword">in</span> myObject);              <span class="comment">// true</span></span><br><span class="line">(<span class="string">"b"</span> <span class="keyword">in</span> myObject);              <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line">myObject.hasOwnProperty( <span class="string">"a"</span> ); <span class="comment">// true</span></span><br><span class="line">myObject.hasOwnProperty( <span class="string">"b"</span> ); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+in與hasOwnProperty的最大不同處在in會檢查prototype chain而hasOwnProperty不會，需小心的是若object沒有 delegation to Object.prototype，他將不會擁有hasOwnProperty，此時可以使用Object.prototype.hasOwnProperty.call(myObject,"a")來檢查<br>
+另外in看起來好像可以這樣用：4 in [2, 4, 6]，但實際上它檢查的是object的property，所以此用法是錯誤的，in不可用來檢查containers是否存在某值<br>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7-7" class="outline-3">
+<h3 id="sec-7-7"><span class="section-number-3">7.7</span> Enumeration</h3>
+<div class="outline-text-3" id="text-7-7">
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = { };</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(</span><br><span class="line">    myObject,</span><br><span class="line">    <span class="string">"a"</span>,</span><br><span class="line">    <span class="comment">// make `a` enumerable, as normal</span></span><br><span class="line">    { enumerable: <span class="literal">true</span>, value: <span class="number">2</span> }</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(</span><br><span class="line">    myObject,</span><br><span class="line">    <span class="string">"b"</span>,</span><br><span class="line">    <span class="comment">// make `b` NON-enumerable</span></span><br><span class="line">    { enumerable: <span class="literal">false</span>, value: <span class="number">3</span> }</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">myObject.b; <span class="comment">// 3</span></span><br><span class="line">(<span class="string">"b"</span> <span class="keyword">in</span> myObject); <span class="comment">// true</span></span><br><span class="line">myObject.hasOwnProperty( <span class="string">"b"</span> ); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// .......</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> myObject) {</span><br><span class="line">    <span class="built_in">console</span>.log( k, myObject[k] );</span><br><span class="line">}</span><br><span class="line"><span class="comment">// "a" 2</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+<b>Note:</b> for&#x2026;in將會travel all values and properties(include prototype chain)，所以建議遍歷object使用for&#x2026;in loop，遍歷array的話使用一般for loop<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = { };</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(</span><br><span class="line">    myObject,</span><br><span class="line">    <span class="string">"a"</span>,</span><br><span class="line">    <span class="comment">// make `a` enumerable, as normal</span></span><br><span class="line">    { enumerable: <span class="literal">true</span>, value: <span class="number">2</span> }</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(</span><br><span class="line">    myObject,</span><br><span class="line">    <span class="string">"b"</span>,</span><br><span class="line">    <span class="comment">// make `b` non-enumerable</span></span><br><span class="line">    { enumerable: <span class="literal">false</span>, value: <span class="number">3</span> }</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">myObject.propertyIsEnumerable( <span class="string">"a"</span> ); <span class="comment">// true</span></span><br><span class="line">myObject.propertyIsEnumerable( <span class="string">"b"</span> ); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.keys( myObject ); <span class="comment">// ["a"]</span></span><br><span class="line"><span class="built_in">Object</span>.getOwnPropertyNames( myObject ); <span class="comment">// ["a", "b"]</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+目前沒有built-in方法可做到list all keys in object include prototype chain，需要自行recursive Object.keys()<br>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7-8" class="outline-3">
+<h3 id="sec-7-8"><span class="section-number-3">7.8</span> Iteration</h3>
+<div class="outline-text-3" id="text-7-8">
+<p>
+for&#x2026;in loop拿出來的東西會是object的properties，但若我們想直接拿出value呢？<br>
+ES6新增的for&#x2026;of loop可辦到<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> myArray = [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> v <span class="keyword">of</span> myArray) {</span><br><span class="line">    <span class="built_in">console</span>.log( v );</span><br><span class="line">}</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+for&#x2026;of僅能用在有定義@@iterator的object上，array預設就有，但其他object預設是沒有的<br>
+若想用for&#x2026;of的話還是可以自己定義@@iterator，滿足以下即可：<br>
+As long as your iterator returns the expected { value: .. } return values from next() calls, and a { done: true } after the iteration is complete, ES6's for..of can iterate over it.<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = {</span><br><span class="line">    a: <span class="number">2</span>,</span><br><span class="line">    b: <span class="number">3</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty( myObject, <span class="built_in">Symbol</span>.iterator, {</span><br><span class="line">    enumerable: <span class="literal">false</span>,</span><br><span class="line">    writable: <span class="literal">false</span>,</span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line">    value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">	<span class="keyword">var</span> o = <span class="keyword">this</span>;</span><br><span class="line">	<span class="keyword">var</span> idx = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">var</span> ks = <span class="built_in">Object</span>.keys( o );</span><br><span class="line">	<span class="keyword">return</span> {</span><br><span class="line">	    next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">		<span class="keyword">return</span> {</span><br><span class="line">		    value: o[ks[idx++]],</span><br><span class="line">		    done: (idx &gt; ks.length)</span><br><span class="line">		};</span><br><span class="line">	    }</span><br><span class="line">	};</span><br><span class="line">    }</span><br><span class="line">} );</span><br><span class="line"></span><br><span class="line"><span class="comment">// iterate `myObject` manually</span></span><br><span class="line"><span class="keyword">var</span> it = myObject[<span class="built_in">Symbol</span>.iterator]();</span><br><span class="line">it.next(); <span class="comment">// { value:2, done:false }</span></span><br><span class="line">it.next(); <span class="comment">// { value:3, done:false }</span></span><br><span class="line">it.next(); <span class="comment">// { value:undefined, done:true }</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// iterate `myObject` with `for..of`</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> v <span class="keyword">of</span> myObject) {</span><br><span class="line">    <span class="built_in">console</span>.log( v );</span><br><span class="line">}</span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+以下是一個利用iterator的亂數產生器<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> randoms = {</span><br><span class="line">    [<span class="built_in">Symbol</span>.iterator]: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">	<span class="keyword">return</span> {</span><br><span class="line">	    next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">		<span class="keyword">return</span> { value: <span class="built_in">Math</span>.random() };</span><br><span class="line">	    }</span><br><span class="line">	};</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> randoms_pool = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> n <span class="keyword">of</span> randoms) {</span><br><span class="line">    randoms_pool.push( n );</span><br><span class="line"></span><br><span class="line">    <span class="comment">// don't proceed unbounded!</span></span><br><span class="line">    <span class="keyword">if</span> (randoms_pool.length === <span class="number">100</span>) <span class="keyword">break</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Mixing (Up) "Class" Objects</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+JavaScript's object mechanism does not automatically perform copy behavior when you "inherit" or "instantiate". Plainly, there's no "classes" in JavaScript to instantiate, only objects. And objects don't get copied to other objects, they get linked together.<br>
+</p>
+
+<p>
+Since observed class behaviors in other languages imply copies, let's examine how JS developers <b>fake</b> the missing copy behavior of classes in JavaScript: mixins. We'll look at two types of "mixin": explicit and implicit.<br>
+</p>
+</div>
+<div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Explicit Mixins</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+Such a utility is often called <code>extend(..)</code> by many libraries/frameworks, but we will call it <code>mixin(..)</code> here for illustrative purposes.<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// vastly simplified `mixin(..)` example:</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mixin</span>(<span class="params"> sourceObj, targetObj </span>) </span>{</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> sourceObj) {</span><br><span class="line">	<span class="comment">// only copy if not already present</span></span><br><span class="line">	<span class="keyword">if</span> (!(key <span class="keyword">in</span> targetObj)) {</span><br><span class="line">	    targetObj[key] = sourceObj[key];</span><br><span class="line">	}</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> targetObj;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Vehicle = {</span><br><span class="line">    engines: <span class="number">1</span>,</span><br><span class="line"></span><br><span class="line">    ignition: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">	<span class="built_in">console</span>.log( <span class="string">"Turning on my engine."</span> );</span><br><span class="line">    },</span><br><span class="line"></span><br><span class="line">    drive: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">	<span class="keyword">this</span>.ignition();</span><br><span class="line">	<span class="built_in">console</span>.log( <span class="string">"Steering and moving forward!"</span> );</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Car = mixin( Vehicle, {</span><br><span class="line">    wheels: <span class="number">4</span>,</span><br><span class="line"></span><br><span class="line">    drive: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">	Vehicle.drive.call( <span class="keyword">this</span> );</span><br><span class="line">	<span class="built_in">console</span>.log( <span class="string">"Rolling on all "</span> + <span class="keyword">this</span>.wheels + <span class="string">" wheels!"</span> );</span><br><span class="line">    }</span><br><span class="line">} );</span><br></pre></td></tr></table></figure>
+</div>
+<p>
+But because of JavaScript's peculiarities, explicit pseudo-polymorphism (because of shadowing!) creates brittle manual/explicit linkage <b>in every single function where you need such a (pseudo-)polymorphic reference</b>. This can significantly increase the maintenance cost. Moreover, while explicit pseudo-polymorphism can emulate the behavior of "multiple inheritance", it only increases the complexity and brittleness.<br>
+</p>
+
+<p>
+The result of such approaches is usually more complex, harder-to-read, and harder-to-maintain code. <b>Explicit pseudo-polymorphism should be avoided wherever possible</b>, because the cost outweighs the benefit in most respects.<br>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-8-2" class="outline-3">
+<h3 id="sec-8-2"><span class="section-number-3">8.2</span> Implicit Mixins</h3>
+<div class="outline-text-3" id="text-8-2">
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> Something = {</span><br><span class="line">    cool: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">	<span class="keyword">this</span>.greeting = <span class="string">"Hello World"</span>;</span><br><span class="line">	<span class="keyword">this</span>.count = <span class="keyword">this</span>.count ? <span class="keyword">this</span>.count + <span class="number">1</span> : <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">Something.cool();</span><br><span class="line">Something.greeting; <span class="comment">// "Hello World"</span></span><br><span class="line">Something.count; <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Another = {</span><br><span class="line">    cool: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">	<span class="comment">// implicit mixin of `Something` to `Another`</span></span><br><span class="line">	Something.cool.call( <span class="keyword">this</span> );</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">Another.cool();</span><br><span class="line">Another.greeting; <span class="comment">// "Hello World"</span></span><br><span class="line">Another.count; <span class="comment">// 1 (not shared state with `Something`)</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+While this sort of technique seems to take useful advantage of this rebinding functionality, it is the brittle Something.cool.call( this ) call, which cannot be made into a relative (and thus more flexible) reference, that you should heed with caution. Generally, avoid such constructs where possible to keep cleaner and more maintainable code.<br>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-8-3" class="outline-3">
+<h3 id="sec-8-3"><span class="section-number-3">8.3</span> Conclusion</h3>
+<div class="outline-text-3" id="text-8-3">
+<p>
+Classes are a design pattern. Many languages provide syntax which enables natural class-oriented software design. JS also has a similar syntax, but it behaves very differently from what you're used to with classes in those other languages.<br>
+</p>
+
+<p>
+<b>Classes mean copies.</b><br>
+</p>
+
+<p>
+When traditional classes are instantiated, a copy of behavior from class to instance occurs. When classes are inherited, a copy of behavior from parent to child also occurs.<br>
+</p>
+
+<p>
+Polymorphism (having different functions at multiple levels of an inheritance chain with the same name) may seem like it implies a referential relative link from child back to parent, but it's still just a result of copy behavior.<br>
+</p>
+
+<p>
+JavaScript <b>does not automatically create copies</b> (as classes imply) between objects.<br>
+</p>
+
+<p>
+The mixin pattern (both explicit and implicit) is often used to sort of emulate class copy behavior, but this usually leads to ugly and brittle syntax like explicit pseudo-polymorphism (<code>OtherObj.methodName.call(this, ...)</code>), which often results in harder to understand and maintain code.<br>
+</p>
+
+<p>
+Explicit mixins are also not exactly the same as class copy, since objects (and functions!) only have shared references duplicated, not the objects/functions duplicated themselves. Not paying attention to such nuance is the source of a variety of gotchas.<br>
+</p>
+
+<p>
+In general, faking classes in JS often sets more landmines for future coding than solving present real problems.<br>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Prototype</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+JavaScript沒有Class(一般Class-Oriented Language的class)，只有Object<br>
+Prototype的概念比較類似Delegate而不是Inherited(Copy)<br>
+Objects in JavaScript have an internal property, denoted in the specification as Prototype, which is simply a reference to another object. Almost all objects are given a non-null value for this property, at the time of their creation.<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> anotherObject = {</span><br><span class="line">    a: <span class="number">2</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="comment">// create an object linked to `anotherObject`</span></span><br><span class="line"><span class="keyword">var</span> myObject = <span class="built_in">Object</span>.create( anotherObject );</span><br><span class="line"></span><br><span class="line">myObject.a; <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+<div id="outline-container-sec-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="section-number-3">9.1</span> Setting & Shadowing Properties</h3>
+<div class="outline-text-3" id="text-9-1">
+<ol class="org-ol">
+<li>If a normal data accessor property named foo is found anywhere higher on the Prototype chain, and it's not marked as read-only (writable:false) then a new property called foo is added directly to myObject, resulting in a shadowed property.<br>
+</li>
+<li>If a foo is found higher on the Prototype chain, but it's marked as read-only (writable:false), then both the setting of that existing property as well as the creation of the shadowed property on myObject are disallowed. If the code is running in strict mode, an error will be thrown. Otherwise, the setting of the property value will silently be ignored. Either way, no shadowing occurs.<br>
+</li>
+<li>If a foo is found higher on the Prototype chain and it's a setter (see Chapter 3), then the setter will always be called. No foo will be added to (aka, shadowed on) myObject, nor will the foo setter be redefined.<br>
+</li>
+</ol>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> anotherObject = {</span><br><span class="line">    a: <span class="number">2</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myObject = <span class="built_in">Object</span>.create( anotherObject );</span><br><span class="line"></span><br><span class="line">anotherObject.a; <span class="comment">// 2</span></span><br><span class="line">myObject.a; <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">anotherObject.hasOwnProperty( <span class="string">"a"</span> ); <span class="comment">// true</span></span><br><span class="line">myObject.hasOwnProperty( <span class="string">"a"</span> ); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line">myObject.a++; <span class="comment">// oops, implicit shadowing!</span></span><br><span class="line"></span><br><span class="line">anotherObject.a; <span class="comment">// 2</span></span><br><span class="line">myObject.a; <span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line">myObject.hasOwnProperty( <span class="string">"a"</span> ); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+Shadowing with methods leads to ugly explicit pseudo-polymorphism if you need to delegate between them. Usually, shadowing is more complicated and nuanced than it's worth, so you should try to avoid it if possible. Use <b>Behavior Delegation</b> for an alternative design pattern, which among other things discourages shadowing in favor of cleaner alternatives.<br>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-9-2" class="outline-3">
+<h3 id="sec-9-2"><span class="section-number-3">9.2</span> New(Constructor Call)</h3>
+<div class="outline-text-3" id="text-9-2">
+<ol class="org-ol">
+<li>a brand new object is created (aka, constructed) out of thin air<br>
+</li>
+<li>the newly constructed object is Prototype-linked<br>
+</li>
+<li>the newly constructed object is set as the this binding for that function call<br>
+</li>
+<li>unless the function returns its own alternate object, the new-invoked function call will automatically return the newly constructed object.<br>
+</li>
+</ol>
+<p>
+JS沒有Class也沒有Constructor，new的概念跟一般Class-Oriented Language完全不同<br>
+New可以放在任何function前，此時被稱為Constructor Call<br>
+var a = new Foo()代表：<br>
+建立新object a，a的_<sub>proto</sub>_<sub>指向Foo</sub>.prototype，this綁定到該a上<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>{</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo();</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.getPrototypeOf( a ) === Foo.prototype; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+利用prototype模擬Class instantiate Object<br>
+看起來很像Class-Oriented，但實際上是利用上述機制<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params">name</span>) </span>{</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">Foo.prototype.myName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo( <span class="string">"a"</span> );</span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> Foo( <span class="string">"b"</span> );</span><br><span class="line"></span><br><span class="line">a.myName(); <span class="comment">// "a"</span></span><br><span class="line">b.myName(); <span class="comment">// "b"</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-9-3" class="outline-3">
+<h3 id="sec-9-3"><span class="section-number-3">9.3</span> constructor</h3>
+<div class="outline-text-3" id="text-9-3">
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>{</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">Foo.prototype.constructor === Foo; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo();</span><br><span class="line">a.constructor === Foo; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+看起來好像a擁有一個property指向Foo，實際上卻是a._<sub>proto</sub>__.constructor<br>
+此constructor指向Foo看似很有用實際上卻可被複寫，*因此別依賴這個特性*<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>{ <span class="comment">/* .. */</span> }</span><br><span class="line"></span><br><span class="line">Foo.prototype = { <span class="comment">/* .. */</span> }; <span class="comment">// create a new prototype object</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a1 = <span class="keyword">new</span> Foo();</span><br><span class="line">a1.constructor === Foo; <span class="comment">// false!</span></span><br><span class="line">a1.constructor === <span class="built_in">Object</span>; <span class="comment">// true!</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-9-4" class="outline-3">
+<h3 id="sec-9-4"><span class="section-number-3">9.4</span> (Prototypal) Inheritance</h3>
+<div class="outline-text-3" id="text-9-4">
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params">name</span>) </span>{</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">Foo.prototype.myName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Bar</span>(<span class="params">name,label</span>) </span>{</span><br><span class="line">    Foo.call( <span class="keyword">this</span>, name );</span><br><span class="line">    <span class="keyword">this</span>.label = label;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// here, we make a new `Bar.prototype`</span></span><br><span class="line"><span class="comment">// linked to `Foo.prototype`</span></span><br><span class="line">Bar.prototype = <span class="built_in">Object</span>.create( Foo.prototype );</span><br><span class="line"></span><br><span class="line"><span class="comment">// Beware! Now `Bar.prototype.constructor` is gone,</span></span><br><span class="line"><span class="comment">// and might need to be manually "fixed" if you're</span></span><br><span class="line"><span class="comment">// in the habit of relying on such properties!</span></span><br><span class="line"></span><br><span class="line">Bar.prototype.myLabel = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.label;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Bar( <span class="string">"a"</span>, <span class="string">"obj a"</span> );</span><br><span class="line"></span><br><span class="line">a.myName(); <span class="comment">// "a"</span></span><br><span class="line">a.myLabel(); <span class="comment">// "obj a"</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+Object.create(..) creates a "new" object out of thin air, and links that new object's internal Prototype to the object you specify (Foo.prototype in this case).<br>
+</p>
+
+<p>
+底下是兩個錯誤用法<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// doesn't work like you want!</span></span><br><span class="line"><span class="comment">// 這樣的話根本不需要多一個Bar，用Foo就好了</span></span><br><span class="line">Bar.prototype = Foo.prototype;</span><br><span class="line"></span><br><span class="line"><span class="comment">// works kinda like you want, but with</span></span><br><span class="line"><span class="comment">// side-effects you probably don't want :(</span></span><br><span class="line"><span class="comment">// 若Foo()裡面有做一些其他事，會一起做，但是我們只是要建立prototype chain</span></span><br><span class="line">Bar.prototype = <span class="keyword">new</span> Foo();</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+ES6後可以用Object.setPrototypeOf()代替Object.create()<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// pre-ES6</span></span><br><span class="line"><span class="comment">// throws away default existing `Bar.prototype`</span></span><br><span class="line">Bar.prototype = <span class="built_in">Object</span>.create( Foo.prototype );</span><br><span class="line"></span><br><span class="line"><span class="comment">// ES6+</span></span><br><span class="line"><span class="comment">// modifies existing `Bar.prototype`</span></span><br><span class="line"><span class="built_in">Object</span>.setPrototypeOf( Bar.prototype, Foo.prototype );</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Behavior Delegation</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+以下都先參考原文吧，我有空在整理<br>
+主要是說在javascript世界中Behavior Delegation的做法比OO還要直覺簡單，有實際例子、code舉例<br>
+<a href="https://github.com/getify/You-Dont-Know-JS/blob/master/this%2520&%2520object%2520prototypes/ch6.md" target="_blank" rel="external">You-Dont-Know-JS/this & object prototypes/ch6.md</a><br>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> Asynchrony</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+大致介紹javascript的Asynchronous<br>
+JS Engine本身沒有multi-thread，javascript的Asynchronous是靠run environment的event loop queue達成<br>
+<a href="https://github.com/getify/You-Dont-Know-JS/blob/master/async%2520&%2520performance/ch1.md" target="_blank" rel="external">You-Dont-Know-JS/async & performance/ch1.md</a><br>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> Callbacks</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+主要是在說明傳統使用callback來達成Asynchronous的各種缺點<br>
+</p>
+<ol class="org-ol">
+<li>反人類思考模式，難以閱讀<br>
+</li>
+<li>callback會將程式帶到非自己所寫的function，可以在callback中撰寫各種check來處理但不夠好<br>
+</li>
+</ol>
+<p>
+<a href="https://github.com/getify/You-Dont-Know-JS/blob/master/async%2520&%2520performance/ch2.md" target="_blank" rel="external">You-Dont-Know-JS/async & performance/ch2.md</a><br>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> ES6新東東</h2>
+<div class="outline-text-2" id="text-13">
+<p>
+let, const, arrow function, class, module, symbol<br>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> Reference</h2>
+<div class="outline-text-2" id="text-14">
+<p>
+此筆記主要是來自截取並整理自Github上的You-Dont-Know-JS<br>
+附上原始位置供各位參考<br>
+<a href="https://github.com/getify/You-Dont-Know-JS" target="_blank" rel="external">https://github.com/getify/You-Dont-Know-JS</a><br>
+</p>
+</div>
+</div>
+
+Last Updated 2017-03-10 五 10:26.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="external">hexo-renderer-org</a> with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.2.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 8.2.10)
+
+            
+                
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/javascript/">javascript</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2015/12/24/orgmode-template/"  data-tooltip="Orgmode template">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2015/12/10/如何在舊環境下使用javascript新特性/" data-tooltip="如何在舊環境下使用javascript新特性">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/11/javascript學習筆記/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/11/javascript學習筆記/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/11/javascript學習筆記/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 Cwza. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2015/12/24/orgmode-template/"  data-tooltip="Orgmode template">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2015/12/10/如何在舊環境下使用javascript新特性/" data-tooltip="如何在舊環境下使用javascript新特性">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/11/javascript學習筆記/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/11/javascript學習筆記/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/11/javascript學習筆記/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/11/javascript學習筆記/">
+                <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/11/javascript學習筆記/">
+                <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/11/javascript學習筆記/">
+                <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        <!-- Define author's picture -->
+
+
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="https://www.gravatar.com/avatar/f563bb5ba525d2aa148cd22fb4c2db26?s=110"/>
+        
+            <h4 id="about-card-name">Cwza</h4>
+        
+            <h5 id="about-card-bio"><p>Hello everyone.</br> I’m cwza.</br> Welcome to my blog.</br></p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Taiwan/Taipei
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/my_blog/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/my_blog/assets/js/script.min.js"></script>
+<!--SCRIPTS END-->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'cwzablog';
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+
+    <script type="text/javascript">
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+            e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','rxPzK7_9dZFEqRaWyGy2','2.0.0');
+    </script>
+
+
+</html>

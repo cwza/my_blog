@@ -1,0 +1,631 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="cwza&#39;s blog">
+    <title>Remove Python pyc File - cwza&#39;s blog</title>
+    <meta name="author" content="Cwza">
+    
+    
+        <link rel="alternative" type="application/atom+xml" title="RSS" href="/my_blog/atom.xml">
+    
+    <meta name="description" content="Table of Contents
+
+
+1. Bash Command
+2. Git post-checkout hook
+3. Python Environment Variable PYTHONDONTWRITEBYTECODE
+
+3.1. set it at .bash_profile(global)
+3.2. set it at activate and remove it at dea">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Remove Python pyc File">
+<meta property="og:url" content="http://cwza.github.io/my_blog/2016/03/16/remove-python-pyc-file/index.html">
+<meta property="og:site_name" content="cwza's blog">
+<meta property="og:description" content="Table of Contents
+
+
+1. Bash Command
+2. Git post-checkout hook
+3. Python Environment Variable PYTHONDONTWRITEBYTECODE
+
+3.1. set it at .bash_profile(global)
+3.2. set it at activate and remove it at dea">
+<meta property="og:updated_time" content="2017-03-10T02:26:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Remove Python pyc File">
+<meta name="twitter:description" content="Table of Contents
+
+
+1. Bash Command
+2. Git post-checkout hook
+3. Python Environment Variable PYTHONDONTWRITEBYTECODE
+
+3.1. set it at .bash_profile(global)
+3.2. set it at activate and remove it at dea">
+    
+    
+    
+        <meta property="og:image" content="https://www.gravatar.com/avatar/f563bb5ba525d2aa148cd22fb4c2db26?s=640"/>
+    
+    
+    
+    
+
+    <!--add google search console verification-->
+    
+
+    <!--STYLES-->
+    <link rel="stylesheet" href="/my_blog/assets/css/style.min.css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-70916999-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/my_blog/ ">cwza&#39;s blog</a>
+    </h1>
+    
+        
+            <a  class="header-right-icon st-search-show-outputs"
+                href="#search">
+        
+        
+            <i class="fa fa-lg fa-search"></i>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/my_blog/#about">
+                    <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/f563bb5ba525d2aa148cd22fb4c2db26?s=110"/>
+            </a>
+            <span class="sidebar-profile-name">Cwza</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">Home</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">Categories</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">Tags</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">Archives</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">Search</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">About</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/cwza" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://facebook.com/profile.php?id=100001791342932" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-facebook"></i>
+                    <span class="sidebar-button-desc">Facebook</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:cwz0205a@gmail.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">Mail</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            Remove Python pyc File
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Wed Mar 16 2016 12:08:00 GMT+0800">
+	
+		    Mar 16, 2016
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/python/">python</a>
+
+
+    
+</div>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Bash Command</a></li>
+<li><a href="#sec-2">2. Git post-checkout hook</a></li>
+<li><a href="#sec-3">3. Python Environment Variable PYTHONDONTWRITEBYTECODE</a>
+<ul>
+<li><a href="#sec-3-1">3.1. set it at .bash_profile(global)</a></li>
+<li><a href="#sec-3-2">3.2. set it at activate and remove it at deactivate by VirtualEnv</a></li>
+<li><a href="#sec-3-3">3.3. use direnv to set</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+Python interpreter在執行的時候會在每個package底下產生__pycache__ folder and <b>.pyc, *.pyo file<br>
+一般而言這些file不會進入版本控管所以在.gitigore中通常會有</b>.py[co], <span class="underline"><span class="underline">pycache</span></span><br>
+但以上設定卻會在git branch switch時導致pyc, pyo殘留問題<br>
+以下介紹3種方法來處理<br>
+</p>
+
+<a id="more"></a>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Bash Command</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+手動執行以下指令<br>
+recursively removes all .pyc files and <span class="underline"><span class="underline">pycache</span></span> directories in the current directory<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">find . | grep -E <span class="string">"(__pycache__|\.pyc$)"</span> | xargs rm -rf</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Git post-checkout hook</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+git post-checkout hook能設定在git branch switch後自動執行的指令<br>
+只要將需要執行的程式放到repo/.git/hooks/post-checkout並設定權限為可執行即可<br>
+github討論:<br>
+<a href="http://stackoverflow.com/questions/1504724/automatically-remove-pyc-files-and-otherwise-empty-directories-when-i-check-ou" target="_blank" rel="external">http://stackoverflow.com/questions/1504724/automatically-remove-pyc-files-and-otherwise-empty-directories-when-i-check-ou</a><br>
+</p>
+
+<p>
+以下是google找來的auto remove pyc and empty folder after git checkout範例<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="shebang">#!/usr/bin/env bash</span><br><span class="line"></span></span><br><span class="line"><span class="comment"># Delete .pyc files and empty directories from root of project</span></span><br><span class="line"><span class="built_in">cd</span> ./$(git rev-parse --show-cdup)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Clean-up</span></span><br><span class="line">find . -name <span class="string">".DS_Store"</span> -delete</span><br><span class="line"></span><br><span class="line">NUM_PYC_FILES=$( find . -name <span class="string">"*.pyc"</span> | wc <span class="operator">-l</span> | tr <span class="operator">-d</span> <span class="string">' '</span> )</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$NUM_PYC_FILES</span> <span class="operator">-gt</span> <span class="number">0</span> ]; <span class="keyword">then</span></span><br><span class="line">    find . -name <span class="string">"*.pyc"</span> -delete</span><br><span class="line">    <span class="built_in">printf</span> <span class="string">"\e[00;31mDeleted <span class="variable">$NUM_PYC_FILES</span> .pyc files\e[00m\n"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">NUM_EMPTY_DIRS=$( find . -type d -empty | wc <span class="operator">-l</span> | tr <span class="operator">-d</span> <span class="string">' '</span> )</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$NUM_EMPTY_DIRS</span> <span class="operator">-gt</span> <span class="number">0</span> ]; <span class="keyword">then</span></span><br><span class="line">    find . -type d -empty -delete</span><br><span class="line">    <span class="built_in">printf</span> <span class="string">"\e[00;31mDeleted <span class="variable">$NUM_EMPTY_DIRS</span> empty directories\e[00m\n"</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Python Environment Variable PYTHONDONTWRITEBYTECODE</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+環境變數中設定PYTHONDONTWRITEBYTECODE=1，可完全禁止python interpreter產生類似檔案<br>
+在developer的環境下十分好用<br>
+以下3種設定環境變數的方法<br>
+</p>
+</div>
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> set it at .bash_profile(global)</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+在.bash_profile中加入export PYTHONDONTWRITEBYTECODE=1<br>
+最簡單的設定方式，但將導致系統內建的python也無法產生byte code<br>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> set it at activate and remove it at deactivate by VirtualEnv</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+在VirtualEnv中設定，如此即可做到只有該Virtual Env會被影響到<br>
+bin/activate:<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Tell Python not to write out .pyc files.</span></span><br><span class="line">_OLD_PYTHONDONTWRITEBYTECODE=<span class="string">"<span class="variable">$PYTHONDONTWRITEBYTECODE</span>"</span></span><br><span class="line">PYTHONDONTWRITEBYTECODE=<span class="number">1</span></span><br><span class="line"><span class="built_in">export</span> PYTHONDONTWRITEBYTECODE</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+bin/deactivate:<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">PYTHONDONTWRITEBYTECODE=<span class="string">"<span class="variable">$_OLD_PYTHONDONTWRITEBYTECODE</span>"</span></span><br><span class="line"><span class="built_in">export</span> PYTHONDONTWRITEBYTECODE</span><br><span class="line"><span class="built_in">unset</span> _OLD_PYTHONDONTWRITEBYTECODE</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> use direnv to set</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+若python環境是用pyenv + pyenv-virtualenv來管理的話，則需要用到其他tool才能設定環境變數<br>
+因為pyenv不會去執行virtualenv的activate與deactivate，且目前並沒有辦法可以在pyenv中設定環境變數<br>
+by pyenv author: <a href="https://github.com/yyuu/pyenv-virtualenv/issues/55" target="_blank" rel="external">https://github.com/yyuu/pyenv-virtualenv/issues/55</a><br>
+</p>
+
+<p>
+direnv使用方式可參考: direnv筆記<br>
+</p>
+</div>
+</div>
+</div>
+
+Last Updated 2017-03-10 五 10:26.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="external">hexo-renderer-org</a> with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.2.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 8.2.10)
+
+            
+                
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/git/">git</a> <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/python/">python</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2016/03/16/direnv筆記/"  data-tooltip="direnv筆記">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2016/03/14/ag-the-silver-searcher筆記/" data-tooltip="Ag The Silver Searcher 筆記">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2016/03/16/remove-python-pyc-file/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2016/03/16/remove-python-pyc-file/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2016/03/16/remove-python-pyc-file/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 Cwza. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2016/03/16/direnv筆記/"  data-tooltip="direnv筆記">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2016/03/14/ag-the-silver-searcher筆記/" data-tooltip="Ag The Silver Searcher 筆記">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2016/03/16/remove-python-pyc-file/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2016/03/16/remove-python-pyc-file/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2016/03/16/remove-python-pyc-file/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2016/03/16/remove-python-pyc-file/">
+                <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2016/03/16/remove-python-pyc-file/">
+                <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2016/03/16/remove-python-pyc-file/">
+                <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        <!-- Define author's picture -->
+
+
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="https://www.gravatar.com/avatar/f563bb5ba525d2aa148cd22fb4c2db26?s=110"/>
+        
+            <h4 id="about-card-name">Cwza</h4>
+        
+            <h5 id="about-card-bio"><p>Hello everyone.</br> I’m cwza.</br> Welcome to my blog.</br></p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Taiwan/Taipei
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/my_blog/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/my_blog/assets/js/script.min.js"></script>
+<!--SCRIPTS END-->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'cwzablog';
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+
+    <script type="text/javascript">
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+            e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','rxPzK7_9dZFEqRaWyGy2','2.0.0');
+    </script>
+
+
+</html>

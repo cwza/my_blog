@@ -1,0 +1,1047 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>cwza&#39;s blog</title>
+  
+  <link href="/my_blog/atom.xml" rel="self"/>
+  
+  <link href="http://cwza.github.io/my_blog/"/>
+  <updated>2017-03-10T02:26:35.000Z</updated>
+  <id>http://cwza.github.io/my_blog/</id>
+  
+  <author>
+    <name>Cwza</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>nginx connection limit bandwith limit rate limit</title>
+    <link href="http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/"/>
+    <id>http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/</id>
+    <published>2017-02-13T08:30:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="connection-limit"><a href="#connection-limit" class="headerlink" title="connection limit"></a>connection limit</h2><p>每一ip最多50連線數<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_conn connlimit 50;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="bandwith-limit"><a href="#bandwith-limit" class="headerlink" title="bandwith limit"></a>bandwith limit</h2><p>當流量超過500k時限制速度為50k<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_rate 50k;</div><div class="line">      limit_rate_after 500k;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="rate-limit"><a href="#rate-limit" class="headerlink" title="rate limit"></a>rate limit</h2><p>每秒最多50 request<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=50r/s;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;connection-limit&quot;&gt;&lt;a href=&quot;#connection-limit&quot; class=&quot;headerlink&quot; title=&quot;connection limit&quot;&gt;&lt;/a&gt;connection limit&lt;/h2&gt;&lt;p&gt;每一ip最多50連線數&lt;br
+    
+    </summary>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
+    
+    
+      <category term="nginx" scheme="http://cwza.github.io/my_blog/tags/nginx/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nginx and ufw add rate limit</title>
+    <link href="http://cwza.github.io/my_blog/2017/02/13/nginx-and-ufw-add-rate-limit/"/>
+    <id>http://cwza.github.io/my_blog/2017/02/13/nginx-and-ufw-add-rate-limit/</id>
+    <published>2017-02-13T08:30:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>production環境下需要設定rate limit來避免DOS攻擊<br>以下介紹兩種設定方式，一種是讓ap server來擋(這裡介紹nginx)，一種是讓系統防火墻來擋(這裡介紹ufw)</p>
+<a id="more"></a>
+<h2 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h2><p>將limit_req_zone $binary_remote_addr zone=one:10m rate=10r/s;加入nginx.conf最上一層<br>將limit_req zone=one burst=5 nodelay;加入欲使用rate limit的location中<br>nginx.fonf Ex:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># the IP(s) on which your node server is running. I chose port 3000.</span></div><div class="line">upstream app_faceblock &#123;</div><div class="line">    server 127.0.0.1:3001;</div><div class="line">    keepalive 8;</div><div class="line">&#125;</div><div class="line"></div><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=10r/s;</div><div class="line"></div><div class="line"><span class="comment"># the nginx server instance</span></div><div class="line">server &#123;</div><div class="line">    listen 0.0.0.0:80;</div><div class="line">    server_name cwzc.pw www.cwzc.pw;</div><div class="line">    access_log /var/<span class="built_in">log</span>/nginx/faceblock.log;</div><div class="line"></div><div class="line">    listen 443 ssl default_server;</div><div class="line">    listen [::]:443 ssl default_server;</div><div class="line"></div><div class="line">    ssl_certificate /etc/nginx/ssl/nginx.crt;</div><div class="line">    ssl_certificate_key /etc/nginx/ssl/nginx.key;</div><div class="line"></div><div class="line"></div><div class="line">    location /static &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      root /static;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment"># pass the request to the node.js server with the correct headers</span></div><div class="line">    <span class="comment"># and much more can be added, see nginx config options</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line"></div><div class="line">      proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">      proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">      proxy_set_header Host <span class="variable">$http_host</span>;</div><div class="line">      proxy_set_header X-NginX-Proxy <span class="literal">true</span>;</div><div class="line"></div><div class="line">      proxy_pass http://app_faceblock/;</div><div class="line">      proxy_redirect off;</div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="ufw"><a href="#ufw" class="headerlink" title="ufw"></a>ufw</h2><p>ufw是ubuntu中的Filewall<br>可以讓我們自定各種rule<br>詳細解釋請參照<a href="https://gist.github.com/lavoiesl/3740917" target="_blank" rel="external">https://gist.github.com/lavoiesl/3740917</a><br>修改/etc/ufw/user.rules<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">### Add those lines after *filter near the beginning of the file</span></div><div class="line">:ufw-http - [0:0]</div><div class="line">:ufw-http-logdrop - [0:0]</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">### Add those lines near the end of the file</span></div><div class="line"></div><div class="line"><span class="comment">### Start HTTP ###</span></div><div class="line"></div><div class="line"><span class="comment"># Enter rule</span></div><div class="line">-A ufw-before-input -p tcp --dport 80   -j ufw-http</div><div class="line">-A ufw-before-input -p tcp --dport 443  -j ufw-http</div><div class="line"></div><div class="line"><span class="comment"># Limit connections per Class C</span></div><div class="line">-A ufw-http -p tcp --syn -m connlimit --connlimit-above 50 --connlimit-mask 24 -j ufw-http-logdrop</div><div class="line"></div><div class="line"><span class="comment"># Limit connections per IP</span></div><div class="line">-A ufw-http -m state --state NEW -m recent --name conn_per_ip --set</div><div class="line">-A ufw-http -m state --state NEW -m recent --name conn_per_ip --update --seconds 10 --hitcount 20 -j ufw-http-logdrop</div><div class="line"></div><div class="line"><span class="comment"># Limit packets per IP</span></div><div class="line">-A ufw-http -m recent --name pack_per_ip --set</div><div class="line">-A ufw-http -m recent --name pack_per_ip --update --seconds 1  --hitcount 20  -j ufw-http-logdrop</div><div class="line"></div><div class="line"><span class="comment"># Finally accept</span></div><div class="line">-A ufw-http -j ACCEPT</div><div class="line"></div><div class="line"><span class="comment"># Log-A ufw-http-logdrop -m limit --limit 3/min --limit-burst 10 -j LOG --log-prefix "[UFW HTTP DROP] "</span></div><div class="line">-A ufw-http-logdrop -j DROP</div><div class="line"></div><div class="line"><span class="comment">### End HTTP ###</span></div></pre></td></tr></table></figure></p>
+<p>restart ufw<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ufw <span class="built_in">disable</span></div><div class="line">ufw <span class="built_in">enable</span></div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;production環境下需要設定rate limit來避免DOS攻擊&lt;br&gt;以下介紹兩種設定方式，一種是讓ap server來擋(這裡介紹nginx)，一種是讓系統防火墻來擋(這裡介紹ufw)&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
+    
+    
+      <category term="nginx" scheme="http://cwza.github.io/my_blog/tags/nginx/"/>
+    
+      <category term="firewall" scheme="http://cwza.github.io/my_blog/tags/firewall/"/>
+    
+      <category term="ubuntu" scheme="http://cwza.github.io/my_blog/tags/ubuntu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>docker compose筆記</title>
+    <link href="http://cwza.github.io/my_blog/2017/02/10/docker-compose%E7%AD%86%E8%A8%98/"/>
+    <id>http://cwza.github.io/my_blog/2017/02/10/docker-compose筆記/</id>
+    <published>2017-02-10T08:37:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Container之間有關係時可以用docker command中的–link搞定<br>當有多個Container需要連結時我們會希望能撰寫一份設定檔定義Container之間的關係然後執行就好<br>這就是docker-compose在做的事<br>撰寫docker-compose.yml定義各Container link relation<br>然後run docker-compose up -d</p>
+<h2 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker-compose <span class="_">-f</span> ./docker-compose.yml up <span class="_">-d</span></div></pre></td></tr></table></figure>
+<h2 id="docker-compose-yml-example"><a href="#docker-compose-yml-example" class="headerlink" title="docker-compose.yml example"></a>docker-compose.yml example</h2><p>以下設定表示<br>faceblock是ap server<br>zombodb_postgres是postgres database<br>zombodb_elastic是elasticsearch database<br>faceblock相依於zombodb_postgres<br>zombodb_postgres相依於zombodb_elastic<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">faceblock:</div><div class="line">  build: ./faceblock <span class="comment"># DockerFile location</span></div><div class="line">  ports: <span class="comment"># export ports</span></div><div class="line">   - <span class="string">"3001:3000"</span></div><div class="line">   - <span class="string">"3043:443"</span></div><div class="line">  links: <span class="comment"># dependency</span></div><div class="line">   - zombodb_postgres</div><div class="line">  entrypoint: /execute.sh</div><div class="line"></div><div class="line">zombodb_postgres:</div><div class="line">  build: ./postgres</div><div class="line">  ports:</div><div class="line">   - <span class="string">"5432:5432"</span></div><div class="line">  links:</div><div class="line">   - zombodb_elastic</div><div class="line">  restart: always <span class="comment"># auto restart while exit</span></div><div class="line"></div><div class="line">zombodb_elastic:</div><div class="line">  build: ./elasticsearch</div><div class="line">  ports:</div><div class="line">   - <span class="string">"9200:9200"</span></div><div class="line">   - <span class="string">"9300:9300"</span></div><div class="line">  restart: always</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Container之間有關係時可以用docker command中的–link搞定&lt;br&gt;當有多個Container需要連結時我們會希望能撰寫一份設定檔定義Container之間的關係然後執行就好&lt;br&gt;這就是docker-compose在做的事&lt;br&gt;撰寫docker-c
+    
+    </summary>
+    
+      <category term="computer-science" scheme="http://cwza.github.io/my_blog/categories/computer-science/"/>
+    
+    
+      <category term="docker" scheme="http://cwza.github.io/my_blog/tags/docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JS polyfill use core-js</title>
+    <link href="http://cwza.github.io/my_blog/2017/02/09/JS-polyfill-use-core-js/"/>
+    <id>http://cwza.github.io/my_blog/2017/02/09/JS-polyfill-use-core-js/</id>
+    <published>2017-02-09T09:40:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Create-React-App正常使用下無法更改babel設定<br>且為了保持產生的bundle.js不會太大<br>Create-React-App並不會將babel-polyfill全部打開<br>例如以下這些在IE中將會失敗的Function<br>Array.includes, String.includes, Object.values<br>以下簡單介紹3種解決辦法</p>
+<a id="more"></a>
+<h2 id="import-babel-polyfill"><a href="#import-babel-polyfill" class="headerlink" title="import babel-polyfill"></a>import babel-polyfill</h2><p>最簡單的方法，但會造成bundle.js增大<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="string">'babel-polyfill'</span>;</div></pre></td></tr></table></figure></p>
+<h2 id="use-CDN"><a href="#use-CDN" class="headerlink" title="use CDN"></a>use CDN</h2><p>一樣會讓user下載整套polyfill<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.polyfill.io/v2/polyfill.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://wzrd.in/standalone/es7-shim@latest"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h2 id="use-core-js"><a href="#use-core-js" class="headerlink" title="use core-js"></a>use core-js</h2><p>babel-polyfill內部使用的是core-js<br>所以我們可以直接require core-js即可<br>當然可以部分require</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> () =&gt; &#123;</div><div class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.includes) &#123;</div><div class="line">    <span class="built_in">require</span>(<span class="string">'core-js/fn/array/includes'</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (!<span class="built_in">String</span>.includes) &#123;</div><div class="line">    <span class="built_in">require</span>(<span class="string">'core-js/fn/string/includes'</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (!<span class="built_in">Object</span>.values) &#123;</div><div class="line">    <span class="built_in">require</span>(<span class="string">'core-js/fn/object/values'</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (!<span class="built_in">String</span>.endsWith) &#123;</div><div class="line">    <span class="built_in">require</span>(<span class="string">'core-js/fn/string/ends-with'</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (!<span class="built_in">String</span>.startsWith) &#123;</div><div class="line">    <span class="built_in">require</span>(<span class="string">'core-js/fn/string/starts-with'</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Create-React-App正常使用下無法更改babel設定&lt;br&gt;且為了保持產生的bundle.js不會太大&lt;br&gt;Create-React-App並不會將babel-polyfill全部打開&lt;br&gt;例如以下這些在IE中將會失敗的Function&lt;br&gt;Array.includes, String.includes, Object.values&lt;br&gt;以下簡單介紹3種解決辦法&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
+    
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Digital Ocean Domain And Swap Setting</title>
+    <link href="http://cwza.github.io/my_blog/2017/02/09/Digital-Ocean-Domain-And-Swap-Setting/"/>
+    <id>http://cwza.github.io/my_blog/2017/02/09/Digital-Ocean-Domain-And-Swap-Setting/</id>
+    <published>2017-02-09T08:21:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Domain-Setting"><a href="#Domain-Setting" class="headerlink" title="Domain Setting"></a>Domain Setting</h2><ol>
+<li>買一個domain(namecheap之類的)</li>
+<li>照著官方文件做吧<br><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-a-host-name-with-digitalocean" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-set-up-a-host-name-with-digitalocean</a></li>
+</ol>
+<h2 id="Swap-Setting"><a href="#Swap-Setting" class="headerlink" title="Swap Setting"></a>Swap Setting</h2><p>Digital Ocean每月5美金的那個VPS，記憶體只有512MB<br>並且Digital Ocean預設OS的Swap是關閉的（官方說明SSD不建議使用swap）<br>若在上面再用docker的話高機率因為記憶體不足process被kill掉<br>若是真的不想加錢買更多記憶體的話還是可以手動開啟swap</p>
+<p>一樣官方文件照著做就好<br><a href="https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Domain-Setting&quot;&gt;&lt;a href=&quot;#Domain-Setting&quot; class=&quot;headerlink&quot; title=&quot;Domain Setting&quot;&gt;&lt;/a&gt;Domain Setting&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;買一個domain(namech
+    
+    </summary>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
+    
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/tags/web/"/>
+    
+      <category term="digital-ocean" scheme="http://cwza.github.io/my_blog/tags/digital-ocean/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>use gh-pages to auto deploy static files to github pages</title>
+    <link href="http://cwza.github.io/my_blog/2017/02/08/use-gh-pages-to-auto-deploy-static-files-to-github-pages/"/>
+    <id>http://cwza.github.io/my_blog/2017/02/08/use-gh-pages-to-auto-deploy-static-files-to-github-pages/</id>
+    <published>2017-02-07T20:22:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://github.com/tschaub/gh-pages" target="_blank" rel="external">https://github.com/tschaub/gh-pages</a><br>Publish files to a gh-pages branch on GitHub</p>
+<h2 id="install"><a href="#install" class="headerlink" title="install"></a>install</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install gh-pages --save-dev</div></pre></td></tr></table></figure>
+<h2 id="config"><a href="#config" class="headerlink" title="config"></a>config</h2><p>add following to package.json<br>-d : base path of static files<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="string">"scripts"</span>: &#123;</div><div class="line">  <span class="string">"deploy"</span>: <span class="string">"gh-pages -d dist"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="deploy"><a href="#deploy" class="headerlink" title="deploy"></a>deploy</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm run deploy</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://github.com/tschaub/gh-pages&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/tschaub/gh-pages&lt;/a&gt;&lt;br&gt;Publish files to 
+    
+    </summary>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
+    
+    
+      <category term="github" scheme="http://cwza.github.io/my_blog/tags/github/"/>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/tags/web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>jwt筆記</title>
+    <link href="http://cwza.github.io/my_blog/2017/02/06/jwt%E7%AD%86%E8%A8%98/"/>
+    <id>http://cwza.github.io/my_blog/2017/02/06/jwt筆記/</id>
+    <published>2017-02-06T07:10:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>json web token 簡單筆記</p>
+<a id="more"></a>
+<h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><p>通常使用在驗證client是否已登入過，若Client將未失效token藉由header一起發送，則視為已登入<br>與傳統session最大分別在jwt驗證不需要在Server存任何訊息</p>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><ul>
+<li>Client request login</li>
+<li>Server驗證User並建立jwt</li>
+<li>jwt由User的非敏感信息與expire time …etc組成</li>
+<li>token會藉由server的private key以HMAC alg.加密</li>
+<li>Client之後的所有request皆需在header中帶上此token</li>
+<li>Server收到token後使用密鑰解開並檢查是否失效，並根據token中的user信息判斷request user</li>
+</ul>
+<h2 id="very-easy-example"><a href="#very-easy-example" class="headerlink" title="very easy example"></a>very easy example</h2><p>以下code用來理解用<br>實際server端code使用library node-jsonwebtoken<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// javascript</span></div><div class="line"><span class="comment">// Server</span></div><div class="line"><span class="keyword">var</span> header = &#123; <span class="string">'typ'</span>: <span class="string">'JWT'</span>, <span class="string">'alg'</span>: <span class="string">'HS256'</span> &#125;;</div><div class="line"><span class="keyword">var</span> payload = &#123; <span class="string">"sub"</span>: <span class="string">"1234567890"</span>, <span class="string">"name"</span>: <span class="string">"John Doe"</span>, <span class="string">"admin"</span>: <span class="literal">true</span> &#125;;</div><div class="line"><span class="keyword">var</span> encodedString = base64UrlEncode(header) + <span class="string">'.'</span> + base64UrlEncode(payload);</div><div class="line"><span class="keyword">var</span> signature = HMACSHA256(encodedString, <span class="string">'secret'</span>);</div><div class="line"><span class="keyword">var</span> token = encodedString + <span class="string">'.'</span> + signature;</div><div class="line"></div><div class="line"><span class="comment">// Client</span></div><div class="line">fetch(<span class="string">'api/user/1'</span>, &#123; <span class="attr">headers</span>: &#123; <span class="string">'Authorization'</span>: <span class="string">'Bearer '</span> + token &#125; &#125;)</div></pre></td></tr></table></figure></p>
+<h2 id="node-jsonwebtoken-example"><a href="#node-jsonwebtoken-example" class="headerlink" title="node-jsonwebtoken example"></a>node-jsonwebtoken example</h2><p><a href="https://github.com/auth0/node-jsonwebtoken" target="_blank" rel="external">https://github.com/auth0/node-jsonwebtoken</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> jwt = <span class="built_in">require</span>(<span class="string">'jsonwebtoken'</span>);</div><div class="line"><span class="keyword">const</span> expiresIn = <span class="string">'30m'</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> createJwt = <span class="function">(<span class="params">user</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> jwt.sign(user, configs.app.privateKey, &#123;</div><div class="line">        <span class="attr">expiresIn</span>: expiresIn,</div><div class="line">        <span class="attr">issuer</span>: configs.app.name,</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> verifyJwt = <span class="function">(<span class="params">jwtString</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> jwt.verify(jwtString, configs.app.privateKey, &#123;</div><div class="line">        <span class="attr">issuer</span>: configs.app.name,</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// if user not found, create it. and return user and generated jwt</span></div><div class="line"><span class="keyword">const</span> checkUser = <span class="function">(<span class="params">userInfo</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> db.tx(<span class="string">'authenticationController.checkUser'</span>, <span class="function"><span class="keyword">function</span>* (<span class="params">t</span>) </span>&#123;</div><div class="line">    <span class="keyword">let</span> user = <span class="keyword">yield</span> t.users.findByMail(mail);</div><div class="line">    <span class="keyword">if</span>(!user) &#123;</div><div class="line">      user = <span class="keyword">yield</span> t.users.add(&#123;mail, picture&#125;);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> &#123;user, <span class="attr">faceblockToken</span>: createJwt(user)&#125;;</div><div class="line">  &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> login = <span class="function">(<span class="params">req</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> getUserInfoFromSocial(req.params.socialSite, req.params.socialToken)</div><div class="line">    .then(<span class="function"><span class="params">userInfo</span> =&gt;</span> &#123;</div><div class="line">      <span class="keyword">if</span>(!userInfo || !userInfo.email) <span class="keyword">throw</span> Errors.authenticationError();</div><div class="line">      <span class="keyword">return</span> checkUser(userInfo);</div><div class="line">    &#125;).then(<span class="function"><span class="params">userWithJwt</span> =&gt;</span> &#123;</div><div class="line">      <span class="keyword">let</span> response = &#123;</div><div class="line">        <span class="attr">authentication</span>: &#123;</div><div class="line">          <span class="attr">userId</span>: userWithJwt.user.id,</div><div class="line">          <span class="attr">faceblockToken</span>: userWithJwt.faceblockToken,</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> response;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> authenticate = <span class="function">(<span class="params">req</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">let</span> faceblockToken = req.headers[<span class="string">'faceblock-token'</span>];</div><div class="line">    <span class="keyword">let</span> userFromJwt = verifyJwt(faceblockToken);</div><div class="line">    <span class="keyword">return</span> db.users.find(userFromJwt.id);</div><div class="line">  &#125; <span class="keyword">catch</span>(error) &#123;</div><div class="line">    <span class="keyword">throw</span> Errors.authenticationError(error);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;json web token 簡單筆記&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
+    
+    
+      <category term="computer-science" scheme="http://cwza.github.io/my_blog/tags/computer-science/"/>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/tags/web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTTPS加密解密筆記</title>
+    <link href="http://cwza.github.io/my_blog/2017/02/06/HTTPS%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86%E7%AD%86%E8%A8%98/"/>
+    <id>http://cwza.github.io/my_blog/2017/02/06/HTTPS加密解密筆記/</id>
+    <published>2017-02-06T06:00:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>簡單的Https傳輸過程筆記</p>
+<a id="more"></a>
+<h2 id="Principle"><a href="#Principle" class="headerlink" title="Principle"></a>Principle</h2><h3 id="public-key-cryptography"><a href="#public-key-cryptography" class="headerlink" title="public-key cryptography"></a>public-key cryptography</h3><p>經過公鑰加密的密文只能藉由密鑰解密<br>經過私鑰加密的密文只能藉由公鑰解密<br>ex: RSA</p>
+<h3 id="symmetric-key-algorithms"><a href="#symmetric-key-algorithms" class="headerlink" title="symmetric key algorithms"></a>symmetric key algorithms</h3><p>加密解密使用同一把密鑰<br>ex: DES</p>
+<h2 id="過程"><a href="#過程" class="headerlink" title="過程"></a>過程</h2><ul>
+<li>Client say hello to Server</li>
+<li>Server send CA signed Certification to Client<ul>
+<li>CA signed Certification詳細參照下節</li>
+</ul>
+</li>
+<li>Client check Certification(Cert包含公鑰，確保Cert是由可信任的CA簽可的，確保該公鑰確實是該Server的)</li>
+<li>Client send random string to Server</li>
+<li>Server使用私鑰加密經過hash後的random string與hash演算法發送回Client(RSA)<ul>
+<li>Hacker可能會發送多個簡單有規律的字串給Server獲得加密後的字串，企圖找出加密規律，hash後再傳送可避免這個</li>
+</ul>
+</li>
+<li>Client用公鑰解密得到hash後的random string與hash演算法，並將原random string以hash演算法作hash並比對，若相同可確保是該Server送出的(RSA)</li>
+<li>Client使用公鑰加密並送出密鑰與對稱加密演算法給Server(RSA)</li>
+<li>Server使用私鑰解密得到對稱加密密鑰(RSA)</li>
+<li>Client使用密鑰將帳號密碼與hash過的帳號密碼、hash演算法傳給Server(DES)<ul>
+<li>hash可用來比對並確保傳輸過程中內容沒遭到修改</li>
+</ul>
+</li>
+<li>Server使用密鑰解密得到帳號密碼與hash，Server將帳號密碼hash後與Client的hash比對，確保過程中是否內容有遭到修改(DES)</li>
+<li>通訊過程中除了hash外也可將random value加入，若收到重複的random value則表示該內容可能是hacker為了干擾重複傳送的</li>
+</ul>
+<h2 id="Certification"><a href="#Certification" class="headerlink" title="Certification"></a>Certification</h2><p>Certification包含Issuer(CA)、valid to(有效期)、public key、Subject(上述過程中的Server)、Signature algorithm(對Thumbprint加密的演算法)、Thumbprint, Thumbprint algorithm(用來確保Cert的完整性確保沒被修改過)</p>
+<ul>
+<li>OS內建SecureTrust CA的Certification</li>
+<li>Server提供公鑰與Server信息給CA申請Cert</li>
+<li>CA必須驗證該公鑰確實為該Server所擁有並發送Cert給Server</li>
+<li>Client收到Cert後以CA的公鑰與Signature Alg解密得到Thumbprint與Thumbprint alg.</li>
+<li>Client使用Thumbprint alg.計算Cert的Thumbprint並比對</li>
+<li>此時即可確保Cert沒被修改過且公鑰確實為該Server</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;簡單的Https傳輸過程筆記&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
+    
+    
+      <category term="computer-science" scheme="http://cwza.github.io/my_blog/tags/computer-science/"/>
+    
+      <category term="https" scheme="http://cwza.github.io/my_blog/tags/https/"/>
+    
+      <category term="ssl" scheme="http://cwza.github.io/my_blog/tags/ssl/"/>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/tags/web/"/>
+    
+      <category term="cryptology" scheme="http://cwza.github.io/my_blog/tags/cryptology/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>USE TIMESTAMPTZ IN POSTGRES NOT TIMESTAMP</title>
+    <link href="http://cwza.github.io/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/"/>
+    <id>http://cwza.github.io/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/</id>
+    <published>2017-01-19T10:53:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>ALWAYS USE TIMESTAMPTZ NOT USE TIMESTAMP IN POSTGRES.<br>SET timezone = ‘UTC’ IN pgsql/data/postgresql.conf.</p>
+<a id="more"></a>
+<p>timestamptz is accepted as an abbreviation for timestamp with time zone.</p>
+<p>USE THIS:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="keyword">users</span></div><div class="line">(</div><div class="line">    <span class="keyword">id</span> <span class="built_in">serial</span> PRIMARY <span class="keyword">KEY</span>,</div><div class="line">    mail <span class="built_in">text</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">UNIQUE</span>,</div><div class="line">    picture <span class="built_in">text</span>,</div><div class="line">    create_time timestamptz <span class="keyword">default</span> <span class="keyword">current_timestamp</span>,</div><div class="line">    update_time timestamptz <span class="keyword">default</span> <span class="keyword">current_timestamp</span></div><div class="line">);</div></pre></td></tr></table></figure></p>
+<p>NOT THIS:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="keyword">users</span></div><div class="line">(</div><div class="line">    <span class="keyword">id</span> <span class="built_in">serial</span> PRIMARY <span class="keyword">KEY</span>,</div><div class="line">    mail <span class="built_in">text</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">UNIQUE</span>,</div><div class="line">    picture <span class="built_in">text</span>,</div><div class="line">    create_time <span class="keyword">timestamp</span> <span class="keyword">default</span> <span class="keyword">current_timestamp</span>,</div><div class="line">    update_time <span class="keyword">timestamp</span> <span class="keyword">default</span> <span class="keyword">current_timestamp</span></div><div class="line">);</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;ALWAYS USE TIMESTAMPTZ NOT USE TIMESTAMP IN POSTGRES.&lt;br&gt;SET timezone = ‘UTC’ IN pgsql/data/postgresql.conf.&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="database" scheme="http://cwza.github.io/my_blog/categories/database/"/>
+    
+    
+      <category term="database" scheme="http://cwza.github.io/my_blog/tags/database/"/>
+    
+      <category term="postgres" scheme="http://cwza.github.io/my_blog/tags/postgres/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nginx With Node And Https config</title>
+    <link href="http://cwza.github.io/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/"/>
+    <id>http://cwza.github.io/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/</id>
+    <published>2017-01-19T06:48:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Nginx With Node And Https config example<br><a id="more"></a></p>
+<h1 id="nginx-config-examaple"><a href="#nginx-config-examaple" class="headerlink" title="nginx config examaple"></a>nginx config examaple</h1><p>pass all request to nodejs server</p>
+<p>copy ssl cert files to /etc/nginx/ssl/<br>copy nginx.conf file to /etc/nginx/sites-available<br>and link to /etc/nginx/sites-enabled/<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp ~/faceblock/faceblock-server/docker/faceblock/nginx.conf /etc/nginx/sites-available/faceblock</div><div class="line">ln <span class="_">-s</span> /etc/nginx/sites-available/faceblock /etc/nginx/sites-enabled/faceblock</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># nginx.conf</span></div><div class="line"><span class="comment"># the IP(s) on which your node server is running. I chose port 3001.</span></div><div class="line">upstream app_faceblock &#123;</div><div class="line">    server 127.0.0.1:3001;</div><div class="line">    keepalive 8;</div><div class="line">&#125;</div><div class="line"></div><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=10r/s; <span class="comment"># rate limit</span></div><div class="line"></div><div class="line"><span class="comment"># the nginx server instance</span></div><div class="line">server &#123;</div><div class="line">    listen 0.0.0.0:80;</div><div class="line">    server_name cwzc.pw www.cwzc.pw;</div><div class="line">    access_log /var/<span class="built_in">log</span>/nginx/faceblock.log;</div><div class="line"></div><div class="line">    listen 443 ssl default_server;</div><div class="line">    listen [::]:443 ssl default_server;</div><div class="line"></div><div class="line">    ssl_certificate /etc/nginx/ssl/nginx.crt;</div><div class="line">    ssl_certificate_key /etc/nginx/ssl/nginx.key;</div><div class="line"></div><div class="line">    location /static &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      root /static;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment"># pass the request to the node.js server with the correct headers</span></div><div class="line">    <span class="comment"># and much more can be added, see nginx config options</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      </div><div class="line">      proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">      proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">      proxy_set_header Host <span class="variable">$http_host</span>;</div><div class="line">      proxy_set_header X-NginX-Proxy <span class="literal">true</span>;</div><div class="line"></div><div class="line">      proxy_pass http://app_faceblock/;</div><div class="line">      proxy_redirect off;</div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<h1 id="Free-SSL-Certification"><a href="#Free-SSL-Certification" class="headerlink" title="Free SSL Certification"></a>Free SSL Certification</h1><h2 id="Goto-sslforfree-and-get-cert-files"><a href="#Goto-sslforfree-and-get-cert-files" class="headerlink" title="Goto sslforfree and get cert files"></a>Goto <a href="https://www.sslforfree.com/" target="_blank" rel="external">sslforfree</a> and get cert files</h2><p>You will get three files ca_bundle.crt, certificate.crt, and private.key</p>
+<h2 id="Copy-files-to-etc-nginx-ssl-and-do-followings"><a href="#Copy-files-to-etc-nginx-ssl-and-do-followings" class="headerlink" title="Copy files to /etc/nginx/ssl and do followings"></a>Copy files to /etc/nginx/ssl and do followings</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mv private.key nginx.key</div><div class="line"><span class="comment">#</span></div><div class="line">cat certificate.crt ca_bundle.crt &gt;&gt; nginx.crt</div><div class="line">vim nginx.crt</div><div class="line"><span class="comment"># change -----BEGIN-----END------ to</span></div><div class="line"><span class="comment"># -----BEGIN--------</span></div><div class="line"><span class="comment"># ----END--------</span></div><div class="line">service nginx restart</div></pre></td></tr></table></figure>
+<h2 id="This-free-SSL-Certification-will-expire-after-90-days-so-you-will-have-to-go-to-sslforfree-to-get-new-Certification-before-expired"><a href="#This-free-SSL-Certification-will-expire-after-90-days-so-you-will-have-to-go-to-sslforfree-to-get-new-Certification-before-expired" class="headerlink" title="This free SSL Certification will expire after 90 days, so you will have to go to sslforfree to get new Certification before expired"></a>This free SSL Certification will expire after 90 days, so you will have to go to sslforfree to get new Certification before expired</h2>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Nginx With Node And Https config example&lt;br&gt;
+    
+    </summary>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
+    
+    
+      <category term="https" scheme="http://cwza.github.io/my_blog/tags/https/"/>
+    
+      <category term="ssl" scheme="http://cwza.github.io/my_blog/tags/ssl/"/>
+    
+      <category term="nodejs" scheme="http://cwza.github.io/my_blog/tags/nodejs/"/>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/tags/web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Higher Order Component</title>
+    <link href="http://cwza.github.io/my_blog/2017/01/19/Higher-Order-Component/"/>
+    <id>http://cwza.github.io/my_blog/2017/01/19/Higher-Order-Component/</id>
+    <published>2017-01-19T06:48:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>A Simple Higher Order Component example</p>
+<h2 id="Simple-example"><a href="#Simple-example" class="headerlink" title="Simple example"></a>Simple example</h2><p>For loading spinner with different Component<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// HOC declaration</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">withLoadingSpinner</span>(<span class="params">Component</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">EnhancedComponent</span>(<span class="params">&#123; isLoading, ...props &#125;</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!isLoading) &#123;</div><div class="line">      <span class="keyword">return</span> &lt;Component &#123; ...props &#125; /&gt;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return &lt;LoadingSpinner /&gt;;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Usage</div><div class="line"></div><div class="line">const ListItemsWithLoadingIndicator = withLoadingSpinner(ListItems);</div><div class="line"></div><div class="line">&lt;ListItemsWithLoadingIndicator</div><div class="line">  isLoading=&#123;props.isLoading&#125;</div><div class="line">  list=&#123;props.list&#125;</div><div class="line">/&gt;</div></pre></td></tr></table></figure></p>
+<h1 id="Recompose"><a href="#Recompose" class="headerlink" title="Recompose"></a>Recompose</h1><p><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">https://github.com/rafrex/spa-github-pages</a><br>A React Library for HOC</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;A Simple Higher Order Component example&lt;/p&gt;
+&lt;h2 id=&quot;Simple-example&quot;&gt;&lt;a href=&quot;#Simple-example&quot; class=&quot;headerlink&quot; title=&quot;Simple example&quot;&gt;&lt;
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
+    
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
+    
+      <category term="react" scheme="http://cwza.github.io/my_blog/tags/react/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Deploy react app to github page</title>
+    <link href="http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/"/>
+    <id>http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/</id>
+    <published>2017-01-19T06:48:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Deploy-react-app-by-create-react-app"><a href="#Deploy-react-app-by-create-react-app" class="headerlink" title="Deploy react app by create-react-app"></a>Deploy react app by create-react-app</h2><p>Follow this guide to deploy react app to github pages.<br><a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#github-pages" target="_blank" rel="external">React Create App Readme</a></p>
+<h2 id="Do-something-to-let-github-pages-OK-with-SPA"><a href="#Do-something-to-let-github-pages-OK-with-SPA" class="headerlink" title="Do something to let github pages OK with SPA"></a>Do something to let github pages OK with SPA</h2><p>Github pages does not support SPA routings now, so you have to do followings:<br>Follow this guide to make SPA OK with github pages<br><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">spa github pages</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Deploy-react-app-by-create-react-app&quot;&gt;&lt;a href=&quot;#Deploy-react-app-by-create-react-app&quot; class=&quot;headerlink&quot; title=&quot;Deploy react app by 
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
+    
+    
+      <category term="github" scheme="http://cwza.github.io/my_blog/tags/github/"/>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
+    
+      <category term="react" scheme="http://cwza.github.io/my_blog/tags/react/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>微軟提供免費windows-VM</title>
+    <link href="http://cwza.github.io/my_blog/2016/12/08/%E5%BE%AE%E8%BB%9F%E6%8F%90%E4%BE%9B%E5%85%8D%E8%B2%BBwindows-VM/"/>
+    <id>http://cwza.github.io/my_blog/2016/12/08/微軟提供免費windows-VM/</id>
+    <published>2016-12-08T05:55:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/" target="_blank" rel="external">https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/</a></p>
+<p>90天之後再輸入slmgr -rearm重新取得授權</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://developer.microsoft.com/
+    
+    </summary>
+    
+      <category term="windows" scheme="http://cwza.github.io/my_blog/categories/windows/"/>
+    
+    
+      <category term="linux" scheme="http://cwza.github.io/my_blog/tags/linux/"/>
+    
+      <category term="windows" scheme="http://cwza.github.io/my_blog/tags/windows/"/>
+    
+      <category term="mac" scheme="http://cwza.github.io/my_blog/tags/mac/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker筆記</title>
+    <link href="http://cwza.github.io/my_blog/2016/11/21/Docker%E7%AD%86%E8%A8%98/"/>
+    <id>http://cwza.github.io/my_blog/2016/11/21/Docker筆記/</id>
+    <published>2016-11-21T06:31:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<!-- toc -->
+<p>Docker is the world’s leading software containerization platform<br><a href="https://www.docker.com/" target="_blank" rel="external">Docker Official Site</a><br><a href="https://hub.docker.com/" target="_blank" rel="external">Docker Hub: search images from this site</a></p>
+<a id="more"></a>
+<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><p>Go to Official Site and click download.</p>
+<h1 id="Uninstall"><a href="#Uninstall" class="headerlink" title="Uninstall"></a>Uninstall</h1><h2 id="Uninstall-from-GUI"><a href="#Uninstall-from-GUI" class="headerlink" title="Uninstall from GUI"></a>Uninstall from GUI</h2><p>Choose  –&gt; Preferences from the menu bar, then click Uninstall / Reset on the Preferences dialog.</p>
+<h2 id="Uninstall-from-command"><a href="#Uninstall-from-command" class="headerlink" title="Uninstall from command"></a>Uninstall from command</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ /Applications/Docker.app/Contents/MacOS/Docker --uninstall</div><div class="line">Docker is running, exiting...</div><div class="line">Docker uninstalled successfully. You can move the Docker application to the trash.</div></pre></td></tr></table></figure>
+<h1 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h1><h2 id="Docker-run"><a href="#Docker-run" class="headerlink" title="Docker run"></a>Docker run</h2><ul>
+<li>-d #run in background(demen)</li>
+<li>-p 80:5000 #map host 80 port to container 5000 port</li>
+<li>-t -i #execute interactive terminal</li>
+<li>–name <container name=""></container></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">docker run &lt;userID&gt;/&lt;imageName&gt; &lt;<span class="built_in">command</span>&gt; &lt;<span class="built_in">command</span> parameter&gt;</div><div class="line">docker run <span class="_">-d</span> -p 80:5000 training/webapp python app.py <span class="comment"># -p 80:5000 to map container 5000 port to host 80 post, -d to run in background</span></div><div class="line">docker run -t -i ubuntu:14.04 /bin/bash <span class="comment"># run interactive bash</span></div><div class="line">docker run <span class="_">-d</span> -P --name web training/webapp python app.py <span class="comment"># give container a name</span></div></pre></td></tr></table></figure>
+<h2 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">docker pull &lt;image&gt; <span class="comment"># pull image</span></div><div class="line">docker inspect &lt;container ID&gt; <span class="comment"># see the container specific info</span></div><div class="line">docker ps <span class="comment"># list current running container</span></div><div class="line">docker ps <span class="_">-a</span> <span class="comment"># list all container</span></div><div class="line">docker stop &lt;container name&gt; <span class="comment"># stop container</span></div><div class="line">docker rm <span class="_">-f</span> &lt;container name&gt;|&lt;container id&gt; <span class="comment"># remove container</span></div><div class="line">docker images <span class="comment"># list all images</span></div><div class="line">docker rmi &lt;imageID&gt;|&lt;imageName&gt; <span class="comment"># remove image</span></div><div class="line">docker build -t &lt;userID&gt;/&lt;imageName&gt; ./ <span class="comment"># build image according to Dockfile</span></div><div class="line">docker tag &lt;imageID&gt; &lt;userID&gt;/&lt;imageName&gt;:latest</div><div class="line">docker logs <span class="_">-f</span> &lt;container ID&gt; <span class="comment"># print stdout of container</span></div><div class="line"></div><div class="line">docker login</div><div class="line">docker push &lt;userID&gt;/&lt;imageName&gt;</div></pre></td></tr></table></figure>
+<h1 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># an easy example</span></div><div class="line">FROM docker/whalesay:latest <span class="comment"># use other image as base</span></div><div class="line">RUN apt-get -y update &amp;&amp; apt-get install -y fortunes <span class="comment"># run init command</span></div><div class="line">ENV POSTGRES_USER faceblock</div><div class="line">CMD /usr/games/fortune <span class="_">-a</span> | cowsay</div></pre></td></tr></table></figure>
+<h1 id="Container-Link"><a href="#Container-Link" class="headerlink" title="Container Link"></a>Container Link</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">docker run <span class="_">-d</span> --name db training/postgres <span class="comment"># creates a container called db, which contains a PostgreSQL database.</span></div><div class="line">docker run <span class="_">-d</span> -P --name web --link db:db training/webapp python app.py <span class="comment"># create a web container and link it with db container</span></div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;!-- toc --&gt;
+&lt;p&gt;Docker is the world’s leading software containerization platform&lt;br&gt;&lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker Official Site&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://hub.docker.com/&quot;&gt;Docker Hub: search images from this site&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="computer-science" scheme="http://cwza.github.io/my_blog/categories/computer-science/"/>
+    
+    
+      <category term="linux" scheme="http://cwza.github.io/my_blog/tags/linux/"/>
+    
+      <category term="windows" scheme="http://cwza.github.io/my_blog/tags/windows/"/>
+    
+      <category term="mac" scheme="http://cwza.github.io/my_blog/tags/mac/"/>
+    
+      <category term="docker" scheme="http://cwza.github.io/my_blog/tags/docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>zsh and prezto設定筆記</title>
+    <link href="http://cwza.github.io/my_blog/2016/11/02/zsh-and-prezto%E8%A8%AD%E5%AE%9A%E7%AD%86%E8%A8%98/"/>
+    <id>http://cwza.github.io/my_blog/2016/11/02/zsh-and-prezto設定筆記/</id>
+    <published>2016-11-02T09:17:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<!-- toc -->
+<p>Zsh + Prezto可實現更方便好用的Terminal<br>本文描述在Mac上安裝Zsh設定文件Prezto的方法</p>
+<p>Mac上建議可搭配iTerm2使用</p>
+<a id="more"></a>
+<h1 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h1><h2 id="Launch-Zsh"><a href="#Launch-Zsh" class="headerlink" title="Launch Zsh"></a>Launch Zsh</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zsh</div></pre></td></tr></table></figure>
+<h2 id="get-the-code-from-github"><a href="#get-the-code-from-github" class="headerlink" title="get the code from github"></a>get the code from github</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> --recursive https://github.com/sorin-ionescu/prezto.git <span class="string">"<span class="variable">$&#123;ZDOTDIR:-$HOME&#125;</span>/.zprezto"</span></div></pre></td></tr></table></figure>
+<h2 id="add-zshrc-and-source-init-zsh-to-it"><a href="#add-zshrc-and-source-init-zsh-to-it" class="headerlink" title="add ~/.zshrc and source init.zsh to it"></a>add ~/.zshrc and source init.zsh to it</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ~/.zshrc</span></div><div class="line"><span class="comment"># Source Prezto.</span></div><div class="line"><span class="keyword">if</span> [[ <span class="_">-s</span> <span class="string">"<span class="variable">$&#123;ZDOTDIR:-$HOME&#125;</span>/.zprezto/init.zsh"</span> ]]; <span class="keyword">then</span></div><div class="line">  <span class="built_in">source</span> <span class="string">"<span class="variable">$&#123;ZDOTDIR:-$HOME&#125;</span>/.zprezto/init.zsh"</span></div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
+<h2 id="設定預設terminal為zsh"><a href="#設定預設terminal為zsh" class="headerlink" title="設定預設terminal為zsh"></a>設定預設terminal為zsh</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chsh <span class="_">-s</span> /bin/zsh</div></pre></td></tr></table></figure>
+<h2 id="install-Powerline-fonts"><a href="#install-Powerline-fonts" class="headerlink" title="install Powerline fonts"></a>install Powerline fonts</h2><p>如果要使用powerline系列主題的話，需要安裝powerline系列字型<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/powerline/fonts.git</div><div class="line"><span class="built_in">cd</span> fonts</div><div class="line">./install.sh</div></pre></td></tr></table></figure></p>
+<p>安裝完後在terminal的字型中選用有powerline的字型</p>
+<h1 id="設定"><a href="#設定" class="headerlink" title="設定"></a>設定</h1><h2 id="add-zpreztorc-and-enable-modules"><a href="#add-zpreztorc-and-enable-modules" class="headerlink" title="add ~/.zpreztorc and enable modules"></a>add ~/.zpreztorc and enable modules</h2><p>prompt -l可列出主題，prompt {主題名稱}可套用主題到現有session上<br>以下設定開啟的主題為agnoster<br>支援的module列表可參照<a href="https://github.com/sorin-ionescu/prezto/tree/master/modules" target="_blank" rel="external">https://github.com/sorin-ionescu/prezto/tree/master/modules</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#~/.zpreztorc</span></div><div class="line"><span class="comment"># Color output (auto set to 'no' on dumb terminals).</span></div><div class="line"><span class="built_in">zstyle</span> <span class="string">':prezto:*:*'</span> color <span class="string">'yes'</span></div><div class="line"></div><div class="line"><span class="comment"># Set the Prezto modules to load (browse modules).</span></div><div class="line"><span class="comment"># The order matters.</span></div><div class="line"><span class="built_in">zstyle</span> <span class="string">':prezto:load'</span> pmodule \</div><div class="line">   <span class="string">'directory'</span> \</div><div class="line">   <span class="string">'utility'</span> \</div><div class="line">   <span class="string">'completion'</span> \</div><div class="line">   <span class="string">'git'</span> \</div><div class="line">   <span class="string">'syntax-highlighting'</span> \</div><div class="line">   <span class="string">'history-substring-search'</span> \</div><div class="line">   <span class="string">'autosuggestions'</span> \</div><div class="line">   <span class="string">'prompt'</span> \</div><div class="line"></div><div class="line"><span class="comment"># Set the prompt theme.</span></div><div class="line"><span class="built_in">zstyle</span> <span class="string">':prezto:module:prompt'</span> theme <span class="string">'agnoster'</span></div></pre></td></tr></table></figure></p>
+<h2 id="Remove-category-menu-of-tab-complete"><a href="#Remove-category-menu-of-tab-complete" class="headerlink" title="Remove category menu of tab complete"></a>Remove category menu of tab complete</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ~/.zprezto/modules/completion/init.zsh</span></div><div class="line">...</div><div class="line"><span class="comment"># Group matches and describe.</span></div><div class="line"><span class="built_in">zstyle</span> <span class="string">':completion:*:*:*:*:*'</span> menu select</div><div class="line"><span class="comment"># zstyle ':completion:*:matches' group 'yes'</span></div><div class="line"><span class="comment"># zstyle ':completion:*:options' description 'yes'</span></div><div class="line"><span class="comment"># zstyle ':completion:*:options' auto-description '%d'</span></div><div class="line"><span class="comment"># zstyle ':completion:*:corrections' format ' %F&#123;green&#125;-- %d (errors: %e) --%f'</span></div><div class="line"><span class="comment"># zstyle ':completion:*:descriptions' format ' %F&#123;yellow&#125;-- %d --%f'</span></div><div class="line"><span class="comment"># zstyle ':completion:*:messages' format ' %F&#123;purple&#125; -- %d --%f'</span></div><div class="line"><span class="comment"># zstyle ':completion:*:warnings' format ' %F&#123;red&#125;-- no matches found --%f'</span></div><div class="line"><span class="comment"># zstyle ':completion:*:default' list-prompt '%S%M matches%s'</span></div><div class="line"><span class="comment"># zstyle ':completion:*' format ' %F&#123;yellow&#125;-- %d --%f'</span></div><div class="line"><span class="comment"># zstyle ':completion:*' group-name ''</span></div><div class="line"><span class="comment"># zstyle ':completion:*' verbose yes</span></div><div class="line">...</div></pre></td></tr></table></figure>
+<h1 id="Update-Prezto"><a href="#Update-Prezto" class="headerlink" title="Update Prezto"></a>Update Prezto</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> ~/.zprezto</div><div class="line">git pull &amp;&amp; git submodule update --init --recursive</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;!-- toc --&gt;
+&lt;p&gt;Zsh + Prezto可實現更方便好用的Terminal&lt;br&gt;本文描述在Mac上安裝Zsh設定文件Prezto的方法&lt;/p&gt;
+&lt;p&gt;Mac上建議可搭配iTerm2使用&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="mac" scheme="http://cwza.github.io/my_blog/categories/mac/"/>
+    
+    
+      <category term="linux" scheme="http://cwza.github.io/my_blog/tags/linux/"/>
+    
+      <category term="mac" scheme="http://cwza.github.io/my_blog/tags/mac/"/>
+    
+      <category term="zsh" scheme="http://cwza.github.io/my_blog/tags/zsh/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>javascript reduce basic example</title>
+    <link href="http://cwza.github.io/my_blog/2016/10/27/javascript-reduce-basic-example/"/>
+    <id>http://cwza.github.io/my_blog/2016/10/27/javascript-reduce-basic-example/</id>
+    <published>2016-10-27T09:11:00.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Basic Example</a></li>
+<li><a href="#sec-2">2. map and filter is also a reduce</a></li>
+</ul>
+</div>
+</div>
+<p>
+Reduce is a function to transform an array to another something<br>
+</p>
+
+<a id="more"></a>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Basic Example</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+input: votes<br>
+output: { angular: 3, react: 4, ember: 1, vanilla: 1 }<br>
+</p>
+
+<div class="org-src-container">
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> votes = [</span><br><span class="line">    <span class="string">"angular"</span>,</span><br><span class="line">    <span class="string">"angular"</span>,</span><br><span class="line">    <span class="string">"react"</span>,</span><br><span class="line">    <span class="string">"react"</span>,</span><br><span class="line">    <span class="string">"react"</span>,</span><br><span class="line">    <span class="string">"angular"</span>,</span><br><span class="line">    <span class="string">"ember"</span>,</span><br><span class="line">    <span class="string">"react"</span>,</span><br><span class="line">    <span class="string">"vanilla"</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> initialVaue = {};</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> reducer = <span class="function"><span class="keyword">function</span>(<span class="params">tally, vote</span>) </span>{</span><br><span class="line">    <span class="keyword">if</span>(!tally[vote]) {</span><br><span class="line">	tally[vote] = <span class="number">1</span>;</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">	tally[vote] = tally[vote] + <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> tally;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result = votes.reduce(reducer, initialValue);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result);</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> map and filter is also a reduce</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// contents of doubled === doubleMapped</span></span><br><span class="line"><span class="keyword">var</span> data = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> doubled = data.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">acc, value</span>) </span>{</span><br><span class="line">    acc.push(value * <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">return</span> acc;</span><br><span class="line">}, []);</span><br><span class="line"><span class="keyword">var</span> doubleMapped = data.map(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>) </span>{</span><br><span class="line">    <span class="keyword">return</span> item * <span class="number">2</span>;</span><br><span class="line">});</span><br><span class="line"></span><br><span class="line"><span class="comment">// contentes of evens === evenFiltered</span></span><br><span class="line"><span class="keyword">var</span> data2 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">var</span> evens = data2.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">acc, value</span>) </span>{</span><br><span class="line">    <span class="keyword">if</span>(value % <span class="number">2</span> ===<span class="number">0</span>) {</span><br><span class="line">	acc.push(value);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> acc;</span><br><span class="line">}, []);</span><br><span class="line"><span class="keyword">var</span> evenFiltered = data2.filter(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>) </span>{</span><br><span class="line">    <span class="keyword">return</span> (item % <span class="number">2</span> ===<span class="number">0</span>);</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+Last Updated 2017-03-10 五 10:26.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="external">hexo-renderer-org</a> with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.2.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 8.2.10)
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;div id=&quot;table-of-contents&quot;&gt;
+&lt;h2&gt;Table of Contents&lt;/h2&gt;
+&lt;div id=&quot;text-table-of-contents&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#sec-1&quot;&gt;1. Basic Example&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#sec-2&quot;&gt;2. map and filter is also a reduce&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+Reduce is a function to transform an array to another something&lt;br&gt;
+&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
+    
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Javascript Composition Over Inheritance</title>
+    <link href="http://cwza.github.io/my_blog/2016/10/25/javascript-composition-over-inheritance/"/>
+    <id>http://cwza.github.io/my_blog/2016/10/25/javascript-composition-over-inheritance/</id>
+    <published>2016-10-25T07:00:00.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[
+
+<p>
+Javascript中Composition示範code<br>
+當在javascript中需要多重繼承概念時可考慮使用Composition<br>
+</p>
+<a id="more"></a>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Factory functions</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Compare to prototype factory function is a more flexible way to create object using JS.<br>
+</p>
+
+<p>
+OO形式（using prototype）：<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span> </span>{</span><br><span class="line">  constructor() {</span><br><span class="line">    <span class="keyword">this</span>.sound = <span class="string">'woof'</span></span><br><span class="line">  }</span><br><span class="line">  talk() {</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.sound)</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">const</span> sniffles = <span class="keyword">new</span> Dog()</span><br><span class="line">sniffles.talk() <span class="comment">// Outputs: "woof"</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+以Factory改寫：<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> dog = () =&gt; {</span><br><span class="line">  <span class="keyword">const</span> sound = <span class="string">'woof'</span></span><br><span class="line">  <span class="keyword">return</span> {</span><br><span class="line">    talk: () =&gt; <span class="built_in">console</span>.log(sound)</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">const</span> sniffles = dog()</span><br><span class="line">sniffles.talk() <span class="comment">// Outputs: "woof"</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Composition</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+假設我們想建立以下物件關係<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">dog            = pooper + barker //dog can poop and bark&#10;cat            = pooper + meower //cat can poop and meow&#10;cleaningRobot  = driver + cleaner //cleaningRobot can be driven and clean&#10;murderRobot    = driver + killer&#10;murderRobotDog = driver + killer + barker</span><br></pre></td></tr></table></figure>
+</div>
+<p>
+以上需求可使用prototype多重繼承達成，但在javascript中我們也可用Composition來處理，以下範例使用到上述的Factory<br>
+</p>
+
+<div class="org-src-container">
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> barker = (state) =&gt; ({</span><br><span class="line">  bark: () =&gt; <span class="built_in">console</span>.log(<span class="string">'Woof, I am '</span> + state.name)</span><br><span class="line">})</span><br><span class="line"><span class="keyword">const</span> driver = (state) =&gt; ({</span><br><span class="line">  drive: () =&gt; state.position = state.position + state.speed</span><br><span class="line">})</span><br></pre></td></tr></table></figure>
+</div>
+<div class="org-src-container">
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> murderRobotDog = (name)  =&gt; {</span><br><span class="line">  <span class="keyword">let</span> state = {</span><br><span class="line">    name,</span><br><span class="line">    speed: <span class="number">100</span>,</span><br><span class="line">    position: <span class="number">0</span></span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Object</span>.assign(</span><br><span class="line">	{},</span><br><span class="line">	barker(state),</span><br><span class="line">	driver(state),</span><br><span class="line">	killer(state)</span><br><span class="line">    )</span><br><span class="line">}</span><br><span class="line"><span class="keyword">const</span> bruno =  murderRobotDog(<span class="string">'bruno'</span>)</span><br><span class="line">bruno.bark() <span class="comment">// "Woof, I am Bruno"</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+可以注意到的是，Composition比起多重繼承有更大的彈性，繼承需要在一開始就設計好整個繼承架構，而Composition則是可以在任何時候疊加上去即可<br>
+在JS中可以多多利用Composition<br>
+</p>
+</div>
+</div>
+
+Last Updated 2017-03-10 五 10:26.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="external">hexo-renderer-org</a> with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.2.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 8.2.10)
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;
+Javascript中Composition示範code&lt;br&gt;
+當在javascript中需要多重繼承概念時可考慮使用Composition&lt;br&gt;
+&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
+    
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>direnv筆記</title>
+    <link href="http://cwza.github.io/my_blog/2016/03/16/direnv%E7%AD%86%E8%A8%98/"/>
+    <id>http://cwza.github.io/my_blog/2016/03/16/direnv筆記/</id>
+    <published>2016-03-16T04:50:00.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Install</a></li>
+<li><a href="#sec-2">2. Usage</a></li>
+<li><a href="#sec-3">3. emacs plugin</a></li>
+</ul>
+</div>
+</div>
+<p>
+direnv可用來設定Project的environment variable<br>
+當cd進project目錄時自動設定環境變數，離開時自動unload<br>
+非常好用<br>
+</p>
+
+<a id="more"></a>
+
+<p>
+<a href="https://github.com/direnv/direnv" target="_blank" rel="external">https://github.com/direnv/direnv</a><br>
+</p>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Install</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+for mac:<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install direnv</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+add following to .bash_profile:<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">eval</span> <span class="string">"<span class="variable">$(direnv hook bash)</span>"</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Usage</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Add .envrc file at Project root directory<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> PYTHONDONTWRITEBYTECODE=<span class="number">1</span></span><br><span class="line"><span class="built_in">export</span> env=dev</span><br></pre></td></tr></table></figure>
+</div>
+<p>
+run <code>direnv allow .</code><br>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> emacs plugin</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<a href="https://github.com/christianromney/projectile-direnv" target="_blank" rel="external">https://github.com/christianromney/projectile-direnv</a><br>
+</p>
+</div>
+</div>
+
+Last Updated 2017-03-10 五 10:26.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="external">hexo-renderer-org</a> with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.2.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 8.2.10)
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;div id=&quot;table-of-contents&quot;&gt;
+&lt;h2&gt;Table of Contents&lt;/h2&gt;
+&lt;div id=&quot;text-table-of-contents&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#sec-1&quot;&gt;1. Install&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#sec-2&quot;&gt;2. Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#sec-3&quot;&gt;3. emacs plugin&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+direnv可用來設定Project的environment variable&lt;br&gt;
+當cd進project目錄時自動設定環境變數，離開時自動unload&lt;br&gt;
+非常好用&lt;br&gt;
+&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="linux" scheme="http://cwza.github.io/my_blog/categories/linux/"/>
+    
+    
+      <category term="linux" scheme="http://cwza.github.io/my_blog/tags/linux/"/>
+    
+      <category term="mac" scheme="http://cwza.github.io/my_blog/tags/mac/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Remove Python pyc File</title>
+    <link href="http://cwza.github.io/my_blog/2016/03/16/remove-python-pyc-file/"/>
+    <id>http://cwza.github.io/my_blog/2016/03/16/remove-python-pyc-file/</id>
+    <published>2016-03-16T04:08:00.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Bash Command</a></li>
+<li><a href="#sec-2">2. Git post-checkout hook</a></li>
+<li><a href="#sec-3">3. Python Environment Variable PYTHONDONTWRITEBYTECODE</a>
+<ul>
+<li><a href="#sec-3-1">3.1. set it at .bash_profile(global)</a></li>
+<li><a href="#sec-3-2">3.2. set it at activate and remove it at deactivate by VirtualEnv</a></li>
+<li><a href="#sec-3-3">3.3. use direnv to set</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+Python interpreter在執行的時候會在每個package底下產生__pycache__ folder and <b>.pyc, *.pyo file<br>
+一般而言這些file不會進入版本控管所以在.gitigore中通常會有</b>.py[co], <span class="underline"><span class="underline">pycache</span></span><br>
+但以上設定卻會在git branch switch時導致pyc, pyo殘留問題<br>
+以下介紹3種方法來處理<br>
+</p>
+
+<a id="more"></a>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Bash Command</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+手動執行以下指令<br>
+recursively removes all .pyc files and <span class="underline"><span class="underline">pycache</span></span> directories in the current directory<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">find . | grep -E <span class="string">"(__pycache__|\.pyc$)"</span> | xargs rm -rf</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Git post-checkout hook</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+git post-checkout hook能設定在git branch switch後自動執行的指令<br>
+只要將需要執行的程式放到repo/.git/hooks/post-checkout並設定權限為可執行即可<br>
+github討論:<br>
+<a href="http://stackoverflow.com/questions/1504724/automatically-remove-pyc-files-and-otherwise-empty-directories-when-i-check-ou" target="_blank" rel="external">http://stackoverflow.com/questions/1504724/automatically-remove-pyc-files-and-otherwise-empty-directories-when-i-check-ou</a><br>
+</p>
+
+<p>
+以下是google找來的auto remove pyc and empty folder after git checkout範例<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="shebang">#!/usr/bin/env bash</span><br><span class="line"></span></span><br><span class="line"><span class="comment"># Delete .pyc files and empty directories from root of project</span></span><br><span class="line"><span class="built_in">cd</span> ./$(git rev-parse --show-cdup)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Clean-up</span></span><br><span class="line">find . -name <span class="string">".DS_Store"</span> -delete</span><br><span class="line"></span><br><span class="line">NUM_PYC_FILES=$( find . -name <span class="string">"*.pyc"</span> | wc <span class="operator">-l</span> | tr <span class="operator">-d</span> <span class="string">' '</span> )</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$NUM_PYC_FILES</span> <span class="operator">-gt</span> <span class="number">0</span> ]; <span class="keyword">then</span></span><br><span class="line">    find . -name <span class="string">"*.pyc"</span> -delete</span><br><span class="line">    <span class="built_in">printf</span> <span class="string">"\e[00;31mDeleted <span class="variable">$NUM_PYC_FILES</span> .pyc files\e[00m\n"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">NUM_EMPTY_DIRS=$( find . -type d -empty | wc <span class="operator">-l</span> | tr <span class="operator">-d</span> <span class="string">' '</span> )</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$NUM_EMPTY_DIRS</span> <span class="operator">-gt</span> <span class="number">0</span> ]; <span class="keyword">then</span></span><br><span class="line">    find . -type d -empty -delete</span><br><span class="line">    <span class="built_in">printf</span> <span class="string">"\e[00;31mDeleted <span class="variable">$NUM_EMPTY_DIRS</span> empty directories\e[00m\n"</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Python Environment Variable PYTHONDONTWRITEBYTECODE</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+環境變數中設定PYTHONDONTWRITEBYTECODE=1，可完全禁止python interpreter產生類似檔案<br>
+在developer的環境下十分好用<br>
+以下3種設定環境變數的方法<br>
+</p>
+</div>
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> set it at .bash_profile(global)</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+在.bash_profile中加入export PYTHONDONTWRITEBYTECODE=1<br>
+最簡單的設定方式，但將導致系統內建的python也無法產生byte code<br>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> set it at activate and remove it at deactivate by VirtualEnv</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+在VirtualEnv中設定，如此即可做到只有該Virtual Env會被影響到<br>
+bin/activate:<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Tell Python not to write out .pyc files.</span></span><br><span class="line">_OLD_PYTHONDONTWRITEBYTECODE=<span class="string">"<span class="variable">$PYTHONDONTWRITEBYTECODE</span>"</span></span><br><span class="line">PYTHONDONTWRITEBYTECODE=<span class="number">1</span></span><br><span class="line"><span class="built_in">export</span> PYTHONDONTWRITEBYTECODE</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+bin/deactivate:<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">PYTHONDONTWRITEBYTECODE=<span class="string">"<span class="variable">$_OLD_PYTHONDONTWRITEBYTECODE</span>"</span></span><br><span class="line"><span class="built_in">export</span> PYTHONDONTWRITEBYTECODE</span><br><span class="line"><span class="built_in">unset</span> _OLD_PYTHONDONTWRITEBYTECODE</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> use direnv to set</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+若python環境是用pyenv + pyenv-virtualenv來管理的話，則需要用到其他tool才能設定環境變數<br>
+因為pyenv不會去執行virtualenv的activate與deactivate，且目前並沒有辦法可以在pyenv中設定環境變數<br>
+by pyenv author: <a href="https://github.com/yyuu/pyenv-virtualenv/issues/55" target="_blank" rel="external">https://github.com/yyuu/pyenv-virtualenv/issues/55</a><br>
+</p>
+
+<p>
+direnv使用方式可參考: direnv筆記<br>
+</p>
+</div>
+</div>
+</div>
+
+Last Updated 2017-03-10 五 10:26.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="external">hexo-renderer-org</a> with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.2.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 8.2.10)
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;div id=&quot;table-of-contents&quot;&gt;
+&lt;h2&gt;Table of Contents&lt;/h2&gt;
+&lt;div id=&quot;text-table-of-contents&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#sec-1&quot;&gt;1. Bash Command&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#sec-2&quot;&gt;2. Git post-checkout hook&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#sec-3&quot;&gt;3. Python Environment Variable PYTHONDONTWRITEBYTECODE&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#sec-3-1&quot;&gt;3.1. set it at .bash_profile(global)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#sec-3-2&quot;&gt;3.2. set it at activate and remove it at deactivate by VirtualEnv&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#sec-3-3&quot;&gt;3.3. use direnv to set&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+Python interpreter在執行的時候會在每個package底下產生__pycache__ folder and &lt;b&gt;.pyc, *.pyo file&lt;br&gt;
+一般而言這些file不會進入版本控管所以在.gitigore中通常會有&lt;/b&gt;.py[co], &lt;span class=&quot;underline&quot;&gt;&lt;span class=&quot;underline&quot;&gt;pycache&lt;/span&gt;&lt;/span&gt;&lt;br&gt;
+但以上設定卻會在git branch switch時導致pyc, pyo殘留問題&lt;br&gt;
+以下介紹3種方法來處理&lt;br&gt;
+&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="python" scheme="http://cwza.github.io/my_blog/categories/python/"/>
+    
+    
+      <category term="git" scheme="http://cwza.github.io/my_blog/tags/git/"/>
+    
+      <category term="python" scheme="http://cwza.github.io/my_blog/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ag The Silver Searcher 筆記</title>
+    <link href="http://cwza.github.io/my_blog/2016/03/14/ag-the-silver-searcher%E7%AD%86%E8%A8%98/"/>
+    <id>http://cwza.github.io/my_blog/2016/03/14/ag-the-silver-searcher筆記/</id>
+    <published>2016-03-14T08:35:00.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Install</a></li>
+<li><a href="#sec-2">2. Command</a></li>
+<li><a href="#sec-3">3. .agignore File</a></li>
+</ul>
+</div>
+</div>
+<p>
+Ag: A code searching tool similar to ack, with a focus on speed.<br>
+</p>
+
+<a id="more"></a>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Install</h2>
+<div class="outline-text-2" id="text-1">
+<div class="org-src-container">
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install ag</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Command</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ag DHH <span class="comment"># search "DHH"</span></span><br><span class="line">ag DHH guides/ <span class="comment"># search "DHH" at path guides/</span></span><br><span class="line">ag readme$ <span class="comment"># search string is always the regular expression pattern</span></span><br><span class="line">ag -Q .rb railties/CHANGELOG.md <span class="comment"># use -Q to search exactly the string not regular expression</span></span><br><span class="line">ag DHH <span class="operator">-l</span> <span class="comment"># only output file path that contains search string</span></span><br><span class="line">ag readme -i <span class="comment"># case insensitive</span></span><br><span class="line">ag readme -G ec$ <span class="comment"># scoping to file name that end with "ec"</span></span><br><span class="line">ag readme <span class="operator">-l</span> --ignore-dir=<span class="string">"*.rb"</span> <span class="comment"># ignore all directory that end with .rb</span></span><br><span class="line">ps <span class="operator">-e</span> | ag forego <span class="comment"># search from ps output</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> .agignore File</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+The .agignore file specifies ignore paths for Ag, and works independently of any VCS file.<br>
+</p>
+<div class="org-src-container">
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">railties/lib</span><br><span class="line">guides/code</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+Last Updated 2017-03-10 五 10:26.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="external">hexo-renderer-org</a> with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.2.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 8.2.10)
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;div id=&quot;table-of-contents&quot;&gt;
+&lt;h2&gt;Table of Contents&lt;/h2&gt;
+&lt;div id=&quot;text-table-of-contents&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#sec-1&quot;&gt;1. Install&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#sec-2&quot;&gt;2. Command&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#sec-3&quot;&gt;3. .agignore File&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+Ag: A code searching tool similar to ack, with a focus on speed.&lt;br&gt;
+&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="linux" scheme="http://cwza.github.io/my_blog/categories/linux/"/>
+    
+    
+      <category term="linux" scheme="http://cwza.github.io/my_blog/tags/linux/"/>
+    
+      <category term="search" scheme="http://cwza.github.io/my_blog/tags/search/"/>
+    
+      <category term="ag" scheme="http://cwza.github.io/my_blog/tags/ag/"/>
+    
+  </entry>
+  
+</feed>
