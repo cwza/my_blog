@@ -225,19 +225,19 @@
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
-                                <a class="link-unstyled" href="/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/">nginx connection limit bandwith limit rate limit</a>
+                                <a class="link-unstyled" href="/my_blog/2017/03/13/gvm筆記與vscode整合/">gvm筆記與vscode整合</a>
                         
                     </h1>
                     <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Mon Feb 13 2017 16:30:57 GMT+0800">
+    <time itemprop="datePublished" content="Mon Mar 13 2017 18:11:57 GMT+0800">
 	
-		    Feb 13, 2017
+		    Mar 13, 2017
     	
     </time>
     
         <span>in </span>
         
-    <a class="category-link" href="/my_blog/categories/web/">web</a>
+    <a class="category-link" href="/my_blog/categories/golang/">golang</a>
 
 
     
@@ -246,17 +246,19 @@
                 
                 
                     <div class="postShorten-content" itemprop="articleBody">
-                        <h2 id="connection-limit"><a href="#connection-limit" class="headerlink" title="connection limit"></a>connection limit</h2><p>每一ip最多50連線數<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_conn connlimit 50;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-<h2 id="bandwith-limit"><a href="#bandwith-limit" class="headerlink" title="bandwith limit"></a>bandwith limit</h2><p>當流量超過500k時限制速度為50k<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_rate 50k;</div><div class="line">      limit_rate_after 500k;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-<h2 id="rate-limit"><a href="#rate-limit" class="headerlink" title="rate limit"></a>rate limit</h2><p>每秒最多50 request<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=50r/s;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-
+                        <h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">xcode-select --install</div><div class="line">brew update</div><div class="line">brew install mercurial</div><div class="line">bash &lt; &lt;(curl <span class="_">-s</span> -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)</div><div class="line">gvm install go1.4 -B</div><div class="line">gvm use go1.4</div><div class="line"><span class="built_in">export</span> GOROOT_BOOTSTRAP=<span class="variable">$GOROOT</span></div><div class="line">gvm install 1.8</div></pre></td></tr></table></figure>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">gvm install [version]</div><div class="line">gvm uninstall [version]</div><div class="line">gvm listall</div><div class="line">gvm list</div><div class="line">gvm use [version]</div><div class="line">gvm implode    // uninstall gvm</div></pre></td></tr></table></figure>
+<h2 id="使用gvm來管理workspace"><a href="#使用gvm來管理workspace" class="headerlink" title="使用gvm來管理workspace"></a>使用gvm來管理workspace</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">go use [version]</div><div class="line">mkdir -p ~/golang/  </div><div class="line"><span class="built_in">cd</span> ~/golang/  </div><div class="line">gvm pkgset create --local  </div><div class="line">gvm pkgset use --local  </div><div class="line">mkdir src pkg bin</div><div class="line">go env</div></pre></td></tr></table></figure>
+<p>利用pkgset將GOPATH設為自定的workspace path</p>
+<h2 id="vscode-整合"><a href="#vscode-整合" class="headerlink" title="vscode 整合"></a>vscode 整合</h2><p>設定gopath與goroot為go env的值<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">go use [version]</div><div class="line">go env</div></pre></td></tr></table></figure></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"go.gopath"</span>:<span class="string">"/Users/meep007/cwz/develop/practice/golang:/Users/meep007/cwz/develop/practice/golang/.gvm_local/pkgsets/go1.8/local:/Users/meep007/.gvm/pkgsets/go1.8/global"</span>,</div><div class="line">  <span class="attr">"go.goroot"</span>: <span class="string">"/Users/meep007/.gvm/gos/go1.8"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
                         
                             
 
                         
                         
                             <p>
-                                <a href="/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/#post-footer" class="postShorten-excerpt_link link">
+                                <a href="/my_blog/2017/03/13/gvm筆記與vscode整合/#post-footer" class="postShorten-excerpt_link link">
                                     Comment and share
                                 </a>
                             </p>
@@ -300,6 +302,54 @@
                                 Continue reading
                             </a>
                             
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
+                                <a class="link-unstyled" href="/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/">nginx connection limit bandwith limit rate limit</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Mon Feb 13 2017 16:30:57 GMT+0800">
+	
+		    Feb 13, 2017
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/web/">web</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <h2 id="connection-limit"><a href="#connection-limit" class="headerlink" title="connection limit"></a>connection limit</h2><p>每一ip最多50連線數<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_conn connlimit 50;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="bandwith-limit"><a href="#bandwith-limit" class="headerlink" title="bandwith limit"></a>bandwith limit</h2><p>當流量超過500k時限制速度為50k<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_rate 50k;</div><div class="line">      limit_rate_after 500k;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="rate-limit"><a href="#rate-limit" class="headerlink" title="rate limit"></a>rate limit</h2><p>每秒最多50 request<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=50r/s;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/#post-footer" class="postShorten-excerpt_link link">
+                                    Comment and share
+                                </a>
+                            </p>
                         
                     </div>
                 
@@ -605,46 +655,6 @@
                         <p>ALWAYS USE TIMESTAMPTZ NOT USE TIMESTAMP IN POSTGRES.<br>SET timezone = ‘UTC’ IN pgsql/data/postgresql.conf.</p>
                         
                             <a href="/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/" class="postShorten-excerpt_link link">
-                                Continue reading
-                            </a>
-                            
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/">Nginx With Node And Https config</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Jan 19 2017 14:48:57 GMT+0800">
-	
-		    Jan 19, 2017
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/web/">web</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <p>Nginx With Node And Https config example<br>
-                        
-                            <a href="/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/" class="postShorten-excerpt_link link">
                                 Continue reading
                             </a>
                             

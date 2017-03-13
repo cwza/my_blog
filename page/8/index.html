@@ -226,6 +226,67 @@
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
+                                <a class="link-unstyled" href="/my_blog/2015/12/03/install-glassfish-at-linux-CentOS筆記/">install glassfish at linux CentOS筆記</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Thu Dec 03 2015 16:14:53 GMT+0800">
+	
+		    Dec 03, 2015
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/java/">java</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <a id="more"></a>
+<p>要先裝java<br>可參考<a href="/2015/12/03/insall-oracle-jdk-at-linux-CentOS筆記/">insall oracle jdk at linux(CentOS)</a></p>
+<ol>
+<li>下載glassfish</li>
+<li><p>解壓縮到/usr/glassfish</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">unzip glassfish4.zip</div></pre></td></tr></table></figure>
+</li>
+<li><p>開啟glassfish server</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/glassfish4/glassfish/bin</div><div class="line">./asadmin start-domain domain1</div></pre></td></tr></table></figure>
+</li>
+<li><ul>
+<li>管理介面 <a href="http://localhost:4848" target="_blank" rel="external">http://localhost:4848</a></li>
+<li><a href="http://localhost:8080" target="_blank" rel="external">http://localhost:8080</a></li>
+</ul>
+</li>
+</ol>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/my_blog/2015/12/03/install-glassfish-at-linux-CentOS筆記/#post-footer" class="postShorten-excerpt_link link">
+                                    Comment and share
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
                                 <a class="link-unstyled" href="/my_blog/2015/12/03/insall-oracle-jdk-at-linux-CentOS筆記/">insall oracle jdk at linux CentOS筆記</a>
                         
                     </h1>
@@ -608,53 +669,6 @@
             
         </article>
     
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2015/12/03/Java-Annotation筆記/">Java Annotation筆記</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Dec 03 2015 15:31:12 GMT+0800">
-	
-		    Dec 03, 2015
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/java/">java</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <a id="more"></a>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnotationTest</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> Logger log = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass());</div><div class="line">	</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">		Field f_b = Test1.class.getDeclaredField(<span class="string">"b"</span>);</div><div class="line">		Annotation annotation_b = f_b.getAnnotation(Ignore.class);</div><div class="line">		</div><div class="line">		Field f_a = Test1.class.getDeclaredField(<span class="string">"a"</span>);</div><div class="line">		Annotation annotation_a = f_a.getAnnotation(Ignore.class);</div><div class="line">		log.info(<span class="string">""</span> + annotation_a);</div><div class="line">		log.info(<span class="string">""</span> + annotation_b);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test1</span> </span>&#123;</div><div class="line">	String a;</div><div class="line">	<span class="meta">@Ignore</span></div><div class="line">	String b;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/my_blog/2015/12/03/Java-Annotation筆記/#post-footer" class="postShorten-excerpt_link link">
-                                    Comment and share
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -675,7 +689,7 @@
             </a>
         </li>
         
-        <li class="pagination-number">page 8 of 9</li>
+        <li class="pagination-number">page 8 of 10</li>
     </ul>
 </div>
 

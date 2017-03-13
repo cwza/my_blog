@@ -6,22 +6,22 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="cwza&#39;s blog">
-    <title>USE TIMESTAMPTZ IN POSTGRES NOT TIMESTAMP - cwza&#39;s blog</title>
+    <title>gvm筆記與vscode整合 - cwza&#39;s blog</title>
     <meta name="author" content="Cwza">
     
     
         <link rel="alternative" type="application/atom+xml" title="RSS" href="/my_blog/atom.xml">
     
-    <meta name="description" content="ALWAYS USE TIMESTAMPTZ NOT USE TIMESTAMP IN POSTGRES.SET timezone = ‘UTC’ IN pgsql/data/postgresql.conf.">
+    <meta name="description" content="安裝12345678xcode-select --installbrew updatebrew install mercurialbash &amp;lt; &amp;lt;(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)gvm install go1.4 -Bgvm use">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="USE TIMESTAMPTZ IN POSTGRES NOT TIMESTAMP">
-<meta property="og:url" content="http://cwza.github.io/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/index.html">
+<meta property="og:title" content="gvm筆記與vscode整合">
+<meta property="og:url" content="http://cwza.github.io/my_blog/2017/03/13/gvm筆記與vscode整合/index.html">
 <meta property="og:site_name" content="cwza's blog">
-<meta property="og:description" content="ALWAYS USE TIMESTAMPTZ NOT USE TIMESTAMP IN POSTGRES.SET timezone = ‘UTC’ IN pgsql/data/postgresql.conf.">
-<meta property="og:updated_time" content="2017-03-10T02:26:35.000Z">
+<meta property="og:description" content="安裝12345678xcode-select --installbrew updatebrew install mercurialbash &amp;lt; &amp;lt;(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)gvm install go1.4 -Bgvm use">
+<meta property="og:updated_time" content="2017-03-13T10:22:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="USE TIMESTAMPTZ IN POSTGRES NOT TIMESTAMP">
-<meta name="twitter:description" content="ALWAYS USE TIMESTAMPTZ NOT USE TIMESTAMP IN POSTGRES.SET timezone = ‘UTC’ IN pgsql/data/postgresql.conf.">
+<meta name="twitter:title" content="gvm筆記與vscode整合">
+<meta name="twitter:description" content="安裝12345678xcode-select --installbrew updatebrew install mercurialbash &amp;lt; &amp;lt;(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)gvm install go1.4 -Bgvm use">
     
     
     
@@ -225,19 +225,19 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title" itemprop="headline">
-            USE TIMESTAMPTZ IN POSTGRES NOT TIMESTAMP
+            gvm筆記與vscode整合
         </h1>
     
     <div class="post-meta">
-    <time itemprop="datePublished" content="Thu Jan 19 2017 18:53:57 GMT+0800">
+    <time itemprop="datePublished" content="Mon Mar 13 2017 18:11:57 GMT+0800">
 	
-		    Jan 19, 2017
+		    Mar 13, 2017
     	
     </time>
     
         <span>in </span>
         
-    <a class="category-link" href="/my_blog/categories/database/">database</a>
+    <a class="category-link" href="/my_blog/categories/golang/">golang</a>
 
 
     
@@ -246,12 +246,12 @@
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <p>ALWAYS USE TIMESTAMPTZ NOT USE TIMESTAMP IN POSTGRES.<br>SET timezone = ‘UTC’ IN pgsql/data/postgresql.conf.</p>
-<a id="more"></a>
-<p>timestamptz is accepted as an abbreviation for timestamp with time zone.</p>
-<p>USE THIS:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="keyword">users</span></div><div class="line">(</div><div class="line">    <span class="keyword">id</span> <span class="built_in">serial</span> PRIMARY <span class="keyword">KEY</span>,</div><div class="line">    mail <span class="built_in">text</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">UNIQUE</span>,</div><div class="line">    picture <span class="built_in">text</span>,</div><div class="line">    create_time timestamptz <span class="keyword">default</span> <span class="keyword">current_timestamp</span>,</div><div class="line">    update_time timestamptz <span class="keyword">default</span> <span class="keyword">current_timestamp</span></div><div class="line">);</div></pre></td></tr></table></figure></p>
-<p>NOT THIS:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="keyword">users</span></div><div class="line">(</div><div class="line">    <span class="keyword">id</span> <span class="built_in">serial</span> PRIMARY <span class="keyword">KEY</span>,</div><div class="line">    mail <span class="built_in">text</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">UNIQUE</span>,</div><div class="line">    picture <span class="built_in">text</span>,</div><div class="line">    create_time <span class="keyword">timestamp</span> <span class="keyword">default</span> <span class="keyword">current_timestamp</span>,</div><div class="line">    update_time <span class="keyword">timestamp</span> <span class="keyword">default</span> <span class="keyword">current_timestamp</span></div><div class="line">);</div></pre></td></tr></table></figure></p>
-
+            <h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">xcode-select --install</div><div class="line">brew update</div><div class="line">brew install mercurial</div><div class="line">bash &lt; &lt;(curl <span class="_">-s</span> -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)</div><div class="line">gvm install go1.4 -B</div><div class="line">gvm use go1.4</div><div class="line"><span class="built_in">export</span> GOROOT_BOOTSTRAP=<span class="variable">$GOROOT</span></div><div class="line">gvm install 1.8</div></pre></td></tr></table></figure>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">gvm install [version]</div><div class="line">gvm uninstall [version]</div><div class="line">gvm listall</div><div class="line">gvm list</div><div class="line">gvm use [version]</div><div class="line">gvm implode    // uninstall gvm</div></pre></td></tr></table></figure>
+<h2 id="使用gvm來管理workspace"><a href="#使用gvm來管理workspace" class="headerlink" title="使用gvm來管理workspace"></a>使用gvm來管理workspace</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">go use [version]</div><div class="line">mkdir -p ~/golang/  </div><div class="line"><span class="built_in">cd</span> ~/golang/  </div><div class="line">gvm pkgset create --local  </div><div class="line">gvm pkgset use --local  </div><div class="line">mkdir src pkg bin</div><div class="line">go env</div></pre></td></tr></table></figure>
+<p>利用pkgset將GOPATH設為自定的workspace path</p>
+<h2 id="vscode-整合"><a href="#vscode-整合" class="headerlink" title="vscode 整合"></a>vscode 整合</h2><p>設定gopath與goroot為go env的值<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">go use [version]</div><div class="line">go env</div></pre></td></tr></table></figure></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"go.gopath"</span>:<span class="string">"/Users/meep007/cwz/develop/practice/golang:/Users/meep007/cwz/develop/practice/golang/.gvm_local/pkgsets/go1.8/local:/Users/meep007/.gvm/pkgsets/go1.8/global"</span>,</div><div class="line">  <span class="attr">"go.goroot"</span>: <span class="string">"/Users/meep007/.gvm/gos/go1.8"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
             
                 
 
@@ -263,7 +263,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/database/">database</a> <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/postgres/">postgres</a>
+    <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/golang/">golang</a>
 
             </div>
         
@@ -272,7 +272,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/02/06/HTTPS加密解密筆記/"  data-tooltip="HTTPS加密解密筆記">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -280,7 +280,7 @@
             </li>
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/01/19/Deploy-react-app-to-github-page/" data-tooltip="Deploy react app to github page">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/02/13/nginx-and-ufw-add-rate-limit/" data-tooltip="nginx and ufw add rate limit">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right"></i>
@@ -295,17 +295,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/13/gvm筆記與vscode整合/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/13/gvm筆記與vscode整合/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/13/gvm筆記與vscode整合/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -351,7 +351,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/02/06/HTTPS加密解密筆記/"  data-tooltip="HTTPS加密解密筆記">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -359,7 +359,7 @@
             </li>
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/01/19/Deploy-react-app-to-github-page/" data-tooltip="Deploy react app to github page">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/02/13/nginx-and-ufw-add-rate-limit/" data-tooltip="nginx and ufw add rate limit">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right"></i>
@@ -374,17 +374,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/13/gvm筆記與vscode整合/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/13/gvm筆記與vscode整合/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/13/gvm筆記與vscode整合/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -410,17 +410,17 @@
                 <div id="share-options-bar" class="share-options-bar" data-behavior="3">
     <ul class="share-options">
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/13/gvm筆記與vscode整合/">
                 <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/13/gvm筆記與vscode整合/">
                 <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/13/gvm筆記與vscode整合/">
                 <i class="fa fa-twitter"></i><span>Share on Twitter</span>
             </a>
         </li>

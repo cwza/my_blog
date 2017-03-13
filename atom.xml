@@ -5,7 +5,7 @@
   <link href="/my_blog/atom.xml" rel="self"/>
   
   <link href="http://cwza.github.io/my_blog/"/>
-  <updated>2017-03-10T02:26:35.000Z</updated>
+  <updated>2017-03-13T10:22:00.000Z</updated>
   <id>http://cwza.github.io/my_blog/</id>
   
   <author>
@@ -16,27 +16,29 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>nginx connection limit bandwith limit rate limit</title>
-    <link href="http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/"/>
-    <id>http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/</id>
-    <published>2017-02-13T08:30:57.000Z</published>
-    <updated>2017-03-10T02:26:35.000Z</updated>
+    <title>gvm筆記與vscode整合</title>
+    <link href="http://cwza.github.io/my_blog/2017/03/13/gvm%E7%AD%86%E8%A8%98%E8%88%87vscode%E6%95%B4%E5%90%88/"/>
+    <id>http://cwza.github.io/my_blog/2017/03/13/gvm筆記與vscode整合/</id>
+    <published>2017-03-13T10:11:57.000Z</published>
+    <updated>2017-03-13T10:22:00.000Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="connection-limit"><a href="#connection-limit" class="headerlink" title="connection limit"></a>connection limit</h2><p>每一ip最多50連線數<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_conn connlimit 50;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-<h2 id="bandwith-limit"><a href="#bandwith-limit" class="headerlink" title="bandwith limit"></a>bandwith limit</h2><p>當流量超過500k時限制速度為50k<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_rate 50k;</div><div class="line">      limit_rate_after 500k;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-<h2 id="rate-limit"><a href="#rate-limit" class="headerlink" title="rate limit"></a>rate limit</h2><p>每秒最多50 request<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=50r/s;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-]]></content>
+    <content type="html"><![CDATA[<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">xcode-select --install</div><div class="line">brew update</div><div class="line">brew install mercurial</div><div class="line">bash &lt; &lt;(curl <span class="_">-s</span> -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)</div><div class="line">gvm install go1.4 -B</div><div class="line">gvm use go1.4</div><div class="line"><span class="built_in">export</span> GOROOT_BOOTSTRAP=<span class="variable">$GOROOT</span></div><div class="line">gvm install 1.8</div></pre></td></tr></table></figure>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">gvm install [version]</div><div class="line">gvm uninstall [version]</div><div class="line">gvm listall</div><div class="line">gvm list</div><div class="line">gvm use [version]</div><div class="line">gvm implode    // uninstall gvm</div></pre></td></tr></table></figure>
+<h2 id="使用gvm來管理workspace"><a href="#使用gvm來管理workspace" class="headerlink" title="使用gvm來管理workspace"></a>使用gvm來管理workspace</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">go use [version]</div><div class="line">mkdir -p ~/golang/  </div><div class="line"><span class="built_in">cd</span> ~/golang/  </div><div class="line">gvm pkgset create --local  </div><div class="line">gvm pkgset use --local  </div><div class="line">mkdir src pkg bin</div><div class="line">go env</div></pre></td></tr></table></figure>
+<p>利用pkgset將GOPATH設為自定的workspace path</p>
+<h2 id="vscode-整合"><a href="#vscode-整合" class="headerlink" title="vscode 整合"></a>vscode 整合</h2><p>設定gopath與goroot為go env的值<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">go use [version]</div><div class="line">go env</div></pre></td></tr></table></figure></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"go.gopath"</span>:<span class="string">"/Users/meep007/cwz/develop/practice/golang:/Users/meep007/cwz/develop/practice/golang/.gvm_local/pkgsets/go1.8/local:/Users/meep007/.gvm/pkgsets/go1.8/global"</span>,</div><div class="line">  <span class="attr">"go.goroot"</span>: <span class="string">"/Users/meep007/.gvm/gos/go1.8"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;connection-limit&quot;&gt;&lt;a href=&quot;#connection-limit&quot; class=&quot;headerlink&quot; title=&quot;connection limit&quot;&gt;&lt;/a&gt;connection limit&lt;/h2&gt;&lt;p&gt;每一ip最多50連線數&lt;br
+      &lt;h2 id=&quot;安裝&quot;&gt;&lt;a href=&quot;#安裝&quot; class=&quot;headerlink&quot; title=&quot;安裝&quot;&gt;&lt;/a&gt;安裝&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div cl
     
     </summary>
     
-      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
+      <category term="golang" scheme="http://cwza.github.io/my_blog/categories/golang/"/>
     
     
-      <category term="nginx" scheme="http://cwza.github.io/my_blog/tags/nginx/"/>
+      <category term="golang" scheme="http://cwza.github.io/my_blog/tags/golang/"/>
     
   </entry>
   
@@ -68,6 +70,31 @@
       <category term="firewall" scheme="http://cwza.github.io/my_blog/tags/firewall/"/>
     
       <category term="ubuntu" scheme="http://cwza.github.io/my_blog/tags/ubuntu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nginx connection limit bandwith limit rate limit</title>
+    <link href="http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/"/>
+    <id>http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/</id>
+    <published>2017-02-13T08:30:57.000Z</published>
+    <updated>2017-03-13T10:22:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="connection-limit"><a href="#connection-limit" class="headerlink" title="connection limit"></a>connection limit</h2><p>每一ip最多50連線數<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_conn connlimit 50;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="bandwith-limit"><a href="#bandwith-limit" class="headerlink" title="bandwith limit"></a>bandwith limit</h2><p>當流量超過500k時限制速度為50k<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_rate 50k;</div><div class="line">      limit_rate_after 500k;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="rate-limit"><a href="#rate-limit" class="headerlink" title="rate limit"></a>rate limit</h2><p>每秒最多50 request<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=50r/s;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;connection-limit&quot;&gt;&lt;a href=&quot;#connection-limit&quot; class=&quot;headerlink&quot; title=&quot;connection limit&quot;&gt;&lt;/a&gt;connection limit&lt;/h2&gt;&lt;p&gt;每一ip最多50連線數&lt;br
+    
+    </summary>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
+    
+    
+      <category term="nginx" scheme="http://cwza.github.io/my_blog/tags/nginx/"/>
     
   </entry>
   
@@ -320,6 +347,34 @@
   </entry>
   
   <entry>
+    <title>Deploy react app to github page</title>
+    <link href="http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/"/>
+    <id>http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/</id>
+    <published>2017-01-19T06:48:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Deploy-react-app-by-create-react-app"><a href="#Deploy-react-app-by-create-react-app" class="headerlink" title="Deploy react app by create-react-app"></a>Deploy react app by create-react-app</h2><p>Follow this guide to deploy react app to github pages.<br><a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#github-pages" target="_blank" rel="external">React Create App Readme</a></p>
+<h2 id="Do-something-to-let-github-pages-OK-with-SPA"><a href="#Do-something-to-let-github-pages-OK-with-SPA" class="headerlink" title="Do something to let github pages OK with SPA"></a>Do something to let github pages OK with SPA</h2><p>Github pages does not support SPA routings now, so you have to do followings:<br>Follow this guide to make SPA OK with github pages<br><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">spa github pages</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Deploy-react-app-by-create-react-app&quot;&gt;&lt;a href=&quot;#Deploy-react-app-by-create-react-app&quot; class=&quot;headerlink&quot; title=&quot;Deploy react app by 
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
+    
+    
+      <category term="github" scheme="http://cwza.github.io/my_blog/tags/github/"/>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
+    
+      <category term="react" scheme="http://cwza.github.io/my_blog/tags/react/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Nginx With Node And Https config</title>
     <link href="http://cwza.github.io/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/"/>
     <id>http://cwza.github.io/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/</id>
@@ -376,34 +431,6 @@
     
       <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
     
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
-    
-      <category term="react" scheme="http://cwza.github.io/my_blog/tags/react/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Deploy react app to github page</title>
-    <link href="http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/"/>
-    <id>http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/</id>
-    <published>2017-01-19T06:48:57.000Z</published>
-    <updated>2017-03-10T02:26:35.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Deploy-react-app-by-create-react-app"><a href="#Deploy-react-app-by-create-react-app" class="headerlink" title="Deploy react app by create-react-app"></a>Deploy react app by create-react-app</h2><p>Follow this guide to deploy react app to github pages.<br><a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#github-pages" target="_blank" rel="external">React Create App Readme</a></p>
-<h2 id="Do-something-to-let-github-pages-OK-with-SPA"><a href="#Do-something-to-let-github-pages-OK-with-SPA" class="headerlink" title="Do something to let github pages OK with SPA"></a>Do something to let github pages OK with SPA</h2><p>Github pages does not support SPA routings now, so you have to do followings:<br>Follow this guide to make SPA OK with github pages<br><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">spa github pages</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Deploy-react-app-by-create-react-app&quot;&gt;&lt;a href=&quot;#Deploy-react-app-by-create-react-app&quot; class=&quot;headerlink&quot; title=&quot;Deploy react app by 
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
-    
-    
-      <category term="github" scheme="http://cwza.github.io/my_blog/tags/github/"/>
     
       <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
     
@@ -635,7 +662,7 @@ OO形式（using prototype）：<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> dog = () =&gt; {</span><br><span class="line">  <span class="keyword">const</span> sound = <span class="string">'woof'</span></span><br><span class="line">  <span class="keyword">return</span> {</span><br><span class="line">    talk: () =&gt; <span class="built_in">console</span>.log(sound)</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">const</span> sniffles = dog()</span><br><span class="line">sniffles.talk() <span class="comment">// Outputs: "woof"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> dog = () =&amp;gt; {</span><br><span class="line">  <span class="keyword">const</span> sound = <span class="string">'woof'</span></span><br><span class="line">  <span class="keyword">return</span> {</span><br><span class="line">    talk: () =&amp;gt; <span class="built_in">console</span>.log(sound)</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">const</span> sniffles = dog()</span><br><span class="line">sniffles.talk() <span class="comment">// Outputs: "woof"</span></span><br></pre></td></tr></table></figure>
 </div>
 </div>
 </div>
@@ -657,11 +684,11 @@ OO形式（using prototype）：<br>
 
 <div class="org-src-container">
 
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> barker = (state) =&gt; ({</span><br><span class="line">  bark: () =&gt; <span class="built_in">console</span>.log(<span class="string">'Woof, I am '</span> + state.name)</span><br><span class="line">})</span><br><span class="line"><span class="keyword">const</span> driver = (state) =&gt; ({</span><br><span class="line">  drive: () =&gt; state.position = state.position + state.speed</span><br><span class="line">})</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> barker = (state) =&amp;gt; ({</span><br><span class="line">  bark: () =&amp;gt; <span class="built_in">console</span>.log(<span class="string">'Woof, I am '</span> + state.name)</span><br><span class="line">})</span><br><span class="line"><span class="keyword">const</span> driver = (state) =&amp;gt; ({</span><br><span class="line">  drive: () =&amp;gt; state.position = state.position + state.speed</span><br><span class="line">})</span><br></pre></td></tr></table></figure>
 </div>
 <div class="org-src-container">
 
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> murderRobotDog = (name)  =&gt; {</span><br><span class="line">  <span class="keyword">let</span> state = {</span><br><span class="line">    name,</span><br><span class="line">    speed: <span class="number">100</span>,</span><br><span class="line">    position: <span class="number">0</span></span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Object</span>.assign(</span><br><span class="line">	{},</span><br><span class="line">	barker(state),</span><br><span class="line">	driver(state),</span><br><span class="line">	killer(state)</span><br><span class="line">    )</span><br><span class="line">}</span><br><span class="line"><span class="keyword">const</span> bruno =  murderRobotDog(<span class="string">'bruno'</span>)</span><br><span class="line">bruno.bark() <span class="comment">// "Woof, I am Bruno"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> murderRobotDog = (name)  =&amp;gt; {</span><br><span class="line">  <span class="keyword">let</span> state = {</span><br><span class="line">    name,</span><br><span class="line">    speed: <span class="number">100</span>,</span><br><span class="line">    position: <span class="number">0</span></span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Object</span>.assign(</span><br><span class="line">	{},</span><br><span class="line">	barker(state),</span><br><span class="line">	driver(state),</span><br><span class="line">	killer(state)</span><br><span class="line">    )</span><br><span class="line">}</span><br><span class="line"><span class="keyword">const</span> bruno =  murderRobotDog(<span class="string">'bruno'</span>)</span><br><span class="line">bruno.bark() <span class="comment">// "Woof, I am Bruno"</span></span><br></pre></td></tr></table></figure>
 </div>
 
 <p>
@@ -950,97 +977,9 @@ Python interpreter在執行的時候會在每個package底下產生__pycache__ f
       <category term="python" scheme="http://cwza.github.io/my_blog/categories/python/"/>
     
     
-      <category term="git" scheme="http://cwza.github.io/my_blog/tags/git/"/>
-    
       <category term="python" scheme="http://cwza.github.io/my_blog/tags/python/"/>
     
-  </entry>
-  
-  <entry>
-    <title>Ag The Silver Searcher 筆記</title>
-    <link href="http://cwza.github.io/my_blog/2016/03/14/ag-the-silver-searcher%E7%AD%86%E8%A8%98/"/>
-    <id>http://cwza.github.io/my_blog/2016/03/14/ag-the-silver-searcher筆記/</id>
-    <published>2016-03-14T08:35:00.000Z</published>
-    <updated>2017-03-10T02:26:35.000Z</updated>
-    
-    <content type="html"><![CDATA[
-
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1. Install</a></li>
-<li><a href="#sec-2">2. Command</a></li>
-<li><a href="#sec-3">3. .agignore File</a></li>
-</ul>
-</div>
-</div>
-<p>
-Ag: A code searching tool similar to ack, with a focus on speed.<br>
-</p>
-
-<a id="more"></a>
-
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Install</h2>
-<div class="outline-text-2" id="text-1">
-<div class="org-src-container">
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install ag</span><br></pre></td></tr></table></figure>
-</div>
-</div>
-</div>
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Command</h2>
-<div class="outline-text-2" id="text-2">
-<div class="org-src-container">
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ag DHH <span class="comment"># search "DHH"</span></span><br><span class="line">ag DHH guides/ <span class="comment"># search "DHH" at path guides/</span></span><br><span class="line">ag readme$ <span class="comment"># search string is always the regular expression pattern</span></span><br><span class="line">ag -Q .rb railties/CHANGELOG.md <span class="comment"># use -Q to search exactly the string not regular expression</span></span><br><span class="line">ag DHH <span class="operator">-l</span> <span class="comment"># only output file path that contains search string</span></span><br><span class="line">ag readme -i <span class="comment"># case insensitive</span></span><br><span class="line">ag readme -G ec$ <span class="comment"># scoping to file name that end with "ec"</span></span><br><span class="line">ag readme <span class="operator">-l</span> --ignore-dir=<span class="string">"*.rb"</span> <span class="comment"># ignore all directory that end with .rb</span></span><br><span class="line">ps <span class="operator">-e</span> | ag forego <span class="comment"># search from ps output</span></span><br></pre></td></tr></table></figure>
-</div>
-</div>
-</div>
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> .agignore File</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-The .agignore file specifies ignore paths for Ag, and works independently of any VCS file.<br>
-</p>
-<div class="org-src-container">
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">railties/lib</span><br><span class="line">guides/code</span><br></pre></td></tr></table></figure>
-</div>
-</div>
-</div>
-
-Last Updated 2017-03-10 五 10:26.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="external">hexo-renderer-org</a> with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.2.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 8.2.10)
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;div id=&quot;table-of-contents&quot;&gt;
-&lt;h2&gt;Table of Contents&lt;/h2&gt;
-&lt;div id=&quot;text-table-of-contents&quot;&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#sec-1&quot;&gt;1. Install&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#sec-2&quot;&gt;2. Command&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#sec-3&quot;&gt;3. .agignore File&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;
-Ag: A code searching tool similar to ack, with a focus on speed.&lt;br&gt;
-&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="linux" scheme="http://cwza.github.io/my_blog/categories/linux/"/>
-    
-    
-      <category term="linux" scheme="http://cwza.github.io/my_blog/tags/linux/"/>
-    
-      <category term="search" scheme="http://cwza.github.io/my_blog/tags/search/"/>
-    
-      <category term="ag" scheme="http://cwza.github.io/my_blog/tags/ag/"/>
+      <category term="git" scheme="http://cwza.github.io/my_blog/tags/git/"/>
     
   </entry>
   

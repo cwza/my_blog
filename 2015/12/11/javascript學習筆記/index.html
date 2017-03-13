@@ -331,7 +331,7 @@
 <li><a href="#sec-7-4-4">7.4.4. Freeze</a></li>
 </ul>
 </li>
-<li><a href="#sec-7-5">7.5. Getters & Setters</a></li>
+<li><a href="#sec-7-5">7.5. Getters &amp; Setters</a></li>
 <li><a href="#sec-7-6">7.6. Existence</a></li>
 <li><a href="#sec-7-7">7.7. Enumeration</a></li>
 <li><a href="#sec-7-8">7.8. Iteration</a></li>
@@ -346,7 +346,7 @@
 </li>
 <li><a href="#sec-9">9. Prototype</a>
 <ul>
-<li><a href="#sec-9-1">9.1. Setting & Shadowing Properties</a></li>
+<li><a href="#sec-9-1">9.1. Setting &amp; Shadowing Properties</a></li>
 <li><a href="#sec-9-2">9.2. New(Constructor Call)</a></li>
 <li><a href="#sec-9-3">9.3. constructor</a></li>
 <li><a href="#sec-9-4">9.4. (Prototypal) Inheritance</a></li>
@@ -399,7 +399,7 @@
 實際上是javascript interpreter將var a = 2分成兩個步驟<br>
 declaration(var a)，assignment(a = 2)<br>
 所有declaration在compile time完成，assignment在runtime執行<br>
-須注意的是ES6新增的block scope variable =let & const=，沒有hoisting機制<br>
+須注意的是ES6新增的block scope variable =let &amp; const=，沒有hoisting機制<br>
 當然eval("var a = 2;");這種用法也會破壞hoisting，不過為了效能本來就該避免eval這東西了<br>
 </p>
 <div class="org-src-container">
@@ -417,7 +417,7 @@ declaration(var a)，assignment(a = 2)<br>
 </p>
 
 <p>
-foo()執行完後，local variable a沒被回收的原因是因為baz -> bar還擁有reference to foo，所以a不會被GC回收<br>
+foo()執行完後，local variable a沒被回收的原因是因為baz -&gt; bar還擁有reference to foo，所以a不會被GC回收<br>
 </p>
 <div class="org-src-container">
 
@@ -458,7 +458,7 @@ module dependency loaders/managers<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> MyModules = (<span class="function"><span class="keyword">function</span> <span class="title">Manager</span>(<span class="params"></span>) </span>{</span><br><span class="line">    <span class="keyword">var</span> modules = {};</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">define</span>(<span class="params">name, deps, impl</span>) </span>{</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;deps.length; i++) {</span><br><span class="line">	    deps[i] = modules[deps[i]];</span><br><span class="line">	}</span><br><span class="line">	modules[name] = impl.apply( impl, deps );</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params">name</span>) </span>{</span><br><span class="line">	<span class="keyword">return</span> modules[name];</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> {</span><br><span class="line">	define: define,</span><br><span class="line">	get: get</span><br><span class="line">    };</span><br><span class="line">})();</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> MyModules = (<span class="function"><span class="keyword">function</span> <span class="title">Manager</span>(<span class="params"></span>) </span>{</span><br><span class="line">    <span class="keyword">var</span> modules = {};</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">define</span>(<span class="params">name, deps, impl</span>) </span>{</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&amp;lt;deps.length; i++) {</span><br><span class="line">	    deps[i] = modules[deps[i]];</span><br><span class="line">	}</span><br><span class="line">	modules[name] = impl.apply( impl, deps );</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params">name</span>) </span>{</span><br><span class="line">	<span class="keyword">return</span> modules[name];</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> {</span><br><span class="line">	define: define,</span><br><span class="line">	get: get</span><br><span class="line">    };</span><br><span class="line">})();</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 use above<br>
@@ -621,7 +621,7 @@ ES6新增的arrow function，有著跟一般function不一樣的this行為<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>{</span><br><span class="line">    setTimeout(() =&gt; {</span><br><span class="line">	<span class="comment">// `this` here is lexically adopted from `foo()`</span></span><br><span class="line">	<span class="built_in">console</span>.log( <span class="keyword">this</span>.a );</span><br><span class="line">    },<span class="number">100</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = {</span><br><span class="line">    a: <span class="number">2</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">foo.call( obj ); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>{</span><br><span class="line">    setTimeout(() =&amp;gt; {</span><br><span class="line">	<span class="comment">// `this` here is lexically adopted from `foo()`</span></span><br><span class="line">	<span class="built_in">console</span>.log( <span class="keyword">this</span>.a );</span><br><span class="line">    },<span class="number">100</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = {</span><br><span class="line">    a: <span class="number">2</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">foo.call( obj ); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
 </div>
 <p>
 然而在不用arrow function時就已經有好解法了：<br>
@@ -771,7 +771,7 @@ Object.freeze(..) creates a frozen object, which means it takes an existing obje
 </div>
 </div>
 <div id="outline-container-sec-7-5" class="outline-3">
-<h3 id="sec-7-5"><span class="section-number-3">7.5</span> Getters & Setters</h3>
+<h3 id="sec-7-5"><span class="section-number-3">7.5</span> Getters &amp; Setters</h3>
 <div class="outline-text-3" id="text-7-5">
 <p>
 You will almost certainly want to always declare both getter and setter (having only one or the other often leads to unexpected/surprising behavior)<br>
@@ -835,7 +835,7 @@ As long as your iterator returns the expected { value: .. } return values from n
 </p>
 <div class="org-src-container">
 
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = {</span><br><span class="line">    a: <span class="number">2</span>,</span><br><span class="line">    b: <span class="number">3</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty( myObject, <span class="built_in">Symbol</span>.iterator, {</span><br><span class="line">    enumerable: <span class="literal">false</span>,</span><br><span class="line">    writable: <span class="literal">false</span>,</span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line">    value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">	<span class="keyword">var</span> o = <span class="keyword">this</span>;</span><br><span class="line">	<span class="keyword">var</span> idx = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">var</span> ks = <span class="built_in">Object</span>.keys( o );</span><br><span class="line">	<span class="keyword">return</span> {</span><br><span class="line">	    next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">		<span class="keyword">return</span> {</span><br><span class="line">		    value: o[ks[idx++]],</span><br><span class="line">		    done: (idx &gt; ks.length)</span><br><span class="line">		};</span><br><span class="line">	    }</span><br><span class="line">	};</span><br><span class="line">    }</span><br><span class="line">} );</span><br><span class="line"></span><br><span class="line"><span class="comment">// iterate `myObject` manually</span></span><br><span class="line"><span class="keyword">var</span> it = myObject[<span class="built_in">Symbol</span>.iterator]();</span><br><span class="line">it.next(); <span class="comment">// { value:2, done:false }</span></span><br><span class="line">it.next(); <span class="comment">// { value:3, done:false }</span></span><br><span class="line">it.next(); <span class="comment">// { value:undefined, done:true }</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// iterate `myObject` with `for..of`</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> v <span class="keyword">of</span> myObject) {</span><br><span class="line">    <span class="built_in">console</span>.log( v );</span><br><span class="line">}</span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = {</span><br><span class="line">    a: <span class="number">2</span>,</span><br><span class="line">    b: <span class="number">3</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty( myObject, <span class="built_in">Symbol</span>.iterator, {</span><br><span class="line">    enumerable: <span class="literal">false</span>,</span><br><span class="line">    writable: <span class="literal">false</span>,</span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line">    value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">	<span class="keyword">var</span> o = <span class="keyword">this</span>;</span><br><span class="line">	<span class="keyword">var</span> idx = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">var</span> ks = <span class="built_in">Object</span>.keys( o );</span><br><span class="line">	<span class="keyword">return</span> {</span><br><span class="line">	    next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">		<span class="keyword">return</span> {</span><br><span class="line">		    value: o[ks[idx++]],</span><br><span class="line">		    done: (idx &amp;gt; ks.length)</span><br><span class="line">		};</span><br><span class="line">	    }</span><br><span class="line">	};</span><br><span class="line">    }</span><br><span class="line">} );</span><br><span class="line"></span><br><span class="line"><span class="comment">// iterate `myObject` manually</span></span><br><span class="line"><span class="keyword">var</span> it = myObject[<span class="built_in">Symbol</span>.iterator]();</span><br><span class="line">it.next(); <span class="comment">// { value:2, done:false }</span></span><br><span class="line">it.next(); <span class="comment">// { value:3, done:false }</span></span><br><span class="line">it.next(); <span class="comment">// { value:undefined, done:true }</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// iterate `myObject` with `for..of`</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> v <span class="keyword">of</span> myObject) {</span><br><span class="line">    <span class="built_in">console</span>.log( v );</span><br><span class="line">}</span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
 </div>
 <p>
 以下是一個利用iterator的亂數產生器<br>
@@ -940,7 +940,7 @@ Objects in JavaScript have an internal property, denoted in the specification as
 </div>
 </div>
 <div id="outline-container-sec-9-1" class="outline-3">
-<h3 id="sec-9-1"><span class="section-number-3">9.1</span> Setting & Shadowing Properties</h3>
+<h3 id="sec-9-1"><span class="section-number-3">9.1</span> Setting &amp; Shadowing Properties</h3>
 <div class="outline-text-3" id="text-9-1">
 <ol class="org-ol">
 <li>If a normal data accessor property named foo is found anywhere higher on the Prototype chain, and it's not marked as read-only (writable:false) then a new property called foo is added directly to myObject, resulting in a shadowed property.<br>
@@ -1044,7 +1044,7 @@ ES6後可以用Object.setPrototypeOf()代替Object.create()<br>
 <p>
 以下都先參考原文吧，我有空在整理<br>
 主要是說在javascript世界中Behavior Delegation的做法比OO還要直覺簡單，有實際例子、code舉例<br>
-<a href="https://github.com/getify/You-Dont-Know-JS/blob/master/this%2520&%2520object%2520prototypes/ch6.md" target="_blank" rel="external">You-Dont-Know-JS/this & object prototypes/ch6.md</a><br>
+<a href="https://github.com/getify/You-Dont-Know-JS/blob/master/this%2520&%2520object%2520prototypes/ch6.md" target="_blank" rel="external">You-Dont-Know-JS/this &amp; object prototypes/ch6.md</a><br>
 </p>
 </div>
 </div>
@@ -1054,7 +1054,7 @@ ES6後可以用Object.setPrototypeOf()代替Object.create()<br>
 <p>
 大致介紹javascript的Asynchronous<br>
 JS Engine本身沒有multi-thread，javascript的Asynchronous是靠run environment的event loop queue達成<br>
-<a href="https://github.com/getify/You-Dont-Know-JS/blob/master/async%2520&%2520performance/ch1.md" target="_blank" rel="external">You-Dont-Know-JS/async & performance/ch1.md</a><br>
+<a href="https://github.com/getify/You-Dont-Know-JS/blob/master/async%2520&%2520performance/ch1.md" target="_blank" rel="external">You-Dont-Know-JS/async &amp; performance/ch1.md</a><br>
 </p>
 </div>
 </div>
@@ -1071,7 +1071,7 @@ JS Engine本身沒有multi-thread，javascript的Asynchronous是靠run environme
 </li>
 </ol>
 <p>
-<a href="https://github.com/getify/You-Dont-Know-JS/blob/master/async%2520&%2520performance/ch2.md" target="_blank" rel="external">You-Dont-Know-JS/async & performance/ch2.md</a><br>
+<a href="https://github.com/getify/You-Dont-Know-JS/blob/master/async%2520&%2520performance/ch2.md" target="_blank" rel="external">You-Dont-Know-JS/async &amp; performance/ch2.md</a><br>
 </p>
 </div>
 </div>

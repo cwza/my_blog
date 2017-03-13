@@ -841,8 +841,8 @@ products/, ratings/&#x2026;etc: app root<br>
 <div class="outline-text-3" id="text-3-1">
 <p>
 將setting files分開成各個環境，所有setting file全部進入git控管<br>
-底下為例子，在<repository root="">/config/settings<br>
-</repository></p>
+底下為例子，在&lt;repository root&gt;/config/settings<br>
+</p>
 <div class="org-src-container">
 
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">settings/</span><br><span class="line">      __init__.py</span><br><span class="line">      base.py</span><br><span class="line">      dev_audreyr.py</span><br><span class="line">      dev_pydanny.py</span><br><span class="line">      local.py</span><br><span class="line">      staging.py</span><br><span class="line">      test.py</span><br><span class="line">      production.py</span><br></pre></td></tr></table></figure>
@@ -938,8 +938,8 @@ setting file用以下方式拿secret key<br>
 <div class="outline-text-3" id="text-3-4">
 <p>
 不同環境可能需要裝不同package(ex: local才需要debug工具)<br>
-在<repository root="">/requirements<br>
-</repository></p>
+在&lt;repository root&gt;/requirements<br>
+</p>
 <div class="org-src-container">
 
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">requirements/</span><br><span class="line">    base.txt</span><br><span class="line">    local.txt</span><br><span class="line">    staging.txt</span><br><span class="line">    production.txt</span><br></pre></td></tr></table></figure>
@@ -1232,7 +1232,7 @@ Bad Example:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> django.views.generic <span class="keyword">import</span> DetailView</span><br><span class="line"><span class="keyword">from</span> tastings.models <span class="keyword">import</span> Tasting</span><br><span class="line"></span><br><span class="line">urlpatterns = [ </span><br><span class="line">    url(<span class="string">r"ˆ(?P&lt;pk&gt;\d+)/$"</span>,</span><br><span class="line">	DetailView.as_view(</span><br><span class="line">	    model=Tasting,</span><br><span class="line">	    template_name=<span class="string">"tastings/detail.html"</span>),</span><br><span class="line">	name=<span class="string">"detail"</span>),</span><br><span class="line">    url(<span class="string">r"ˆ(?P&lt;pk&gt;\d+)/results/$"</span>, </span><br><span class="line">	DetailView.as_view(</span><br><span class="line">	    model=Tasting,</span><br><span class="line">	    template_name=<span class="string">"tastings/results.html"</span>),</span><br><span class="line">	name=<span class="string">"results"</span>),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> django.views.generic <span class="keyword">import</span> DetailView</span><br><span class="line"><span class="keyword">from</span> tastings.models <span class="keyword">import</span> Tasting</span><br><span class="line"></span><br><span class="line">urlpatterns = [ </span><br><span class="line">    url(<span class="string">r"ˆ(?P&amp;lt;pk&amp;gt;\d+)/$"</span>,</span><br><span class="line">	DetailView.as_view(</span><br><span class="line">	    model=Tasting,</span><br><span class="line">	    template_name=<span class="string">"tastings/detail.html"</span>),</span><br><span class="line">	name=<span class="string">"detail"</span>),</span><br><span class="line">    url(<span class="string">r"ˆ(?P&amp;lt;pk&amp;gt;\d+)/results/$"</span>, </span><br><span class="line">	DetailView.as_view(</span><br><span class="line">	    model=Tasting,</span><br><span class="line">	    template_name=<span class="string">"tastings/results.html"</span>),</span><br><span class="line">	name=<span class="string">"results"</span>),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 </div>
 
 <p>
@@ -1248,7 +1248,7 @@ Good urls example:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># tastings/urls.py</span></span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(</span><br><span class="line">	regex=<span class="string">r"ˆ$"</span>, </span><br><span class="line">	view=views.TasteListView.as_view(), </span><br><span class="line">	name=<span class="string">"list"</span></span><br><span class="line">    ),</span><br><span class="line">    url(</span><br><span class="line">	regex=<span class="string">r"ˆ(?P&lt;pk&gt;\d+)/$"</span>, </span><br><span class="line">	view=views.TasteDetailView.as_view(), </span><br><span class="line">	name=<span class="string">"detail"</span></span><br><span class="line">    ), </span><br><span class="line">    url(</span><br><span class="line">	regex=<span class="string">r"ˆ(?P&lt;pk&gt;\d+)/results/$"</span>, </span><br><span class="line">	view=views.TasteResultsView.as_.view(), </span><br><span class="line">	name=<span class="string">"results"</span></span><br><span class="line">    ), </span><br><span class="line">    url(</span><br><span class="line">	regex=<span class="string">r"ˆ(?P&lt;pk&gt;\d+)/update/$"</span>, </span><br><span class="line">	view=views.TasteUpdateView.as_view(), </span><br><span class="line">	name=<span class="string">"update"</span></span><br><span class="line">    ) </span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># tastings/urls.py</span></span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(</span><br><span class="line">	regex=<span class="string">r"ˆ$"</span>, </span><br><span class="line">	view=views.TasteListView.as_view(), </span><br><span class="line">	name=<span class="string">"list"</span></span><br><span class="line">    ),</span><br><span class="line">    url(</span><br><span class="line">	regex=<span class="string">r"ˆ(?P&amp;lt;pk&amp;gt;\d+)/$"</span>, </span><br><span class="line">	view=views.TasteDetailView.as_view(), </span><br><span class="line">	name=<span class="string">"detail"</span></span><br><span class="line">    ), </span><br><span class="line">    url(</span><br><span class="line">	regex=<span class="string">r"ˆ(?P&amp;lt;pk&amp;gt;\d+)/results/$"</span>, </span><br><span class="line">	view=views.TasteResultsView.as_.view(), </span><br><span class="line">	name=<span class="string">"results"</span></span><br><span class="line">    ), </span><br><span class="line">    url(</span><br><span class="line">	regex=<span class="string">r"ˆ(?P&amp;lt;pk&amp;gt;\d+)/update/$"</span>, </span><br><span class="line">	view=views.TasteUpdateView.as_view(), </span><br><span class="line">	name=<span class="string">"update"</span></span><br><span class="line">    ) </span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 </div>
 </div>
 </div>
@@ -1277,7 +1277,7 @@ template example:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">{% extends <span class="string">"base.html"</span> %}</span><br><span class="line">{% block title %}Tastings{% endblock title %}</span><br><span class="line">{% block content %}</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  {% <span class="keyword">for</span> taste <span class="keyword">in</span> tastings %} </span><br><span class="line">    &lt;li&gt;</span><br><span class="line">      &lt;a href=<span class="string">"{% url "</span>tastings:detail<span class="string">" taste.pk %}"</span>&gt;{{ taste.title }}&lt;/a&gt;</span><br><span class="line">      &lt;small&gt;</span><br><span class="line">	(&lt;a href=<span class="string">"{% url "</span>tastings:update<span class="string">" taste.pk %}"</span>&gt;update&lt;/a&gt;)</span><br><span class="line">      &lt;/small&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">  {% endfor %}</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">{% endblock content %}</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">{% extends <span class="string">"base.html"</span> %}</span><br><span class="line">{% block title %}Tastings{% endblock title %}</span><br><span class="line">{% block content %}</span><br><span class="line">&amp;lt;ul&amp;gt;</span><br><span class="line">  {% <span class="keyword">for</span> taste <span class="keyword">in</span> tastings %} </span><br><span class="line">    &amp;lt;li&amp;gt;</span><br><span class="line">      &amp;lt;a href=<span class="string">"{% url "</span>tastings:detail<span class="string">" taste.pk %}"</span>&amp;gt;{{ taste.title }}&amp;lt;/a&amp;gt;</span><br><span class="line">      &amp;lt;small&amp;gt;</span><br><span class="line">	(&amp;lt;a href=<span class="string">"{% url "</span>tastings:update<span class="string">" taste.pk %}"</span>&amp;gt;update&amp;lt;/a&amp;gt;)</span><br><span class="line">      &amp;lt;/small&amp;gt;</span><br><span class="line">    &amp;lt;/li&amp;gt;</span><br><span class="line">  {% endfor %}</span><br><span class="line">&amp;lt;/ul&amp;gt;</span><br><span class="line">{% endblock content %}</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 <br>
@@ -1457,7 +1457,7 @@ The nice thing about this is the various  avors/ app templates can now access th
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">{<span class="comment"># flavors/base.html #}</span></span><br><span class="line">{% extends <span class="string">"base.html"</span> %}</span><br><span class="line"></span><br><span class="line">{% block likes_and_favorites %} </span><br><span class="line">  &lt;ul&gt;</span><br><span class="line">    &lt;li&gt;Likes: {{ view.likes_and_favorites.likes }}&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;Favorites: {{ view.likes_and_favorites.favorites_count }}&lt;/li&gt; </span><br><span class="line">  &lt;/ul&gt;</span><br><span class="line">{% endblock likes_and_favorites %}</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">{<span class="comment"># flavors/base.html #}</span></span><br><span class="line">{% extends <span class="string">"base.html"</span> %}</span><br><span class="line"></span><br><span class="line">{% block likes_and_favorites %} </span><br><span class="line">  &amp;lt;ul&amp;gt;</span><br><span class="line">    &amp;lt;li&amp;gt;Likes: {{ view.likes_and_favorites.likes }}&amp;lt;/li&amp;gt;</span><br><span class="line">    &amp;lt;li&amp;gt;Favorites: {{ view.likes_and_favorites.favorites_count }}&amp;lt;/li&amp;gt; </span><br><span class="line">  &amp;lt;/ul&amp;gt;</span><br><span class="line">{% endblock likes_and_favorites %}</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 <br>
@@ -1504,7 +1504,7 @@ Template:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">{# templates/flavors/flavor_detail.html #}</span><br><span class="line">{% if messages %}</span><br><span class="line">  &lt;ul class="messages"&gt;</span><br><span class="line">    {% for message in messages %}</span><br><span class="line">    &lt;li id="message_{{ forloop.counter }}"</span><br><span class="line">	{% if message.tags %} class="{{ message.tags }}" .</span><br><span class="line">	  {% endif %}&gt;</span><br><span class="line">	{{ message }}</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    {% endfor %} </span><br><span class="line">  &lt;/ul&gt;</span><br><span class="line">{% endif %}</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">{# templates/flavors/flavor_detail.html #}</span><br><span class="line">{% if messages %}</span><br><span class="line">  &amp;lt;ul class="messages"&amp;gt;</span><br><span class="line">    {% for message in messages %}</span><br><span class="line">    &amp;lt;li id="message_{{ forloop.counter }}"</span><br><span class="line">	{% if message.tags %} class="{{ message.tags }}" .</span><br><span class="line">	  {% endif %}&amp;gt;</span><br><span class="line">	{{ message }}</span><br><span class="line">    &amp;lt;/li&amp;gt;</span><br><span class="line">    {% endfor %} </span><br><span class="line">  &amp;lt;/ul&amp;gt;</span><br><span class="line">{% endif %}</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 <br>
@@ -1529,7 +1529,7 @@ Template:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">{<span class="comment"># templates/flavors/_flavor_search.html #}</span></span><br><span class="line">{% comment %}</span><br><span class="line">  Usage: {% include <span class="string">"flavors/_flavor_search.html"</span> %}</span><br><span class="line">{% endcomment %}</span><br><span class="line">&lt;form action=<span class="string">"{% url "</span>flavor_list<span class="string">" %}"</span> .method=<span class="string">"GET"</span>&gt;</span><br><span class="line">  &lt;input type=<span class="string">"text"</span> name=<span class="string">"q"</span> /&gt;</span><br><span class="line">  &lt;button type=<span class="string">"submit"</span>&gt;search&lt;/button&gt; </span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">{<span class="comment"># templates/flavors/_flavor_search.html #}</span></span><br><span class="line">{% comment %}</span><br><span class="line">  Usage: {% include <span class="string">"flavors/_flavor_search.html"</span> %}</span><br><span class="line">{% endcomment %}</span><br><span class="line">&amp;lt;form action=<span class="string">"{% url "</span>flavor_list<span class="string">" %}"</span> .method=<span class="string">"GET"</span>&amp;gt;</span><br><span class="line">  &amp;lt;input type=<span class="string">"text"</span> name=<span class="string">"q"</span> /&amp;gt;</span><br><span class="line">  &amp;lt;button type=<span class="string">"submit"</span>&amp;gt;search&amp;lt;/button&amp;gt; </span><br><span class="line">&amp;lt;/form&amp;gt;</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 <br>
@@ -1626,8 +1626,8 @@ Form validation workflow:<br>
 </li>
 <li>Data is validated against  eld-speci c rules, including custom validators. Failure raises a ValidationError.<br>
 </li>
-<li>If there are any custom clean <field>() methods in the form, they are called at this time.<br>
-</field></li>
+<li>If there are any custom clean &lt;field&gt;() methods in the form, they are called at this time.<br>
+</li>
 </ul>
 </li>
 <li>form.fullclean() executes the form.clean() method.<br>
@@ -1679,7 +1679,7 @@ We can streamline Form.clean() with the Form.add error() method.<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IceCreamReviewForm</span><span class="params">(forms.Form)</span>:</span> </span><br><span class="line">    <span class="comment"># Rest of tester form goes here ...</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">clean</span><span class="params">(self)</span>:</span></span><br><span class="line">	cleaned_data = super(TasterForm, self).clean()</span><br><span class="line">	flavor = cleaned_data.get(<span class="string">"flavor"</span>)</span><br><span class="line">	age = cleaned_data.get(<span class="string">"age"</span>)</span><br><span class="line">	<span class="keyword">if</span> flavor == <span class="string">'coffee'</span> <span class="keyword">and</span> age &lt; <span class="number">3</span>:</span><br><span class="line">	    <span class="comment"># Record errors that will be displayed later. </span></span><br><span class="line">	    msg = <span class="string">u"Coffee Ice Cream is not for Babies."</span> </span><br><span class="line">	    self.add_error(<span class="string">'flavor'</span>, msg) </span><br><span class="line">	    self.add_error(<span class="string">'age'</span>, msg)</span><br><span class="line">	<span class="comment"># Always return the full collection of cleaned data. </span></span><br><span class="line">	<span class="keyword">return</span> cleaned_data</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IceCreamReviewForm</span><span class="params">(forms.Form)</span>:</span> </span><br><span class="line">    <span class="comment"># Rest of tester form goes here ...</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">clean</span><span class="params">(self)</span>:</span></span><br><span class="line">	cleaned_data = super(TasterForm, self).clean()</span><br><span class="line">	flavor = cleaned_data.get(<span class="string">"flavor"</span>)</span><br><span class="line">	age = cleaned_data.get(<span class="string">"age"</span>)</span><br><span class="line">	<span class="keyword">if</span> flavor == <span class="string">'coffee'</span> <span class="keyword">and</span> age &amp;lt; <span class="number">3</span>:</span><br><span class="line">	    <span class="comment"># Record errors that will be displayed later. </span></span><br><span class="line">	    msg = <span class="string">u"Coffee Ice Cream is not for Babies."</span> </span><br><span class="line">	    self.add_error(<span class="string">'flavor'</span>, msg) </span><br><span class="line">	    self.add_error(<span class="string">'age'</span>, msg)</span><br><span class="line">	<span class="comment"># Always return the full collection of cleaned data. </span></span><br><span class="line">	<span class="keyword">return</span> cleaned_data</span><br></pre></td></tr></table></figure>
 </div>
 </div>
 </div>
@@ -1763,13 +1763,13 @@ use cases:<br>
 </ul>
 
 <p>
-Django provides a second stage and process for validating incoming data, this time via the clean() method and clean <field name="">() methods.<br>
-</field></p>
+Django provides a second stage and process for validating incoming data, this time via the clean() method and clean &lt;field name&gt;() methods.<br>
+</p>
 <ul class="org-ul">
 <li>clean() validate two or more fields against each other.<br>
 </li>
-<li>clean <field name="">() validate against persistent data.<br>
-</field></li>
+<li>clean &lt;field name&gt;() validate against persistent data.<br>
+</li>
 </ul>
 
 <p>
@@ -1779,7 +1779,7 @@ clean(): validate the flavor and toppings fields against each other<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># flavors/forms.py</span></span><br><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"><span class="keyword">from</span> flavors.models <span class="keyword">import</span> Flavor</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IceCreamOrderForm</span><span class="params">(forms.Form)</span>:</span></span><br><span class="line">    <span class="string">"""Normally done with forms.ModelForm. But we use forms.Form here</span><br><span class="line">	to demonstrate that these sorts of techniques work on every</span><br><span class="line">	type of form.</span><br><span class="line">    """</span></span><br><span class="line">    slug = forms.ChoiceField(<span class="string">"Flavor"</span>)</span><br><span class="line">    toppings = forms.CharField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args, **kwargs)</span>:</span> </span><br><span class="line">	super(IceCreamOrderForm, self).__init__(*args,</span><br><span class="line">		**kwargs)</span><br><span class="line">	<span class="comment"># We dynamically set the choices here rather than</span></span><br><span class="line">	<span class="comment"># in the flavor field definition. Setting them in</span></span><br><span class="line">	<span class="comment"># the field definition means status updates won't</span></span><br><span class="line">	<span class="comment"># be reflected in the form without server restarts.</span></span><br><span class="line">	self.fields[<span class="string">"slug"</span>].choices = [</span><br><span class="line">	    (x.slug, x.title) <span class="keyword">for</span> x <span class="keyword">in</span> Flavor.objects.all() </span><br><span class="line">	]</span><br><span class="line">	<span class="comment"># <span class="doctag">NOTE:</span> We could filter by whether or not a flavor</span></span><br><span class="line">	<span class="comment">#       has any scoops, but this is an example of</span></span><br><span class="line">	<span class="comment">#       how to use clean_slug, not filter().</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">clean_slug</span><span class="params">(self)</span>:</span></span><br><span class="line">	slug = self.cleaned_data[<span class="string">"slug"</span>]</span><br><span class="line">	<span class="keyword">if</span> Flavor.objects.get(slug=slug).scoops_remaining &lt;= <span class="number">0</span>:</span><br><span class="line">	    msg = <span class="string">u"Sorry, we are out of that flavor."</span></span><br><span class="line">	    <span class="keyword">raise</span> forms.ValidationError(msg) </span><br><span class="line">	<span class="keyword">return</span> slug</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">clean</span><span class="params">(self)</span>:</span></span><br><span class="line">	cleaned_data = super(IceCreamOrderForm, self).clean()</span><br><span class="line">	slug = cleaned_data.get(<span class="string">"slug"</span>, <span class="string">""</span>)</span><br><span class="line">	toppings = cleaned_data.get(<span class="string">"toppings"</span>, <span class="string">""</span>)</span><br><span class="line">	<span class="comment"># Silly "too much chocolate" validation example</span></span><br><span class="line">	<span class="keyword">if</span> <span class="string">u"chocolate"</span> <span class="keyword">in</span> slug.lower() <span class="keyword">and</span> \ <span class="string">u"chocolate"</span> <span class="keyword">in</span> toppings.lower():</span><br><span class="line">	    msg = <span class="string">u"Your order has too much chocolate."</span></span><br><span class="line">	    <span class="keyword">raise</span> forms.ValidationError(msg) <span class="keyword">return</span> cleaned_data</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># flavors/forms.py</span></span><br><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"><span class="keyword">from</span> flavors.models <span class="keyword">import</span> Flavor</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IceCreamOrderForm</span><span class="params">(forms.Form)</span>:</span></span><br><span class="line">    <span class="string">"""Normally done with forms.ModelForm. But we use forms.Form here</span><br><span class="line">	to demonstrate that these sorts of techniques work on every</span><br><span class="line">	type of form.</span><br><span class="line">    """</span></span><br><span class="line">    slug = forms.ChoiceField(<span class="string">"Flavor"</span>)</span><br><span class="line">    toppings = forms.CharField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args, **kwargs)</span>:</span> </span><br><span class="line">	super(IceCreamOrderForm, self).__init__(*args,</span><br><span class="line">		**kwargs)</span><br><span class="line">	<span class="comment"># We dynamically set the choices here rather than</span></span><br><span class="line">	<span class="comment"># in the flavor field definition. Setting them in</span></span><br><span class="line">	<span class="comment"># the field definition means status updates won't</span></span><br><span class="line">	<span class="comment"># be reflected in the form without server restarts.</span></span><br><span class="line">	self.fields[<span class="string">"slug"</span>].choices = [</span><br><span class="line">	    (x.slug, x.title) <span class="keyword">for</span> x <span class="keyword">in</span> Flavor.objects.all() </span><br><span class="line">	]</span><br><span class="line">	<span class="comment"># <span class="doctag">NOTE:</span> We could filter by whether or not a flavor</span></span><br><span class="line">	<span class="comment">#       has any scoops, but this is an example of</span></span><br><span class="line">	<span class="comment">#       how to use clean_slug, not filter().</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">clean_slug</span><span class="params">(self)</span>:</span></span><br><span class="line">	slug = self.cleaned_data[<span class="string">"slug"</span>]</span><br><span class="line">	<span class="keyword">if</span> Flavor.objects.get(slug=slug).scoops_remaining &amp;lt;= <span class="number">0</span>:</span><br><span class="line">	    msg = <span class="string">u"Sorry, we are out of that flavor."</span></span><br><span class="line">	    <span class="keyword">raise</span> forms.ValidationError(msg) </span><br><span class="line">	<span class="keyword">return</span> slug</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">clean</span><span class="params">(self)</span>:</span></span><br><span class="line">	cleaned_data = super(IceCreamOrderForm, self).clean()</span><br><span class="line">	slug = cleaned_data.get(<span class="string">"slug"</span>, <span class="string">""</span>)</span><br><span class="line">	toppings = cleaned_data.get(<span class="string">"toppings"</span>, <span class="string">""</span>)</span><br><span class="line">	<span class="comment"># Silly "too much chocolate" validation example</span></span><br><span class="line">	<span class="keyword">if</span> <span class="string">u"chocolate"</span> <span class="keyword">in</span> slug.lower() <span class="keyword">and</span> \ <span class="string">u"chocolate"</span> <span class="keyword">in</span> toppings.lower():</span><br><span class="line">	    msg = <span class="string">u"Your order has too much chocolate."</span></span><br><span class="line">	    <span class="keyword">raise</span> forms.ValidationError(msg) <span class="keyword">return</span> cleaned_data</span><br></pre></td></tr></table></figure>
 </div>
 </div>
 </div>
@@ -1857,11 +1857,11 @@ template:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">{# form to go into stores/store_list.html template #} </span><br><span class="line">&lt;form action="" method="GET"&gt;</span><br><span class="line">  &lt;input type="text" name="q" /&gt; </span><br><span class="line">  &lt;button type="submit"&gt;search&lt;/button&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">{# form to go into stores/store_list.html template #} </span><br><span class="line">&amp;lt;form action="" method="GET"&amp;gt;</span><br><span class="line">  &amp;lt;input type="text" name="q" /&amp;gt; </span><br><span class="line">  &amp;lt;button type="submit"&amp;gt;search&amp;lt;/button&amp;gt;</span><br><span class="line">&amp;lt;/form&amp;gt;</span><br></pre></td></tr></table></figure>
 </div>
 <div class="org-src-container">
 
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">{# form to go into flavors/flavor_list.html template #} </span><br><span class="line">&lt;form action="" method="GET"&gt;</span><br><span class="line">  &lt;button type="submit"&gt;search&lt;/button&gt;</span><br><span class="line">  &lt;input type="text" name="q" /&gt; </span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">{# form to go into flavors/flavor_list.html template #} </span><br><span class="line">&amp;lt;form action="" method="GET"&amp;gt;</span><br><span class="line">  &amp;lt;button type="submit"&amp;gt;search&amp;lt;/button&amp;gt;</span><br><span class="line">  &amp;lt;input type="text" name="q" /&amp;gt; </span><br><span class="line">&amp;lt;/form&amp;gt;</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 <br>
@@ -1914,10 +1914,10 @@ This is best for sites with a consistent overall layout from app to app.<br>
 <h4 id="sec-11-2-2"><span class="section-number-4">11.2.2</span> 3-Tier Template Architecture Example</h4>
 <div class="outline-text-4" id="text-11-2-2">
 <ul class="org-ul">
-<li>Each app has a base_<app name="">.html template. App-level base templates share a common parent base.html template.<br>
-</app></li>
-<li>Templates within apps share a common parent base_<app name="">.html template.<br>
-</app></li>
+<li>Each app has a base_&lt;app name&gt;.html template. App-level base templates share a common parent base.html template.<br>
+</li>
+<li>Templates within apps share a common parent base_&lt;app name&gt;.html template.<br>
+</li>
 <li>Any template at the same level as base.html inherits base.html.<br>
 </li>
 </ul>
@@ -1985,7 +1985,7 @@ Bad Example:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&lt;h2&gt;Greenfelds Who Want Ice Cream&lt;/h2&gt; </span><br><span class="line">&lt;ul&gt;</span><br><span class="line">{% <span class="keyword">for</span> voucher <span class="keyword">in</span> voucher_list %}</span><br><span class="line">    {<span class="comment"># Don't do this: conditional filtering in templates #}</span></span><br><span class="line">    {% <span class="keyword">if</span> <span class="string">"greenfeld"</span> <span class="keyword">in</span> voucher.name.lower %}</span><br><span class="line">	&lt;li&gt;{{ voucher.name }}&lt;/li&gt; </span><br><span class="line">    {% endif %}</span><br><span class="line">{% endfor %} </span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">&lt;h2&gt;Roys Who Want Ice Cream&lt;/h2&gt; </span><br><span class="line">&lt;ul&gt;</span><br><span class="line">{% <span class="keyword">for</span> voucher <span class="keyword">in</span> voucher_list %}</span><br><span class="line">    {<span class="comment"># Don't do this: conditional filtering in templates #}</span></span><br><span class="line">    {% <span class="keyword">if</span> <span class="string">"roy"</span> <span class="keyword">in</span> voucher.name.lower %}</span><br><span class="line">	&lt;li&gt;{{ voucher.name }}&lt;/li&gt; </span><br><span class="line">    {% endif %}</span><br><span class="line">{% endfor %} </span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&amp;lt;h2&amp;gt;Greenfelds Who Want Ice Cream&amp;lt;/h2&amp;gt; </span><br><span class="line">&amp;lt;ul&amp;gt;</span><br><span class="line">{% <span class="keyword">for</span> voucher <span class="keyword">in</span> voucher_list %}</span><br><span class="line">    {<span class="comment"># Don't do this: conditional filtering in templates #}</span></span><br><span class="line">    {% <span class="keyword">if</span> <span class="string">"greenfeld"</span> <span class="keyword">in</span> voucher.name.lower %}</span><br><span class="line">	&amp;lt;li&amp;gt;{{ voucher.name }}&amp;lt;/li&amp;gt; </span><br><span class="line">    {% endif %}</span><br><span class="line">{% endfor %} </span><br><span class="line">&amp;lt;/ul&amp;gt;</span><br><span class="line"></span><br><span class="line">&amp;lt;h2&amp;gt;Roys Who Want Ice Cream&amp;lt;/h2&amp;gt; </span><br><span class="line">&amp;lt;ul&amp;gt;</span><br><span class="line">{% <span class="keyword">for</span> voucher <span class="keyword">in</span> voucher_list %}</span><br><span class="line">    {<span class="comment"># Don't do this: conditional filtering in templates #}</span></span><br><span class="line">    {% <span class="keyword">if</span> <span class="string">"roy"</span> <span class="keyword">in</span> voucher.name.lower %}</span><br><span class="line">	&amp;lt;li&amp;gt;{{ voucher.name }}&amp;lt;/li&amp;gt; </span><br><span class="line">    {% endif %}</span><br><span class="line">{% endfor %} </span><br><span class="line">&amp;lt;/ul&amp;gt;</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 <br>
@@ -2005,7 +2005,7 @@ template:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&lt;h2&gt;Greenfelds Who Want Ice Cream&lt;/h2&gt; </span><br><span class="line">&lt;ul&gt;</span><br><span class="line">{% <span class="keyword">for</span> voucher <span class="keyword">in</span> greenfelds %}</span><br><span class="line">    &lt;li&gt;{{ voucher.name }}&lt;/li&gt; </span><br><span class="line">{% endfor %}</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">&lt;h2&gt;Roys Who Want Ice Cream&lt;/h2&gt; </span><br><span class="line">&lt;ul&gt;</span><br><span class="line">{% <span class="keyword">for</span> voucher <span class="keyword">in</span> roys %}</span><br><span class="line">    &lt;li&gt;{{ voucher.name }}&lt;/li&gt; </span><br><span class="line">{% endfor %}</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&amp;lt;h2&amp;gt;Greenfelds Who Want Ice Cream&amp;lt;/h2&amp;gt; </span><br><span class="line">&amp;lt;ul&amp;gt;</span><br><span class="line">{% <span class="keyword">for</span> voucher <span class="keyword">in</span> greenfelds %}</span><br><span class="line">    &amp;lt;li&amp;gt;{{ voucher.name }}&amp;lt;/li&amp;gt; </span><br><span class="line">{% endfor %}</span><br><span class="line">&amp;lt;/ul&amp;gt;</span><br><span class="line"></span><br><span class="line">&amp;lt;h2&amp;gt;Roys Who Want Ice Cream&amp;lt;/h2&amp;gt; </span><br><span class="line">&amp;lt;ul&amp;gt;</span><br><span class="line">{% <span class="keyword">for</span> voucher <span class="keyword">in</span> roys %}</span><br><span class="line">    &amp;lt;li&amp;gt;{{ voucher.name }}&amp;lt;/li&amp;gt; </span><br><span class="line">{% endfor %}</span><br><span class="line">&amp;lt;/ul&amp;gt;</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 <br>
@@ -2022,7 +2022,7 @@ Bad Example:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">{<span class="comment"># list generated via User.object.all() #}</span></span><br><span class="line">&lt;h1&gt;Ice Cream Fans <span class="keyword">and</span> their favorite flavors.&lt;/h1&gt; </span><br><span class="line">&lt;ul&gt;</span><br><span class="line">{% <span class="keyword">for</span> user <span class="keyword">in</span> user_list %}</span><br><span class="line">    &lt;li&gt;</span><br><span class="line">	{{ user.name }}:</span><br><span class="line">	{<span class="comment"># DON'T DO THIS: Generated implicit query per user #}</span></span><br><span class="line">	{{ user.flavor.title }}</span><br><span class="line">	{<span class="comment"># DON'T DO THIS: Second implicit query per user!!! #}</span></span><br><span class="line">	{{ user.flavor.scoops_remaining }}</span><br><span class="line">    &lt;/li&gt; </span><br><span class="line">{% endfor %}</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">{<span class="comment"># list generated via User.object.all() #}</span></span><br><span class="line">&amp;lt;h1&amp;gt;Ice Cream Fans <span class="keyword">and</span> their favorite flavors.&amp;lt;/h1&amp;gt; </span><br><span class="line">&amp;lt;ul&amp;gt;</span><br><span class="line">{% <span class="keyword">for</span> user <span class="keyword">in</span> user_list %}</span><br><span class="line">    &amp;lt;li&amp;gt;</span><br><span class="line">	{{ user.name }}:</span><br><span class="line">	{<span class="comment"># DON'T DO THIS: Generated implicit query per user #}</span></span><br><span class="line">	{{ user.flavor.title }}</span><br><span class="line">	{<span class="comment"># DON'T DO THIS: Second implicit query per user!!! #}</span></span><br><span class="line">	{{ user.flavor.scoops_remaining }}</span><br><span class="line">    &amp;lt;/li&amp;gt; </span><br><span class="line">{% endfor %}</span><br><span class="line">&amp;lt;/ul&amp;gt;</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 <br>
@@ -2034,7 +2034,7 @@ One quick correction is to use the Django ORM’s <b>select related()</b> method
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">{% comment %}</span><br><span class="line">List generated via User.object.all().select_related(<span class="string">"flavors"</span>) </span><br><span class="line">{% endcomment %}</span><br><span class="line">&lt;h1&gt;Ice Cream Fans <span class="keyword">and</span> their favorite flavors.&lt;/h1&gt;</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">{% <span class="keyword">for</span> user <span class="keyword">in</span> user_list %}</span><br><span class="line">    &lt;li&gt;</span><br><span class="line">	{{ user.name }}:</span><br><span class="line">	{{ user.flavor.title }}</span><br><span class="line">	{{ user.flavor.scoops_remaining }} </span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">{% endfor %} </span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">{% comment %}</span><br><span class="line">List generated via User.object.all().select_related(<span class="string">"flavors"</span>) </span><br><span class="line">{% endcomment %}</span><br><span class="line">&amp;lt;h1&amp;gt;Ice Cream Fans <span class="keyword">and</span> their favorite flavors.&amp;lt;/h1&amp;gt;</span><br><span class="line">&amp;lt;ul&amp;gt;</span><br><span class="line">{% <span class="keyword">for</span> user <span class="keyword">in</span> user_list %}</span><br><span class="line">    &amp;lt;li&amp;gt;</span><br><span class="line">	{{ user.name }}:</span><br><span class="line">	{{ user.flavor.title }}</span><br><span class="line">	{{ user.flavor.scoops_remaining }} </span><br><span class="line">    &amp;lt;/li&amp;gt;</span><br><span class="line">{% endfor %} </span><br><span class="line">&amp;lt;/ul&amp;gt;</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 <br>
@@ -2075,7 +2075,7 @@ base.html:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">{# simple base.html #} </span><br><span class="line">{% load staticfiles %} </span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;</span><br><span class="line">	{% block title %}Two Scoops of Django{% endblock title %}</span><br><span class="line">    &lt;/title&gt;</span><br><span class="line">    {% block stylesheets %}</span><br><span class="line">	&lt;link rel="stylesheet" type="text/css" href="{% static "css/project.css" %}"&gt;</span><br><span class="line">    {% endblock stylesheets %} &lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class="content"&gt;</span><br><span class="line">	{% block content %} </span><br><span class="line">	    &lt;h1&gt;Two Scoops&lt;/h1&gt;</span><br><span class="line">	{% endblock content %} </span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt; </span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">{# simple base.html #} </span><br><span class="line">{% load staticfiles %} </span><br><span class="line">&amp;lt;html&amp;gt;</span><br><span class="line">&amp;lt;head&amp;gt;</span><br><span class="line">    &amp;lt;title&amp;gt;</span><br><span class="line">	{% block title %}Two Scoops of Django{% endblock title %}</span><br><span class="line">    &amp;lt;/title&amp;gt;</span><br><span class="line">    {% block stylesheets %}</span><br><span class="line">	&amp;lt;link rel="stylesheet" type="text/css" href="{% static "css/project.css" %}"&amp;gt;</span><br><span class="line">    {% endblock stylesheets %} &amp;lt;/head&amp;gt;</span><br><span class="line">&amp;lt;body&amp;gt;</span><br><span class="line">    &amp;lt;div class="content"&amp;gt;</span><br><span class="line">	{% block content %} </span><br><span class="line">	    &amp;lt;h1&amp;gt;Two Scoops&amp;lt;/h1&amp;gt;</span><br><span class="line">	{% endblock content %} </span><br><span class="line">    &amp;lt;/div&amp;gt;</span><br><span class="line">&amp;lt;/body&amp;gt; </span><br><span class="line">&amp;lt;/html&amp;gt;</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 <br>
@@ -2086,7 +2086,7 @@ The base.html file contains the following features:<br>
 </li>
 <li>A stylesheets block containing a link to a project.css file used across our site.<br>
 </li>
-<li>A content block containing “<h1>Two Scoops</h1>”.<br>
+<li>A content block containing “&lt;h1&gt;Two Scoops&lt;/h1&gt;”.<br>
 </li>
 </ul>
 <p>
@@ -2148,14 +2148,14 @@ we’ll have a simple about.html inherit the following from it:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">{% extends "base.html" %}</span><br><span class="line">{% load staticfiles %}</span><br><span class="line">{% block title %}About Audrey and Daniel{% endblock title %}</span><br><span class="line">{% block stylesheets %}</span><br><span class="line">    {{ block.super }}</span><br><span class="line">    &lt;link rel="stylesheet" type="text/css" href="{% static "css/about.css" %}"&gt;</span><br><span class="line">{% endblock stylesheets %}</span><br><span class="line">{% block content %}</span><br><span class="line">    {{ block.super }}</span><br><span class="line">    &lt;h2&gt;About Audrey and Daniel&lt;/h2&gt; </span><br><span class="line">    &lt;p&gt;They enjoy eating ice cream&lt;/p&gt;</span><br><span class="line">{% endblock content %}</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">{% extends "base.html" %}</span><br><span class="line">{% load staticfiles %}</span><br><span class="line">{% block title %}About Audrey and Daniel{% endblock title %}</span><br><span class="line">{% block stylesheets %}</span><br><span class="line">    {{ block.super }}</span><br><span class="line">    &amp;lt;link rel="stylesheet" type="text/css" href="{% static "css/about.css" %}"&amp;gt;</span><br><span class="line">{% endblock stylesheets %}</span><br><span class="line">{% block content %}</span><br><span class="line">    {{ block.super }}</span><br><span class="line">    &amp;lt;h2&amp;gt;About Audrey and Daniel&amp;lt;/h2&amp;gt; </span><br><span class="line">    &amp;lt;p&amp;gt;They enjoy eating ice cream&amp;lt;/p&amp;gt;</span><br><span class="line">{% endblock content %}</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 it generates the following HTML:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&lt;html&gt; </span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;</span><br><span class="line">	About Audrey and Daniel</span><br><span class="line">    &lt;/title&gt;</span><br><span class="line">    &lt;link rel="stylesheet" type="text/css" href="/static/css/project.css"&gt; </span><br><span class="line">    &lt;link rel="stylesheet" type="text/css" href="/static/css/about.css"&gt;</span><br><span class="line">&lt;/head&gt; </span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class="content"&gt; </span><br><span class="line">	&lt;h1&gt;Two Scoops&lt;/h1&gt;</span><br><span class="line">	&lt;h2&gt;About Audrey and Daniel&lt;/h2&gt;</span><br><span class="line">	&lt;p&gt;They enjoy eating ice cream&lt;/p&gt; </span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt; </span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&amp;lt;html&amp;gt; </span><br><span class="line">&amp;lt;head&amp;gt;</span><br><span class="line">    &amp;lt;title&amp;gt;</span><br><span class="line">	About Audrey and Daniel</span><br><span class="line">    &amp;lt;/title&amp;gt;</span><br><span class="line">    &amp;lt;link rel="stylesheet" type="text/css" href="/static/css/project.css"&amp;gt; </span><br><span class="line">    &amp;lt;link rel="stylesheet" type="text/css" href="/static/css/about.css"&amp;gt;</span><br><span class="line">&amp;lt;/head&amp;gt; </span><br><span class="line">&amp;lt;body&amp;gt;</span><br><span class="line">    &amp;lt;div class="content"&amp;gt; </span><br><span class="line">	&amp;lt;h1&amp;gt;Two Scoops&amp;lt;/h1&amp;gt;</span><br><span class="line">	&amp;lt;h2&amp;gt;About Audrey and Daniel&amp;lt;/h2&amp;gt;</span><br><span class="line">	&amp;lt;p&amp;gt;They enjoy eating ice cream&amp;lt;/p&amp;gt; </span><br><span class="line">    &amp;lt;/div&amp;gt;</span><br><span class="line">&amp;lt;/body&amp;gt; </span><br><span class="line">&amp;lt;/html&amp;gt;</span><br></pre></td></tr></table></figure>
 </div>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2180,12 +2180,12 @@ it generates the following HTML:<br>
 
 <tr>
 <td class="left">{% block %}</td>
-<td class="left">Since about.html is a child template, block overrides the content provided by base.html. This means our title will render as <title>Audrey and Daniel</title></td>
+<td class="left">Since about.html is a child template, block overrides the content provided by base.html. This means our title will render as &lt;title&gt;Audrey and Daniel&lt;/title&gt;</td>
 </tr>
 
 <tr>
 <td class="left">{{ block.super }}</td>
-<td class="left">When placed in a child template's block, it ensures that the parent's content is also included in the block. In the content block of the about.html template, this will render <h1>Two Scoops</h1>.</td>
+<td class="left">When placed in a child template's block, it ensures that the parent's content is also included in the block. In the content block of the about.html template, this will render &lt;h1&gt;Two Scoops&lt;/h1&gt;.</td>
 </tr>
 </tbody>
 </table>
@@ -2204,7 +2204,7 @@ Template using both project.css and a custom link:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">{% extends "base.html" %}</span><br><span class="line">{% block stylesheets %}</span><br><span class="line">    {{ block.super }} {# this brings in project.css #}</span><br><span class="line">    &lt;link rel="stylesheet" type="text/css" href="{% static "css/custom.css" %}" /&gt; </span><br><span class="line">{% endblock %}</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">{% extends "base.html" %}</span><br><span class="line">{% block stylesheets %}</span><br><span class="line">    {{ block.super }} {# this brings in project.css #}</span><br><span class="line">    &amp;lt;link rel="stylesheet" type="text/css" href="{% static "css/custom.css" %}" /&amp;gt; </span><br><span class="line">{% endblock %}</span><br></pre></td></tr></table></figure>
 </div>
 
 <p>
@@ -2212,7 +2212,7 @@ Dashboard template that excludes the project.css link:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">{% extends "base.html" %}</span><br><span class="line">{% block stylesheets %} .</span><br><span class="line">    &lt;link rel="stylesheet" type="text/css" href="{% static "css/dashboard.css" %}" /&gt;</span><br><span class="line">    {% comment %}</span><br><span class="line">	By not using {{ block.super }}, this block overrides the stylesheet block of base.html .</span><br><span class="line">    {% endcomment %}</span><br><span class="line">{% endblock %}</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">{% extends "base.html" %}</span><br><span class="line">{% block stylesheets %} .</span><br><span class="line">    &amp;lt;link rel="stylesheet" type="text/css" href="{% static "css/dashboard.css" %}" /&amp;gt;</span><br><span class="line">    {% comment %}</span><br><span class="line">	By not using {{ block.super }}, this block overrides the stylesheet block of base.html .</span><br><span class="line">    {% endcomment %}</span><br><span class="line">{% endblock %}</span><br></pre></td></tr></table></figure>
 </div>
 
 <p>
@@ -2293,14 +2293,14 @@ A common developer mistake is to hardcode URLs in templates like this:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&lt;a href=<span class="string">"/flavors/"</span>&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&amp;lt;a href=<span class="string">"/flavors/"</span>&amp;gt;</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 Instead, we use the {% url %} tag and references the names in our URLConf  les:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&lt;a href=<span class="string">"{% url 'flavors_list' %}"</span>&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&amp;lt;a href=<span class="string">"{% url 'flavors_list' %}"</span>&amp;gt;</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 <br>
@@ -2338,7 +2338,7 @@ GitHub’s 404 and 500 error pages are great examples of fancy but entirely stat
 </li>
 <li>All CSS styles are inline in the head of the same HTML page, eliminating the need for a separate stylesheet.<br>
 </li>
-<li>All images are entirely contained as data within the HTML page.  ere are no <img> links to external URLs.<br>
+<li>All images are entirely contained as data within the HTML page.  ere are no &lt;img&gt; links to external URLs.<br>
 </li>
 <li>All JavaScript needed for the page is contained within the HTML page. There are no external links to JavaScript assets.<br>
 </li>
@@ -2413,8 +2413,8 @@ When should you write new template tags? We recommend writing them in situations
 <h3 id="sec-12-3"><span class="section-number-3">12.3</span> Naming Your Template Tag Libraries</h3>
 <div class="outline-text-3" id="text-12-3">
 <p>
-The convention we follow is <app name="">_tags.py.<br>
-</app></p>
+The convention we follow is &lt;app name&gt;_tags.py.<br>
+</p>
 <ul class="org-ul">
 <li>flavors_tags.py<br>
 </li>
@@ -2572,7 +2572,7 @@ flavors/urls.py:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># flavors/urls.py</span></span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> flavors <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(</span><br><span class="line">	regex=<span class="string">r"ˆapi/$"</span>, </span><br><span class="line">	view=views.FlavorCreateReadView.as_view(), </span><br><span class="line">	name=<span class="string">"flavor_rest_api"</span></span><br><span class="line">    ), </span><br><span class="line">    url(</span><br><span class="line">	regex=<span class="string">r"ˆapi/(?P&lt;slug&gt;[-\w]+)/$"</span>,</span><br><span class="line">	view=views.FlavorReadUpdateDeleteView.as_view(),</span><br><span class="line">	name=<span class="string">"flavor_rest_api"</span></span><br><span class="line">    )</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># flavors/urls.py</span></span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> flavors <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(</span><br><span class="line">	regex=<span class="string">r"ˆapi/$"</span>, </span><br><span class="line">	view=views.FlavorCreateReadView.as_view(), </span><br><span class="line">	name=<span class="string">"flavor_rest_api"</span></span><br><span class="line">    ), </span><br><span class="line">    url(</span><br><span class="line">	regex=<span class="string">r"ˆapi/(?P&amp;lt;slug&amp;gt;[-\w]+)/$"</span>,</span><br><span class="line">	view=views.FlavorReadUpdateDeleteView.as_view(),</span><br><span class="line">	name=<span class="string">"flavor_rest_api"</span></span><br><span class="line">    )</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 </div>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -2654,7 +2654,7 @@ If you have REST API views in multiple Django apps, how do you build a project-w
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"> <span class="comment"># core/api.py</span></span><br><span class="line"><span class="string">"""Called from the project root's urls.py URLConf thus:</span><br><span class="line">	url(r"ˆapi/", include("core.api", namespace="api")), </span><br><span class="line">"""</span></span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> flavors <span class="keyword">import</span> views <span class="keyword">as</span> flavor_views </span><br><span class="line"><span class="keyword">from</span> users <span class="keyword">import</span> views <span class="keyword">as</span> user_views</span><br><span class="line"></span><br><span class="line"> urlpatterns = [</span><br><span class="line">     <span class="comment"># {% url "api:flavors" %}</span></span><br><span class="line">     url(</span><br><span class="line">	regex=<span class="string">r"ˆflavors/$"</span>, </span><br><span class="line">	view=flavor_views.FlavorCreateReadView.as_view(), </span><br><span class="line">	name=<span class="string">"flavors"</span> .</span><br><span class="line">     ),</span><br><span class="line"></span><br><span class="line">     <span class="comment"># {% url "api:flavors" flavor.slug %}</span></span><br><span class="line">     url(</span><br><span class="line">	regex=<span class="string">r"ˆflavors/(?P&lt;slug&gt;[-\w]+)/$"</span>, </span><br><span class="line">	view=flavor_views.FlavorReadUpdateDeleteView.as_view(), </span><br><span class="line">	name=<span class="string">"flavors"</span></span><br><span class="line">     ),</span><br><span class="line"></span><br><span class="line">     <span class="comment"># {% url "api:users" %}</span></span><br><span class="line">     url(</span><br><span class="line">	regex=<span class="string">r"ˆusers/$"</span>, </span><br><span class="line">	view=user_views.UserCreateReadView.as_view(), </span><br><span class="line">	name=<span class="string">"users"</span></span><br><span class="line">     ),</span><br><span class="line"></span><br><span class="line">     <span class="comment"># {% url "api:users" user.slug %}</span></span><br><span class="line">     url(</span><br><span class="line">	  regex=<span class="string">r"ˆusers/(?P&lt;slug&gt;[-\w]+)/$"</span>, </span><br><span class="line">	  view=user_views.UserReadUpdateDeleteView.as_view(), </span><br><span class="line">	  name=<span class="string">"users"</span> .</span><br><span class="line">    ),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"> <span class="comment"># core/api.py</span></span><br><span class="line"><span class="string">"""Called from the project root's urls.py URLConf thus:</span><br><span class="line">	url(r"ˆapi/", include("core.api", namespace="api")), </span><br><span class="line">"""</span></span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> flavors <span class="keyword">import</span> views <span class="keyword">as</span> flavor_views </span><br><span class="line"><span class="keyword">from</span> users <span class="keyword">import</span> views <span class="keyword">as</span> user_views</span><br><span class="line"></span><br><span class="line"> urlpatterns = [</span><br><span class="line">     <span class="comment"># {% url "api:flavors" %}</span></span><br><span class="line">     url(</span><br><span class="line">	regex=<span class="string">r"ˆflavors/$"</span>, </span><br><span class="line">	view=flavor_views.FlavorCreateReadView.as_view(), </span><br><span class="line">	name=<span class="string">"flavors"</span> .</span><br><span class="line">     ),</span><br><span class="line"></span><br><span class="line">     <span class="comment"># {% url "api:flavors" flavor.slug %}</span></span><br><span class="line">     url(</span><br><span class="line">	regex=<span class="string">r"ˆflavors/(?P&amp;lt;slug&amp;gt;[-\w]+)/$"</span>, </span><br><span class="line">	view=flavor_views.FlavorReadUpdateDeleteView.as_view(), </span><br><span class="line">	name=<span class="string">"flavors"</span></span><br><span class="line">     ),</span><br><span class="line"></span><br><span class="line">     <span class="comment"># {% url "api:users" %}</span></span><br><span class="line">     url(</span><br><span class="line">	regex=<span class="string">r"ˆusers/$"</span>, </span><br><span class="line">	view=user_views.UserCreateReadView.as_view(), </span><br><span class="line">	name=<span class="string">"users"</span></span><br><span class="line">     ),</span><br><span class="line"></span><br><span class="line">     <span class="comment"># {% url "api:users" user.slug %}</span></span><br><span class="line">     url(</span><br><span class="line">	  regex=<span class="string">r"ˆusers/(?P&amp;lt;slug&amp;gt;[-\w]+)/$"</span>, </span><br><span class="line">	  view=user_views.UserReadUpdateDeleteView.as_view(), </span><br><span class="line">	  name=<span class="string">"users"</span> .</span><br><span class="line">    ),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 <br>
@@ -2681,7 +2681,7 @@ It’s a good practice to abbreviate the urls of your API with the version numbe
 </ol>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># core/apiv1_shutdown.py</span></span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponseGone</span><br><span class="line"></span><br><span class="line">apiv1_gone_msg = <span class="string">"""APIv1 was removed on April 2, 2015. Please switch to APIv3:</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">    &lt;li&gt;</span><br><span class="line">	&lt;a href="https://www.example.com/api/v3/"&gt;APIv3 Endpoint&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt; </span><br><span class="line">    &lt;li&gt;</span><br><span class="line">	&lt;a href="https://example.com/apiv3_docs/"&gt;APIv3 Documentation&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt; </span><br><span class="line">    &lt;li&gt;</span><br><span class="line">	&lt;a href="http://example.com/apiv1_shutdown/"&gt;APIv1 shut down notice&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt; </span><br><span class="line">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">apiv1_gone</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponseGone(apiv1_gone_msg)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># core/apiv1_shutdown.py</span></span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponseGone</span><br><span class="line"></span><br><span class="line">apiv1_gone_msg = <span class="string">"""APIv1 was removed on April 2, 2015. Please switch to APIv3:</span><br><span class="line">&amp;lt;ul&amp;gt;</span><br><span class="line">    &amp;lt;li&amp;gt;</span><br><span class="line">	&amp;lt;a href="https://www.example.com/api/v3/"&amp;gt;APIv3 Endpoint&amp;lt;/a&amp;gt;</span><br><span class="line">    &amp;lt;/li&amp;gt; </span><br><span class="line">    &amp;lt;li&amp;gt;</span><br><span class="line">	&amp;lt;a href="https://example.com/apiv3_docs/"&amp;gt;APIv3 Documentation&amp;lt;/a&amp;gt;</span><br><span class="line">    &amp;lt;/li&amp;gt; </span><br><span class="line">    &amp;lt;li&amp;gt;</span><br><span class="line">	&amp;lt;a href="http://example.com/apiv1_shutdown/"&amp;gt;APIv1 shut down notice&amp;lt;/a&amp;gt;</span><br><span class="line">    &amp;lt;/li&amp;gt;</span><br><span class="line">&amp;lt;/ul&amp;gt; </span><br><span class="line">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">apiv1_gone</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponseGone(apiv1_gone_msg)</span><br></pre></td></tr></table></figure>
 </div>
 </div>
 </div>
@@ -2746,7 +2746,7 @@ For example, it’s not uncommon to want to see the exact URL of a model instanc
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> django.core.urlresolvers <span class="keyword">import</span> reverse </span><br><span class="line"><span class="keyword">from</span> django.utils.html <span class="keyword">import</span> format_html</span><br><span class="line"><span class="keyword">from</span> icecreambars.models <span class="keyword">import</span> IceCreamBar </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IceCreamBarAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></span><br><span class="line">    list_display = (<span class="string">"name"</span>, <span class="string">"shell"</span>, <span class="string">"filling"</span>,)</span><br><span class="line">    readonly_fields = (<span class="string">"show_url"</span>,)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">show_url</span><span class="params">(self, instance)</span>:</span></span><br><span class="line">	url = reverse(<span class="string">"ice_cream_bar_detail"</span>,</span><br><span class="line">		kwargs={<span class="string">"pk"</span>: instance.pk})</span><br><span class="line">	response = format_html(<span class="string">"""&lt;a href="{0}"&gt;{1}&lt;/a&gt;"""</span>, url, url) </span><br><span class="line">	<span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line">    show_url.short_description = <span class="string">"Ice Cream Bar URL"</span></span><br><span class="line">    <span class="comment"># Displays HTML tags</span></span><br><span class="line">    <span class="comment"># Never set allow_tags to True against user submitted data!!!</span></span><br><span class="line">    show_url.allow_tags = <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">admin.site.register(IceCreamBar, IceCreamBarAdmin)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> django.core.urlresolvers <span class="keyword">import</span> reverse </span><br><span class="line"><span class="keyword">from</span> django.utils.html <span class="keyword">import</span> format_html</span><br><span class="line"><span class="keyword">from</span> icecreambars.models <span class="keyword">import</span> IceCreamBar </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IceCreamBarAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></span><br><span class="line">    list_display = (<span class="string">"name"</span>, <span class="string">"shell"</span>, <span class="string">"filling"</span>,)</span><br><span class="line">    readonly_fields = (<span class="string">"show_url"</span>,)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">show_url</span><span class="params">(self, instance)</span>:</span></span><br><span class="line">	url = reverse(<span class="string">"ice_cream_bar_detail"</span>,</span><br><span class="line">		kwargs={<span class="string">"pk"</span>: instance.pk})</span><br><span class="line">	response = format_html(<span class="string">"""&amp;lt;a href="{0}"&amp;gt;{1}&amp;lt;/a&amp;gt;"""</span>, url, url) </span><br><span class="line">	<span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line">    show_url.short_description = <span class="string">"Ice Cream Bar URL"</span></span><br><span class="line">    <span class="comment"># Displays HTML tags</span></span><br><span class="line">    <span class="comment"># Never set allow_tags to True against user submitted data!!!</span></span><br><span class="line">    show_url.allow_tags = <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">admin.site.register(IceCreamBar, IceCreamBarAdmin)</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 <i><img src="/my_blog/2016/02/19/django學習筆記/figure19_6.png" alt="figure19_6.png" title=""></i><br>
@@ -2786,7 +2786,7 @@ The advised way to get to the user class is as follows:<br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># Stock user model definition</span><br><span class="line">&gt;&gt;&gt; from django.contrib.auth import get_user_model</span><br><span class="line">&gt;&gt;&gt; get_user_model()</span><br><span class="line">&lt;class 'django.contrib.auth.models.User'&gt; .</span><br><span class="line"></span><br><span class="line"># When the project has a custom user model definition </span><br><span class="line">&gt;&gt;&gt; from django.contrib.auth import get_user_model </span><br><span class="line">&gt;&gt;&gt; get_user_model()</span><br><span class="line">&lt;class 'profiles.models.UserProfile'&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># Stock user model definition</span><br><span class="line">&amp;gt;&amp;gt;&amp;gt; from django.contrib.auth import get_user_model</span><br><span class="line">&amp;gt;&amp;gt;&amp;gt; get_user_model()</span><br><span class="line">&amp;lt;class 'django.contrib.auth.models.User'&amp;gt; .</span><br><span class="line"></span><br><span class="line"># When the project has a custom user model definition </span><br><span class="line">&amp;gt;&amp;gt;&amp;gt; from django.contrib.auth import get_user_model </span><br><span class="line">&amp;gt;&amp;gt;&amp;gt; get_user_model()</span><br><span class="line">&amp;lt;class 'profiles.models.UserProfile'&amp;gt;</span><br></pre></td></tr></table></figure>
 </div>
 </div>
 <div id="outline-container-sec-15-1-1" class="outline-4">
@@ -3124,8 +3124,8 @@ For projects of any size, we recommend setting up a continuous integration (CI) 
 <h4 id="sec-17-6-2"><span class="section-number-4">17.6.2</span> Step 2: Run Tests and Generate Coverage Report</h4>
 <div class="outline-text-4" id="text-17-6-2">
 <p>
-In the command-line, at the <project root="">, type:<br>
-</project></p>
+In the command-line, at the &lt;project root&gt;, type:<br>
+</p>
 <div class="org-src-container">
 
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ coverage run manage.py <span class="built_in">test</span> --settings=twoscoops.settings.test</span><br></pre></td></tr></table></figure>
@@ -3143,15 +3143,15 @@ If we have nothing except for the default tests for two apps, we should get a re
 <h4 id="sec-17-6-3"><span class="section-number-4">17.6.3</span> Step 3: Generate the Report!</h4>
 <div class="outline-text-4" id="text-17-6-3">
 <p>
-In the command-line, at the <project root="">:<br>
-</project></p>
+In the command-line, at the &lt;project root&gt;:<br>
+</p>
 <div class="org-src-container">
 
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ coverage html --omit=<span class="string">"admin.py"</span></span><br></pre></td></tr></table></figure>
 </div>
 <p>
-After this runs, in the <project root=""> directory there is a new directory called htmlcov/ . In the htmlcov/ directory, open the index.html file using any browser.<br>
-</project></p>
+After this runs, in the &lt;project root&gt; directory there is a new directory called htmlcov/ . In the htmlcov/ directory, open the index.html file using any browser.<br>
+</p>
 </div>
 </div>
 </div>
@@ -3865,7 +3865,7 @@ To generate an event, instead of calling create(), we call a create event() meth
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="keyword">from</span> django.contrib.auth <span class="keyword">import</span> get_user_model</span><br><span class="line">&gt;&gt;&gt; <span class="keyword">from</span> django.utils <span class="keyword">import</span> timezone</span><br><span class="line">&gt;&gt;&gt; <span class="keyword">from</span> events.models <span class="keyword">import</span> Event</span><br><span class="line">&gt;&gt;&gt; user = get_user_model().get(username=<span class="string">"audreyr"</span>)</span><br><span class="line">&gt;&gt;&gt; now = timezone.now()</span><br><span class="line">&gt;&gt;&gt; event = Event.objects.create_event(</span><br><span class="line"><span class="prompt">... </span>    title=<span class="string">"International Ice Cream Tasting Competition"</span>,</span><br><span class="line"><span class="prompt">... </span>    start=now,</span><br><span class="line"><span class="prompt">... </span>    end=now,</span><br><span class="line"><span class="prompt">... </span>    user=user</span><br><span class="line"><span class="prompt">... </span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&amp;gt;&amp;gt;&amp;gt; <span class="keyword">from</span> django.contrib.auth <span class="keyword">import</span> get_user_model</span><br><span class="line">&amp;gt;&amp;gt;&amp;gt; <span class="keyword">from</span> django.utils <span class="keyword">import</span> timezone</span><br><span class="line">&amp;gt;&amp;gt;&amp;gt; <span class="keyword">from</span> events.models <span class="keyword">import</span> Event</span><br><span class="line">&amp;gt;&amp;gt;&amp;gt; user = get_user_model().get(username=<span class="string">"audreyr"</span>)</span><br><span class="line">&amp;gt;&amp;gt;&amp;gt; now = timezone.now()</span><br><span class="line">&amp;gt;&amp;gt;&amp;gt; event = Event.objects.create_event(</span><br><span class="line"><span class="prompt">... </span>    title=<span class="string">"International Ice Cream Tasting Competition"</span>,</span><br><span class="line"><span class="prompt">... </span>    start=now,</span><br><span class="line"><span class="prompt">... </span>    end=now,</span><br><span class="line"><span class="prompt">... </span>    user=user</span><br><span class="line"><span class="prompt">... </span>)</span><br></pre></td></tr></table></figure>
 </div>
 </div>
 </div>
@@ -4420,15 +4420,15 @@ check the following:<br>
 </p>
 
 <ol class="org-ol">
-<li>Does the <form> tag include an encoding type?<br>
-</form></li>
+<li>Does the &lt;form&gt; tag include an encoding type?<br>
+</li>
 </ol>
 <p>
 <br>
 </p>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&lt;form action=<span class="string">"{% url 'stores:file_upload' store.pk %}"</span></span><br><span class="line">	method=<span class="string">"post"</span></span><br><span class="line">	enctype=<span class="string">"multipart/form-data"</span>&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&amp;lt;form action=<span class="string">"{% url 'stores:file_upload' store.pk %}"</span></span><br><span class="line">	method=<span class="string">"post"</span></span><br><span class="line">	enctype=<span class="string">"multipart/form-data"</span>&amp;gt;</span><br></pre></td></tr></table></figure>
 </div>
 <p>
 <br>

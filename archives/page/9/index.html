@@ -220,6 +220,53 @@
 <section class="postShorten-group main-content-wrap">
     
         
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
+                                <a class="link-unstyled" href="/my_blog/2015/12/03/Java-Annotation筆記/">Java Annotation筆記</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Thu Dec 03 2015 15:31:12 GMT+0800">
+	
+		    Dec 03, 2015
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/java/">java</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnotationTest</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> Logger log = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass());</div><div class="line">	</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">		Field f_b = Test1.class.getDeclaredField(<span class="string">"b"</span>);</div><div class="line">		Annotation annotation_b = f_b.getAnnotation(Ignore.class);</div><div class="line">		</div><div class="line">		Field f_a = Test1.class.getDeclaredField(<span class="string">"a"</span>);</div><div class="line">		Annotation annotation_a = f_a.getAnnotation(Ignore.class);</div><div class="line">		log.info(<span class="string">""</span> + annotation_a);</div><div class="line">		log.info(<span class="string">""</span> + annotation_b);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test1</span> </span>&#123;</div><div class="line">	String a;</div><div class="line">	<span class="meta">@Ignore</span></div><div class="line">	String b;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/my_blog/2015/12/03/Java-Annotation筆記/#post-footer" class="postShorten-excerpt_link link">
+                                    Comment and share
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
         <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
             <div class="postShorten-wrap">
                 <div class="postShorten-header">
@@ -591,46 +638,6 @@
             
         </article>
     
-        
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2015/12/02/Bind安裝與基本設定筆記/">Bind安裝與基本設定筆記</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Wed Dec 02 2015 18:56:50 GMT+0800">
-	
-		    Dec 02, 2015
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/linux/">linux</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <p>此筆記為安裝在Debian上的步驟</p>
-                        
-                            <a href="/my_blog/2015/12/02/Bind安裝與基本設定筆記/" class="postShorten-excerpt_link link">
-                                Continue reading
-                            </a>
-                            
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -644,7 +651,14 @@
         </li>
         
         
-        <li class="pagination-number">page 9 of 9</li>
+        <li class="pagination-next">
+            <a class="btn btn--default btn--small" href="/my_blog/archives/page/10/">
+                    <span>OLDER POSTS</span>
+                <i class="fa fa-angle-right text-base icon-ml"></i>
+            </a>
+        </li>
+        
+        <li class="pagination-number">page 9 of 10</li>
     </ul>
 </div>
 
