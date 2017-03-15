@@ -220,6 +220,94 @@
 <section class="postShorten-group main-content-wrap">
     
         
+        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
+                                <a class="link-unstyled" href="/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/">USE TIMESTAMPTZ IN POSTGRES NOT TIMESTAMP</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Thu Jan 19 2017 18:53:57 GMT+0800">
+	
+		    Jan 19, 2017
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/database/">database</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-excerpt" itemprop="articleBody">
+                        <p>ALWAYS USE TIMESTAMPTZ NOT USE TIMESTAMP IN POSTGRES.<br>SET timezone = ‘UTC’ IN pgsql/data/postgresql.conf.</p>
+                        
+                            <a href="/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/" class="postShorten-excerpt_link link">
+                                Continue reading
+                            </a>
+                            
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
+                                <a class="link-unstyled" href="/my_blog/2017/01/19/Higher-Order-Component/">Higher Order Component</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Thu Jan 19 2017 14:48:57 GMT+0800">
+	
+		    Jan 19, 2017
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/javascript/">javascript</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <p>A Simple Higher Order Component example</p>
+<h2 id="Simple-example"><a href="#Simple-example" class="headerlink" title="Simple example"></a>Simple example</h2><p>For loading spinner with different Component<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// HOC declaration</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">withLoadingSpinner</span>(<span class="params">Component</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">EnhancedComponent</span>(<span class="params">&#123; isLoading, ...props &#125;</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!isLoading) &#123;</div><div class="line">      <span class="keyword">return</span> &lt;Component &#123; ...props &#125; /&gt;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return &lt;LoadingSpinner /&gt;;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Usage</div><div class="line"></div><div class="line">const ListItemsWithLoadingIndicator = withLoadingSpinner(ListItems);</div><div class="line"></div><div class="line">&lt;ListItemsWithLoadingIndicator</div><div class="line">  isLoading=&#123;props.isLoading&#125;</div><div class="line">  list=&#123;props.list&#125;</div><div class="line">/&gt;</div></pre></td></tr></table></figure></p>
+<h1 id="Recompose"><a href="#Recompose" class="headerlink" title="Recompose"></a>Recompose</h1><p><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">https://github.com/rafrex/spa-github-pages</a><br>A React Library for HOC</p>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/my_blog/2017/01/19/Higher-Order-Component/#post-footer" class="postShorten-excerpt_link link">
+                                    Comment and share
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
         <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
             <div class="postShorten-wrap">
                 <div class="postShorten-header">
@@ -299,54 +387,6 @@
                                 Continue reading
                             </a>
                             
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2017/01/19/Higher-Order-Component/">Higher Order Component</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Jan 19 2017 14:48:57 GMT+0800">
-	
-		    Jan 19, 2017
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/javascript/">javascript</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <p>A Simple Higher Order Component example</p>
-<h2 id="Simple-example"><a href="#Simple-example" class="headerlink" title="Simple example"></a>Simple example</h2><p>For loading spinner with different Component<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// HOC declaration</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">withLoadingSpinner</span>(<span class="params">Component</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">EnhancedComponent</span>(<span class="params">&#123; isLoading, ...props &#125;</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!isLoading) &#123;</div><div class="line">      <span class="keyword">return</span> &lt;Component &#123; ...props &#125; /&gt;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return &lt;LoadingSpinner /&gt;;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Usage</div><div class="line"></div><div class="line">const ListItemsWithLoadingIndicator = withLoadingSpinner(ListItems);</div><div class="line"></div><div class="line">&lt;ListItemsWithLoadingIndicator</div><div class="line">  isLoading=&#123;props.isLoading&#125;</div><div class="line">  list=&#123;props.list&#125;</div><div class="line">/&gt;</div></pre></td></tr></table></figure></p>
-<h1 id="Recompose"><a href="#Recompose" class="headerlink" title="Recompose"></a>Recompose</h1><p><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">https://github.com/rafrex/spa-github-pages</a><br>A React Library for HOC</p>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/my_blog/2017/01/19/Higher-Order-Component/#post-footer" class="postShorten-excerpt_link link">
-                                    Comment and share
-                                </a>
-                            </p>
                         
                     </div>
                 
@@ -622,67 +662,6 @@ direnv可用來設定Project的environment variable<br>
 </p>
                         
                             <a href="/my_blog/2016/03/16/direnv筆記/" class="postShorten-excerpt_link link">
-                                Continue reading
-                            </a>
-                            
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2016/03/16/remove-python-pyc-file/">Remove Python pyc File</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Wed Mar 16 2016 12:08:00 GMT+0800">
-	
-		    Mar 16, 2016
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/python/">python</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1. Bash Command</a></li>
-<li><a href="#sec-2">2. Git post-checkout hook</a></li>
-<li><a href="#sec-3">3. Python Environment Variable PYTHONDONTWRITEBYTECODE</a>
-<ul>
-<li><a href="#sec-3-1">3.1. set it at .bash_profile(global)</a></li>
-<li><a href="#sec-3-2">3.2. set it at activate and remove it at deactivate by VirtualEnv</a></li>
-<li><a href="#sec-3-3">3.3. use direnv to set</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-<p>
-Python interpreter在執行的時候會在每個package底下產生__pycache__ folder and <b>.pyc, *.pyo file<br>
-一般而言這些file不會進入版本控管所以在.gitigore中通常會有</b>.py[co], <span class="underline"><span class="underline">pycache</span></span><br>
-但以上設定卻會在git branch switch時導致pyc, pyo殘留問題<br>
-以下介紹3種方法來處理<br>
-</p>
-                        
-                            <a href="/my_blog/2016/03/16/remove-python-pyc-file/" class="postShorten-excerpt_link link">
                                 Continue reading
                             </a>
                             

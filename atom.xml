@@ -5,7 +5,7 @@
   <link href="/my_blog/atom.xml" rel="self"/>
   
   <link href="http://cwza.github.io/my_blog/"/>
-  <updated>2017-03-13T10:22:00.000Z</updated>
+  <updated>2017-03-15T06:16:10.000Z</updated>
   <id>http://cwza.github.io/my_blog/</id>
   
   <author>
@@ -16,13 +16,42 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>glide筆記</title>
+    <link href="http://cwza.github.io/my_blog/2017/03/15/glide%E7%AD%86%E8%A8%98/"/>
+    <id>http://cwza.github.io/my_blog/2017/03/15/glide筆記/</id>
+    <published>2017-03-15T06:13:57.000Z</published>
+    <updated>2017-03-15T06:16:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://github.com/Masterminds/glide" target="_blank" rel="external">https://github.com/Masterminds/glide</a></p>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install glide</div></pre></td></tr></table></figure>
+<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>source code需要放在gopath下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ glide create                            <span class="comment"># Start a new workspace</span></div><div class="line">$ open glide.yaml                         <span class="comment"># and edit away!</span></div><div class="line">$ glide get github.com/Masterminds/cookoo <span class="comment"># Get a package and add to glide.yaml</span></div><div class="line">$ glide install                           <span class="comment"># Install packages and dependencies</span></div><div class="line"><span class="comment"># work, work, work</span></div><div class="line">$ go build                                <span class="comment"># Go tools work normally</span></div><div class="line">$ glide up                                <span class="comment"># Update to newest versions of the package</span></div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://github.com/Masterminds/glide&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/Masterminds/glide&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;安裝&quot;&gt;&lt;a
+    
+    </summary>
+    
+      <category term="golang" scheme="http://cwza.github.io/my_blog/categories/golang/"/>
+    
+    
+      <category term="golang" scheme="http://cwza.github.io/my_blog/tags/golang/"/>
+    
+      <category term="glide" scheme="http://cwza.github.io/my_blog/tags/glide/"/>
+    
+  </entry>
+  
+  <entry>
     <title>gvm筆記與vscode整合</title>
     <link href="http://cwza.github.io/my_blog/2017/03/13/gvm%E7%AD%86%E8%A8%98%E8%88%87vscode%E6%95%B4%E5%90%88/"/>
     <id>http://cwza.github.io/my_blog/2017/03/13/gvm筆記與vscode整合/</id>
     <published>2017-03-13T10:11:57.000Z</published>
-    <updated>2017-03-13T10:22:00.000Z</updated>
+    <updated>2017-03-15T06:16:28.000Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">xcode-select --install</div><div class="line">brew update</div><div class="line">brew install mercurial</div><div class="line">bash &lt; &lt;(curl <span class="_">-s</span> -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)</div><div class="line">gvm install go1.4 -B</div><div class="line">gvm use go1.4</div><div class="line"><span class="built_in">export</span> GOROOT_BOOTSTRAP=<span class="variable">$GOROOT</span></div><div class="line">gvm install 1.8</div></pre></td></tr></table></figure>
+    <content type="html"><![CDATA[<p><a href="https://github.com/moovweb/gvm" target="_blank" rel="external">https://github.com/moovweb/gvm</a></p>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">xcode-select --install</div><div class="line">brew update</div><div class="line">brew install mercurial</div><div class="line">bash &lt; &lt;(curl <span class="_">-s</span> -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)</div><div class="line">gvm install go1.4 -B</div><div class="line">gvm use go1.4</div><div class="line"><span class="built_in">export</span> GOROOT_BOOTSTRAP=<span class="variable">$GOROOT</span></div><div class="line">gvm install 1.8</div></pre></td></tr></table></figure>
 <h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">gvm install [version]</div><div class="line">gvm uninstall [version]</div><div class="line">gvm listall</div><div class="line">gvm list</div><div class="line">gvm use [version]</div><div class="line">gvm implode    // uninstall gvm</div></pre></td></tr></table></figure>
 <h2 id="使用gvm來管理workspace"><a href="#使用gvm來管理workspace" class="headerlink" title="使用gvm來管理workspace"></a>使用gvm來管理workspace</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">go use [version]</div><div class="line">mkdir -p ~/golang/  </div><div class="line"><span class="built_in">cd</span> ~/golang/  </div><div class="line">gvm pkgset create --local  </div><div class="line">gvm pkgset use --local  </div><div class="line">mkdir src pkg bin</div><div class="line">go env</div></pre></td></tr></table></figure>
 <p>利用pkgset將GOPATH設為自定的workspace path</p>
@@ -31,7 +60,8 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;安裝&quot;&gt;&lt;a href=&quot;#安裝&quot; class=&quot;headerlink&quot; title=&quot;安裝&quot;&gt;&lt;/a&gt;安裝&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div cl
+      &lt;p&gt;&lt;a href=&quot;https://github.com/moovweb/gvm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/moovweb/gvm&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;安裝&quot;&gt;&lt;a href=&quot;#安裝&quot; 
     
     </summary>
     
@@ -39,6 +69,8 @@
     
     
       <category term="golang" scheme="http://cwza.github.io/my_blog/tags/golang/"/>
+    
+      <category term="gvm" scheme="http://cwza.github.io/my_blog/tags/gvm/"/>
     
   </entry>
   
@@ -347,6 +379,34 @@
   </entry>
   
   <entry>
+    <title>Higher Order Component</title>
+    <link href="http://cwza.github.io/my_blog/2017/01/19/Higher-Order-Component/"/>
+    <id>http://cwza.github.io/my_blog/2017/01/19/Higher-Order-Component/</id>
+    <published>2017-01-19T06:48:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>A Simple Higher Order Component example</p>
+<h2 id="Simple-example"><a href="#Simple-example" class="headerlink" title="Simple example"></a>Simple example</h2><p>For loading spinner with different Component<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// HOC declaration</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">withLoadingSpinner</span>(<span class="params">Component</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">EnhancedComponent</span>(<span class="params">&#123; isLoading, ...props &#125;</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!isLoading) &#123;</div><div class="line">      <span class="keyword">return</span> &lt;Component &#123; ...props &#125; /&gt;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return &lt;LoadingSpinner /&gt;;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Usage</div><div class="line"></div><div class="line">const ListItemsWithLoadingIndicator = withLoadingSpinner(ListItems);</div><div class="line"></div><div class="line">&lt;ListItemsWithLoadingIndicator</div><div class="line">  isLoading=&#123;props.isLoading&#125;</div><div class="line">  list=&#123;props.list&#125;</div><div class="line">/&gt;</div></pre></td></tr></table></figure></p>
+<h1 id="Recompose"><a href="#Recompose" class="headerlink" title="Recompose"></a>Recompose</h1><p><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">https://github.com/rafrex/spa-github-pages</a><br>A React Library for HOC</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;A Simple Higher Order Component example&lt;/p&gt;
+&lt;h2 id=&quot;Simple-example&quot;&gt;&lt;a href=&quot;#Simple-example&quot; class=&quot;headerlink&quot; title=&quot;Simple example&quot;&gt;&lt;
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
+    
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
+    
+      <category term="react" scheme="http://cwza.github.io/my_blog/tags/react/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Deploy react app to github page</title>
     <link href="http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/"/>
     <id>http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/</id>
@@ -407,34 +467,6 @@
       <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
     
       <category term="web" scheme="http://cwza.github.io/my_blog/tags/web/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Higher Order Component</title>
-    <link href="http://cwza.github.io/my_blog/2017/01/19/Higher-Order-Component/"/>
-    <id>http://cwza.github.io/my_blog/2017/01/19/Higher-Order-Component/</id>
-    <published>2017-01-19T06:48:57.000Z</published>
-    <updated>2017-03-10T02:26:35.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>A Simple Higher Order Component example</p>
-<h2 id="Simple-example"><a href="#Simple-example" class="headerlink" title="Simple example"></a>Simple example</h2><p>For loading spinner with different Component<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// HOC declaration</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">withLoadingSpinner</span>(<span class="params">Component</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">EnhancedComponent</span>(<span class="params">&#123; isLoading, ...props &#125;</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!isLoading) &#123;</div><div class="line">      <span class="keyword">return</span> &lt;Component &#123; ...props &#125; /&gt;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return &lt;LoadingSpinner /&gt;;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Usage</div><div class="line"></div><div class="line">const ListItemsWithLoadingIndicator = withLoadingSpinner(ListItems);</div><div class="line"></div><div class="line">&lt;ListItemsWithLoadingIndicator</div><div class="line">  isLoading=&#123;props.isLoading&#125;</div><div class="line">  list=&#123;props.list&#125;</div><div class="line">/&gt;</div></pre></td></tr></table></figure></p>
-<h1 id="Recompose"><a href="#Recompose" class="headerlink" title="Recompose"></a>Recompose</h1><p><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">https://github.com/rafrex/spa-github-pages</a><br>A React Library for HOC</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;A Simple Higher Order Component example&lt;/p&gt;
-&lt;h2 id=&quot;Simple-example&quot;&gt;&lt;a href=&quot;#Simple-example&quot; class=&quot;headerlink&quot; title=&quot;Simple example&quot;&gt;&lt;
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
-    
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
-    
-      <category term="react" scheme="http://cwza.github.io/my_blog/tags/react/"/>
     
   </entry>
   
@@ -820,166 +852,6 @@ direnv可用來設定Project的environment variable&lt;br&gt;
       <category term="linux" scheme="http://cwza.github.io/my_blog/tags/linux/"/>
     
       <category term="mac" scheme="http://cwza.github.io/my_blog/tags/mac/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Remove Python pyc File</title>
-    <link href="http://cwza.github.io/my_blog/2016/03/16/remove-python-pyc-file/"/>
-    <id>http://cwza.github.io/my_blog/2016/03/16/remove-python-pyc-file/</id>
-    <published>2016-03-16T04:08:00.000Z</published>
-    <updated>2017-03-10T02:26:35.000Z</updated>
-    
-    <content type="html"><![CDATA[
-
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1. Bash Command</a></li>
-<li><a href="#sec-2">2. Git post-checkout hook</a></li>
-<li><a href="#sec-3">3. Python Environment Variable PYTHONDONTWRITEBYTECODE</a>
-<ul>
-<li><a href="#sec-3-1">3.1. set it at .bash_profile(global)</a></li>
-<li><a href="#sec-3-2">3.2. set it at activate and remove it at deactivate by VirtualEnv</a></li>
-<li><a href="#sec-3-3">3.3. use direnv to set</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-<p>
-Python interpreter在執行的時候會在每個package底下產生__pycache__ folder and <b>.pyc, *.pyo file<br>
-一般而言這些file不會進入版本控管所以在.gitigore中通常會有</b>.py[co], <span class="underline"><span class="underline">pycache</span></span><br>
-但以上設定卻會在git branch switch時導致pyc, pyo殘留問題<br>
-以下介紹3種方法來處理<br>
-</p>
-
-<a id="more"></a>
-
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Bash Command</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-手動執行以下指令<br>
-recursively removes all .pyc files and <span class="underline"><span class="underline">pycache</span></span> directories in the current directory<br>
-</p>
-<div class="org-src-container">
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">find . | grep -E <span class="string">"(__pycache__|\.pyc$)"</span> | xargs rm -rf</span><br></pre></td></tr></table></figure>
-</div>
-</div>
-</div>
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Git post-checkout hook</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-git post-checkout hook能設定在git branch switch後自動執行的指令<br>
-只要將需要執行的程式放到repo/.git/hooks/post-checkout並設定權限為可執行即可<br>
-github討論:<br>
-<a href="http://stackoverflow.com/questions/1504724/automatically-remove-pyc-files-and-otherwise-empty-directories-when-i-check-ou" target="_blank" rel="external">http://stackoverflow.com/questions/1504724/automatically-remove-pyc-files-and-otherwise-empty-directories-when-i-check-ou</a><br>
-</p>
-
-<p>
-以下是google找來的auto remove pyc and empty folder after git checkout範例<br>
-</p>
-<div class="org-src-container">
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="shebang">#!/usr/bin/env bash</span><br><span class="line"></span></span><br><span class="line"><span class="comment"># Delete .pyc files and empty directories from root of project</span></span><br><span class="line"><span class="built_in">cd</span> ./$(git rev-parse --show-cdup)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Clean-up</span></span><br><span class="line">find . -name <span class="string">".DS_Store"</span> -delete</span><br><span class="line"></span><br><span class="line">NUM_PYC_FILES=$( find . -name <span class="string">"*.pyc"</span> | wc <span class="operator">-l</span> | tr <span class="operator">-d</span> <span class="string">' '</span> )</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$NUM_PYC_FILES</span> <span class="operator">-gt</span> <span class="number">0</span> ]; <span class="keyword">then</span></span><br><span class="line">    find . -name <span class="string">"*.pyc"</span> -delete</span><br><span class="line">    <span class="built_in">printf</span> <span class="string">"\e[00;31mDeleted <span class="variable">$NUM_PYC_FILES</span> .pyc files\e[00m\n"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">NUM_EMPTY_DIRS=$( find . -type d -empty | wc <span class="operator">-l</span> | tr <span class="operator">-d</span> <span class="string">' '</span> )</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$NUM_EMPTY_DIRS</span> <span class="operator">-gt</span> <span class="number">0</span> ]; <span class="keyword">then</span></span><br><span class="line">    find . -type d -empty -delete</span><br><span class="line">    <span class="built_in">printf</span> <span class="string">"\e[00;31mDeleted <span class="variable">$NUM_EMPTY_DIRS</span> empty directories\e[00m\n"</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-</div>
-</div>
-</div>
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Python Environment Variable PYTHONDONTWRITEBYTECODE</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-環境變數中設定PYTHONDONTWRITEBYTECODE=1，可完全禁止python interpreter產生類似檔案<br>
-在developer的環境下十分好用<br>
-以下3種設定環境變數的方法<br>
-</p>
-</div>
-<div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> set it at .bash_profile(global)</h3>
-<div class="outline-text-3" id="text-3-1">
-<p>
-在.bash_profile中加入export PYTHONDONTWRITEBYTECODE=1<br>
-最簡單的設定方式，但將導致系統內建的python也無法產生byte code<br>
-</p>
-</div>
-</div>
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> set it at activate and remove it at deactivate by VirtualEnv</h3>
-<div class="outline-text-3" id="text-3-2">
-<p>
-在VirtualEnv中設定，如此即可做到只有該Virtual Env會被影響到<br>
-bin/activate:<br>
-</p>
-<div class="org-src-container">
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Tell Python not to write out .pyc files.</span></span><br><span class="line">_OLD_PYTHONDONTWRITEBYTECODE=<span class="string">"<span class="variable">$PYTHONDONTWRITEBYTECODE</span>"</span></span><br><span class="line">PYTHONDONTWRITEBYTECODE=<span class="number">1</span></span><br><span class="line"><span class="built_in">export</span> PYTHONDONTWRITEBYTECODE</span><br></pre></td></tr></table></figure>
-</div>
-
-<p>
-bin/deactivate:<br>
-</p>
-<div class="org-src-container">
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">PYTHONDONTWRITEBYTECODE=<span class="string">"<span class="variable">$_OLD_PYTHONDONTWRITEBYTECODE</span>"</span></span><br><span class="line"><span class="built_in">export</span> PYTHONDONTWRITEBYTECODE</span><br><span class="line"><span class="built_in">unset</span> _OLD_PYTHONDONTWRITEBYTECODE</span><br></pre></td></tr></table></figure>
-</div>
-</div>
-</div>
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> use direnv to set</h3>
-<div class="outline-text-3" id="text-3-3">
-<p>
-若python環境是用pyenv + pyenv-virtualenv來管理的話，則需要用到其他tool才能設定環境變數<br>
-因為pyenv不會去執行virtualenv的activate與deactivate，且目前並沒有辦法可以在pyenv中設定環境變數<br>
-by pyenv author: <a href="https://github.com/yyuu/pyenv-virtualenv/issues/55" target="_blank" rel="external">https://github.com/yyuu/pyenv-virtualenv/issues/55</a><br>
-</p>
-
-<p>
-direnv使用方式可參考: direnv筆記<br>
-</p>
-</div>
-</div>
-</div>
-
-Last Updated 2017-03-10 五 10:26.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="external">hexo-renderer-org</a> with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.2.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 8.2.10)
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;div id=&quot;table-of-contents&quot;&gt;
-&lt;h2&gt;Table of Contents&lt;/h2&gt;
-&lt;div id=&quot;text-table-of-contents&quot;&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#sec-1&quot;&gt;1. Bash Command&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#sec-2&quot;&gt;2. Git post-checkout hook&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#sec-3&quot;&gt;3. Python Environment Variable PYTHONDONTWRITEBYTECODE&lt;/a&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#sec-3-1&quot;&gt;3.1. set it at .bash_profile(global)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#sec-3-2&quot;&gt;3.2. set it at activate and remove it at deactivate by VirtualEnv&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#sec-3-3&quot;&gt;3.3. use direnv to set&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;
-Python interpreter在執行的時候會在每個package底下產生__pycache__ folder and &lt;b&gt;.pyc, *.pyo file&lt;br&gt;
-一般而言這些file不會進入版本控管所以在.gitigore中通常會有&lt;/b&gt;.py[co], &lt;span class=&quot;underline&quot;&gt;&lt;span class=&quot;underline&quot;&gt;pycache&lt;/span&gt;&lt;/span&gt;&lt;br&gt;
-但以上設定卻會在git branch switch時導致pyc, pyo殘留問題&lt;br&gt;
-以下介紹3種方法來處理&lt;br&gt;
-&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="python" scheme="http://cwza.github.io/my_blog/categories/python/"/>
-    
-    
-      <category term="python" scheme="http://cwza.github.io/my_blog/tags/python/"/>
-    
-      <category term="git" scheme="http://cwza.github.io/my_blog/tags/git/"/>
     
   </entry>
   

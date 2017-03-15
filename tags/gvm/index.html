@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="cwza&#39;s blog">
-    <title>cwza&#39;s blog</title>
+    <title>Tag: gvm - cwza&#39;s blog</title>
     <meta name="author" content="Cwza">
     
     
@@ -14,7 +14,7 @@
     
     <meta property="og:type" content="blog">
 <meta property="og:title" content="cwza's blog">
-<meta property="og:url" content="http://cwza.github.io/my_blog/page/10/index.html">
+<meta property="og:url" content="http://cwza.github.io/my_blog/tags/gvm/index.html">
 <meta property="og:site_name" content="cwza's blog">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cwza's blog">
@@ -28,8 +28,6 @@
     
 
     <!--add google search console verification-->
-    
-        <meta name="google-site-verification" content="X54_1CkfXpJUuzjjbP2kLLQwBJKUqGiPc_Zx6vyap-Y" />
     
 
     <!--STYLES-->
@@ -217,28 +215,29 @@
                         hasCoverMetaIn
                         ">
                 
+    
 
 <section class="postShorten-group main-content-wrap">
     
         
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
             <div class="postShorten-wrap">
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
-                                <a class="link-unstyled" href="/my_blog/2015/12/02/Bind9的Dynamic-Dns-Update設定筆記/">Bind9的Dynamic Dns Update設定筆記</a>
+                                <a class="link-unstyled" href="/my_blog/2017/03/13/gvm筆記與vscode整合/">gvm筆記與vscode整合</a>
                         
                     </h1>
                     <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Wed Dec 02 2015 19:27:30 GMT+0800">
+    <time itemprop="datePublished" content="Mon Mar 13 2017 18:11:57 GMT+0800">
 	
-		    Dec 02, 2015
+		    Mar 13, 2017
     	
     </time>
     
         <span>in </span>
         
-    <a class="category-link" href="/my_blog/categories/linux/">linux</a>
+    <a class="category-link" href="/my_blog/categories/golang/">golang</a>
 
 
     
@@ -246,53 +245,24 @@
                 </div>
                 
                 
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <h2 id="Something"><a href="#Something" class="headerlink" title="Something"></a>Something</h2><p>bind9支援dynamic dns update request，可以動態的在remote送出dns update去更改dns server zone的設定<br>bind9在接收到dns update request後會先在/etc/bind/底下新增db-abc.com.tw.jnl，以之達成動態修改db-abc.com.tw文件，db-abc.com.tw文件會在下次server restart時才真正寫入<br>當然在zone中要設定allow-update，預設是不允許的</p>
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <p><a href="https://github.com/moovweb/gvm" target="_blank" rel="external">https://github.com/moovweb/gvm</a></p>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">xcode-select --install</div><div class="line">brew update</div><div class="line">brew install mercurial</div><div class="line">bash &lt; &lt;(curl <span class="_">-s</span> -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)</div><div class="line">gvm install go1.4 -B</div><div class="line">gvm use go1.4</div><div class="line"><span class="built_in">export</span> GOROOT_BOOTSTRAP=<span class="variable">$GOROOT</span></div><div class="line">gvm install 1.8</div></pre></td></tr></table></figure>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">gvm install [version]</div><div class="line">gvm uninstall [version]</div><div class="line">gvm listall</div><div class="line">gvm list</div><div class="line">gvm use [version]</div><div class="line">gvm implode    // uninstall gvm</div></pre></td></tr></table></figure>
+<h2 id="使用gvm來管理workspace"><a href="#使用gvm來管理workspace" class="headerlink" title="使用gvm來管理workspace"></a>使用gvm來管理workspace</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">go use [version]</div><div class="line">mkdir -p ~/golang/  </div><div class="line"><span class="built_in">cd</span> ~/golang/  </div><div class="line">gvm pkgset create --local  </div><div class="line">gvm pkgset use --local  </div><div class="line">mkdir src pkg bin</div><div class="line">go env</div></pre></td></tr></table></figure>
+<p>利用pkgset將GOPATH設為自定的workspace path</p>
+<h2 id="vscode-整合"><a href="#vscode-整合" class="headerlink" title="vscode 整合"></a>vscode 整合</h2><p>設定gopath與goroot為go env的值<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">go use [version]</div><div class="line">go env</div></pre></td></tr></table></figure></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"go.gopath"</span>:<span class="string">"/Users/meep007/cwz/develop/practice/golang:/Users/meep007/cwz/develop/practice/golang/.gvm_local/pkgsets/go1.8/local:/Users/meep007/.gvm/pkgsets/go1.8/global"</span>,</div><div class="line">  <span class="attr">"go.goroot"</span>: <span class="string">"/Users/meep007/.gvm/gos/go1.8"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
                         
-                            <a href="/my_blog/2015/12/02/Bind9的Dynamic-Dns-Update設定筆記/" class="postShorten-excerpt_link link">
-                                Continue reading
-                            </a>
                             
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2015/12/02/Bind安裝與基本設定筆記/">Bind安裝與基本設定筆記</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Wed Dec 02 2015 18:56:50 GMT+0800">
-	
-		    Dec 02, 2015
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/linux/">linux</a>
 
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <p>此筆記為安裝在Debian上的步驟</p>
                         
-                            <a href="/my_blog/2015/12/02/Bind安裝與基本設定筆記/" class="postShorten-excerpt_link link">
-                                Continue reading
-                            </a>
-                            
+                        
+                            <p>
+                                <a href="/my_blog/2017/03/13/gvm筆記與vscode整合/#post-footer" class="postShorten-excerpt_link link">
+                                    Comment and share
+                                </a>
+                            </p>
                         
                     </div>
                 
@@ -303,28 +273,13 @@
     <div class="pagination-bar">
     <ul class="pagination">
         
-        <li class="pagination-prev">
-            
-                <a class="btn btn--default btn--small" href="/my_blog/page/9/">
-            
-                <i class="fa fa-angle-left text-base icon-mr"></i>
-                    <span>NEWER POSTS</span>
-            </a>
-        </li>
         
-        
-        <li class="pagination-number">page 10 of 10</li>
+        <li class="pagination-number">page 1 of 1</li>
     </ul>
 </div>
 
 </section>
 
-<!-- hide toc  -->
-<script>
- document.addEventListener("DOMContentLoaded", function(event) {
-     $('div#table-of-contents').hide()
- });
-</script>
 
                 <footer id="footer" class="main-content-wrap">
     <span class="copyrights">

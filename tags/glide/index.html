@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="cwza&#39;s blog">
-    <title>cwza&#39;s blog</title>
+    <title>Tag: glide - cwza&#39;s blog</title>
     <meta name="author" content="Cwza">
     
     
@@ -14,7 +14,7 @@
     
     <meta property="og:type" content="blog">
 <meta property="og:title" content="cwza's blog">
-<meta property="og:url" content="http://cwza.github.io/my_blog/page/10/index.html">
+<meta property="og:url" content="http://cwza.github.io/my_blog/tags/glide/index.html">
 <meta property="og:site_name" content="cwza's blog">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cwza's blog">
@@ -28,8 +28,6 @@
     
 
     <!--add google search console verification-->
-    
-        <meta name="google-site-verification" content="X54_1CkfXpJUuzjjbP2kLLQwBJKUqGiPc_Zx6vyap-Y" />
     
 
     <!--STYLES-->
@@ -217,28 +215,29 @@
                         hasCoverMetaIn
                         ">
                 
+    
 
 <section class="postShorten-group main-content-wrap">
     
         
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
             <div class="postShorten-wrap">
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
-                                <a class="link-unstyled" href="/my_blog/2015/12/02/Bind9的Dynamic-Dns-Update設定筆記/">Bind9的Dynamic Dns Update設定筆記</a>
+                                <a class="link-unstyled" href="/my_blog/2017/03/15/glide筆記/">glide筆記</a>
                         
                     </h1>
                     <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Wed Dec 02 2015 19:27:30 GMT+0800">
+    <time itemprop="datePublished" content="Wed Mar 15 2017 14:13:57 GMT+0800">
 	
-		    Dec 02, 2015
+		    Mar 15, 2017
     	
     </time>
     
         <span>in </span>
         
-    <a class="category-link" href="/my_blog/categories/linux/">linux</a>
+    <a class="category-link" href="/my_blog/categories/golang/">golang</a>
 
 
     
@@ -246,53 +245,21 @@
                 </div>
                 
                 
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <h2 id="Something"><a href="#Something" class="headerlink" title="Something"></a>Something</h2><p>bind9支援dynamic dns update request，可以動態的在remote送出dns update去更改dns server zone的設定<br>bind9在接收到dns update request後會先在/etc/bind/底下新增db-abc.com.tw.jnl，以之達成動態修改db-abc.com.tw文件，db-abc.com.tw文件會在下次server restart時才真正寫入<br>當然在zone中要設定allow-update，預設是不允許的</p>
-                        
-                            <a href="/my_blog/2015/12/02/Bind9的Dynamic-Dns-Update設定筆記/" class="postShorten-excerpt_link link">
-                                Continue reading
-                            </a>
-                            
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2015/12/02/Bind安裝與基本設定筆記/">Bind安裝與基本設定筆記</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Wed Dec 02 2015 18:56:50 GMT+0800">
-	
-		    Dec 02, 2015
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/linux/">linux</a>
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <p><a href="https://github.com/Masterminds/glide" target="_blank" rel="external">https://github.com/Masterminds/glide</a></p>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install glide</div></pre></td></tr></table></figure>
+<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>source code需要放在gopath下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ glide create                            <span class="comment"># Start a new workspace</span></div><div class="line">$ open glide.yaml                         <span class="comment"># and edit away!</span></div><div class="line">$ glide get github.com/Masterminds/cookoo <span class="comment"># Get a package and add to glide.yaml</span></div><div class="line">$ glide install                           <span class="comment"># Install packages and dependencies</span></div><div class="line"><span class="comment"># work, work, work</span></div><div class="line">$ go build                                <span class="comment"># Go tools work normally</span></div><div class="line">$ glide up                                <span class="comment"># Update to newest versions of the package</span></div></pre></td></tr></table></figure></p>
 
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <p>此筆記為安裝在Debian上的步驟</p>
                         
-                            <a href="/my_blog/2015/12/02/Bind安裝與基本設定筆記/" class="postShorten-excerpt_link link">
-                                Continue reading
-                            </a>
                             
+
+                        
+                        
+                            <p>
+                                <a href="/my_blog/2017/03/15/glide筆記/#post-footer" class="postShorten-excerpt_link link">
+                                    Comment and share
+                                </a>
+                            </p>
                         
                     </div>
                 
@@ -303,28 +270,13 @@
     <div class="pagination-bar">
     <ul class="pagination">
         
-        <li class="pagination-prev">
-            
-                <a class="btn btn--default btn--small" href="/my_blog/page/9/">
-            
-                <i class="fa fa-angle-left text-base icon-mr"></i>
-                    <span>NEWER POSTS</span>
-            </a>
-        </li>
         
-        
-        <li class="pagination-number">page 10 of 10</li>
+        <li class="pagination-number">page 1 of 1</li>
     </ul>
 </div>
 
 </section>
 
-<!-- hide toc  -->
-<script>
- document.addEventListener("DOMContentLoaded", function(event) {
-     $('div#table-of-contents').hide()
- });
-</script>
 
                 <footer id="footer" class="main-content-wrap">
     <span class="copyrights">
