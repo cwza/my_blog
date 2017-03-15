@@ -5,7 +5,7 @@
   <link href="/my_blog/atom.xml" rel="self"/>
   
   <link href="http://cwza.github.io/my_blog/"/>
-  <updated>2017-03-15T06:16:10.000Z</updated>
+  <updated>2017-03-15T08:07:06.000Z</updated>
   <id>http://cwza.github.io/my_blog/</id>
   
   <author>
@@ -16,11 +16,36 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>go-middleware筆記</title>
+    <link href="http://cwza.github.io/my_blog/2017/03/15/go-middleware%E7%AD%86%E8%A8%98/"/>
+    <id>http://cwza.github.io/my_blog/2017/03/15/go-middleware筆記/</id>
+    <published>2017-03-15T08:00:57.000Z</published>
+    <updated>2017-03-15T08:07:06.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Two example about middleware in go<br>Reference: <a href="http://www.alexedwards.net/blog/making-and-using-middleware" target="_blank" rel="external">http://www.alexedwards.net/blog/making-and-using-middleware</a></p>
+<a id="more"></a>
+<h2 id="A-basic-middleware-chain-example"><a href="#A-basic-middleware-chain-example" class="headerlink" title="A basic middleware chain example"></a>A basic middleware chain example</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">  <span class="string">"log"</span></div><div class="line">  <span class="string">"net/http"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">middlewareOne</span><span class="params">(next http.Handler)</span> <span class="title">http</span>.<span class="title">Handler</span></span> &#123;</div><div class="line">  <span class="keyword">return</span> http.HandlerFunc(<span class="function"><span class="keyword">func</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line">    log.Println(<span class="string">"Executing middlewareOne"</span>)</div><div class="line">    next.ServeHTTP(w, r)</div><div class="line">    log.Println(<span class="string">"Executing middlewareOne again"</span>)</div><div class="line">  &#125;)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">middlewareTwo</span><span class="params">(next http.Handler)</span> <span class="title">http</span>.<span class="title">Handler</span></span> &#123;</div><div class="line">  <span class="keyword">return</span> http.HandlerFunc(<span class="function"><span class="keyword">func</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line">    log.Println(<span class="string">"Executing middlewareTwo"</span>)</div><div class="line">    <span class="keyword">if</span> r.URL.Path != <span class="string">"/"</span> &#123;</div><div class="line">      <span class="keyword">return</span></div><div class="line">    &#125;</div><div class="line">    next.ServeHTTP(w, r)</div><div class="line">    log.Println(<span class="string">"Executing middlewareTwo again"</span>)</div><div class="line">  &#125;)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">final</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line">  log.Println(<span class="string">"Executing finalHandler"</span>)</div><div class="line">  w.Write([]<span class="keyword">byte</span>(<span class="string">"OK"</span>))</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">  finalHandler := http.HandlerFunc(final)</div><div class="line"></div><div class="line">  http.Handle(<span class="string">"/"</span>, middlewareOne(middlewareTwo(finalHandler)))</div><div class="line">  http.ListenAndServe(<span class="string">":3000"</span>, <span class="literal">nil</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="example-of-chaining-3rd-party-middleware"><a href="#example-of-chaining-3rd-party-middleware" class="headerlink" title="example of chaining 3rd party middleware"></a>example of chaining 3rd party middleware</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">	<span class="string">"bytes"</span></div><div class="line">	<span class="string">"github.com/goji/httpauth"</span></div><div class="line">	<span class="string">"github.com/gorilla/handlers"</span></div><div class="line">	<span class="string">"net/http"</span></div><div class="line">	<span class="string">"os"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">enforceXMLHandler</span><span class="params">(next http.Handler)</span> <span class="title">http</span>.<span class="title">Handler</span></span> &#123;</div><div class="line">	<span class="keyword">return</span> http.HandlerFunc(<span class="function"><span class="keyword">func</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line">		<span class="keyword">if</span> r.ContentLength == <span class="number">0</span> &#123;</div><div class="line">			http.Error(w, http.StatusText(<span class="number">400</span>), <span class="number">400</span>)</div><div class="line">			<span class="keyword">return</span></div><div class="line">		&#125;</div><div class="line"></div><div class="line">		buf := <span class="built_in">new</span>(bytes.Buffer)</div><div class="line">		buf.ReadFrom(r.Body)</div><div class="line">		<span class="keyword">if</span> http.DetectContentType(buf.Bytes()) != <span class="string">"text/xml; charset=utf-8"</span> &#123;</div><div class="line">			http.Error(w, http.StatusText(<span class="number">415</span>), <span class="number">415</span>)</div><div class="line">			<span class="keyword">return</span></div><div class="line">		&#125;</div><div class="line"></div><div class="line">		next.ServeHTTP(w, r)</div><div class="line">	&#125;)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">myLoggingHandler</span><span class="params">(h http.Handler)</span> <span class="title">http</span>.<span class="title">Handler</span></span> &#123;</div><div class="line">	logFile, err := os.OpenFile(<span class="string">"server.log"</span>, os.O_RDWR|os.O_CREATE|os.O_APPEND, <span class="number">0666</span>)</div><div class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">		<span class="built_in">panic</span>(err)</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> handlers.LoggingHandler(logFile, h)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	indexHandler := http.HandlerFunc(index)</div><div class="line">	authHandler := httpauth.SimpleBasicAuth(<span class="string">"username"</span>, <span class="string">"password"</span>)</div><div class="line"></div><div class="line">	http.Handle(<span class="string">"/"</span>, myLoggingHandler(authHandler(enforceXMLHandler(indexHandler))))</div><div class="line">	http.ListenAndServe(<span class="string">":3000"</span>, <span class="literal">nil</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">index</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line">	w.Write([]<span class="keyword">byte</span>(<span class="string">"OK"</span>))</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Two example about middleware in go&lt;br&gt;Reference: &lt;a href=&quot;http://www.alexedwards.net/blog/making-and-using-middleware&quot;&gt;http://www.alexedwards.net/blog/making-and-using-middleware&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="golang" scheme="http://cwza.github.io/my_blog/categories/golang/"/>
+    
+    
+      <category term="golang" scheme="http://cwza.github.io/my_blog/tags/golang/"/>
+    
+  </entry>
+  
+  <entry>
     <title>glide筆記</title>
     <link href="http://cwza.github.io/my_blog/2017/03/15/glide%E7%AD%86%E8%A8%98/"/>
     <id>http://cwza.github.io/my_blog/2017/03/15/glide筆記/</id>
     <published>2017-03-15T06:13:57.000Z</published>
-    <updated>2017-03-15T06:16:10.000Z</updated>
+    <updated>2017-03-15T08:03:59.000Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://github.com/Masterminds/glide" target="_blank" rel="external">https://github.com/Masterminds/glide</a></p>
 <h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install glide</div></pre></td></tr></table></figure>
@@ -48,7 +73,7 @@
     <link href="http://cwza.github.io/my_blog/2017/03/13/gvm%E7%AD%86%E8%A8%98%E8%88%87vscode%E6%95%B4%E5%90%88/"/>
     <id>http://cwza.github.io/my_blog/2017/03/13/gvm筆記與vscode整合/</id>
     <published>2017-03-13T10:11:57.000Z</published>
-    <updated>2017-03-15T06:16:28.000Z</updated>
+    <updated>2017-03-15T08:05:25.000Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://github.com/moovweb/gvm" target="_blank" rel="external">https://github.com/moovweb/gvm</a></p>
 <h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">xcode-select --install</div><div class="line">brew update</div><div class="line">brew install mercurial</div><div class="line">bash &lt; &lt;(curl <span class="_">-s</span> -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)</div><div class="line">gvm install go1.4 -B</div><div class="line">gvm use go1.4</div><div class="line"><span class="built_in">export</span> GOROOT_BOOTSTRAP=<span class="variable">$GOROOT</span></div><div class="line">gvm install 1.8</div></pre></td></tr></table></figure>
@@ -379,6 +404,42 @@
   </entry>
   
   <entry>
+    <title>Nginx With Node And Https config</title>
+    <link href="http://cwza.github.io/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/"/>
+    <id>http://cwza.github.io/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/</id>
+    <published>2017-01-19T06:48:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Nginx With Node And Https config example<br><a id="more"></a></p>
+<h1 id="nginx-config-examaple"><a href="#nginx-config-examaple" class="headerlink" title="nginx config examaple"></a>nginx config examaple</h1><p>pass all request to nodejs server</p>
+<p>copy ssl cert files to /etc/nginx/ssl/<br>copy nginx.conf file to /etc/nginx/sites-available<br>and link to /etc/nginx/sites-enabled/<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp ~/faceblock/faceblock-server/docker/faceblock/nginx.conf /etc/nginx/sites-available/faceblock</div><div class="line">ln <span class="_">-s</span> /etc/nginx/sites-available/faceblock /etc/nginx/sites-enabled/faceblock</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># nginx.conf</span></div><div class="line"><span class="comment"># the IP(s) on which your node server is running. I chose port 3001.</span></div><div class="line">upstream app_faceblock &#123;</div><div class="line">    server 127.0.0.1:3001;</div><div class="line">    keepalive 8;</div><div class="line">&#125;</div><div class="line"></div><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=10r/s; <span class="comment"># rate limit</span></div><div class="line"></div><div class="line"><span class="comment"># the nginx server instance</span></div><div class="line">server &#123;</div><div class="line">    listen 0.0.0.0:80;</div><div class="line">    server_name cwzc.pw www.cwzc.pw;</div><div class="line">    access_log /var/<span class="built_in">log</span>/nginx/faceblock.log;</div><div class="line"></div><div class="line">    listen 443 ssl default_server;</div><div class="line">    listen [::]:443 ssl default_server;</div><div class="line"></div><div class="line">    ssl_certificate /etc/nginx/ssl/nginx.crt;</div><div class="line">    ssl_certificate_key /etc/nginx/ssl/nginx.key;</div><div class="line"></div><div class="line">    location /static &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      root /static;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment"># pass the request to the node.js server with the correct headers</span></div><div class="line">    <span class="comment"># and much more can be added, see nginx config options</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      </div><div class="line">      proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">      proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">      proxy_set_header Host <span class="variable">$http_host</span>;</div><div class="line">      proxy_set_header X-NginX-Proxy <span class="literal">true</span>;</div><div class="line"></div><div class="line">      proxy_pass http://app_faceblock/;</div><div class="line">      proxy_redirect off;</div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<h1 id="Free-SSL-Certification"><a href="#Free-SSL-Certification" class="headerlink" title="Free SSL Certification"></a>Free SSL Certification</h1><h2 id="Goto-sslforfree-and-get-cert-files"><a href="#Goto-sslforfree-and-get-cert-files" class="headerlink" title="Goto sslforfree and get cert files"></a>Goto <a href="https://www.sslforfree.com/" target="_blank" rel="external">sslforfree</a> and get cert files</h2><p>You will get three files ca_bundle.crt, certificate.crt, and private.key</p>
+<h2 id="Copy-files-to-etc-nginx-ssl-and-do-followings"><a href="#Copy-files-to-etc-nginx-ssl-and-do-followings" class="headerlink" title="Copy files to /etc/nginx/ssl and do followings"></a>Copy files to /etc/nginx/ssl and do followings</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mv private.key nginx.key</div><div class="line"><span class="comment">#</span></div><div class="line">cat certificate.crt ca_bundle.crt &gt;&gt; nginx.crt</div><div class="line">vim nginx.crt</div><div class="line"><span class="comment"># change -----BEGIN-----END------ to</span></div><div class="line"><span class="comment"># -----BEGIN--------</span></div><div class="line"><span class="comment"># ----END--------</span></div><div class="line">service nginx restart</div></pre></td></tr></table></figure>
+<h2 id="This-free-SSL-Certification-will-expire-after-90-days-so-you-will-have-to-go-to-sslforfree-to-get-new-Certification-before-expired"><a href="#This-free-SSL-Certification-will-expire-after-90-days-so-you-will-have-to-go-to-sslforfree-to-get-new-Certification-before-expired" class="headerlink" title="This free SSL Certification will expire after 90 days, so you will have to go to sslforfree to get new Certification before expired"></a>This free SSL Certification will expire after 90 days, so you will have to go to sslforfree to get new Certification before expired</h2>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Nginx With Node And Https config example&lt;br&gt;
+    
+    </summary>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
+    
+    
+      <category term="https" scheme="http://cwza.github.io/my_blog/tags/https/"/>
+    
+      <category term="ssl" scheme="http://cwza.github.io/my_blog/tags/ssl/"/>
+    
+      <category term="nodejs" scheme="http://cwza.github.io/my_blog/tags/nodejs/"/>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/tags/web/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Higher Order Component</title>
     <link href="http://cwza.github.io/my_blog/2017/01/19/Higher-Order-Component/"/>
     <id>http://cwza.github.io/my_blog/2017/01/19/Higher-Order-Component/</id>
@@ -431,42 +492,6 @@
       <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
     
       <category term="react" scheme="http://cwza.github.io/my_blog/tags/react/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Nginx With Node And Https config</title>
-    <link href="http://cwza.github.io/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/"/>
-    <id>http://cwza.github.io/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/</id>
-    <published>2017-01-19T06:48:57.000Z</published>
-    <updated>2017-03-10T02:26:35.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Nginx With Node And Https config example<br><a id="more"></a></p>
-<h1 id="nginx-config-examaple"><a href="#nginx-config-examaple" class="headerlink" title="nginx config examaple"></a>nginx config examaple</h1><p>pass all request to nodejs server</p>
-<p>copy ssl cert files to /etc/nginx/ssl/<br>copy nginx.conf file to /etc/nginx/sites-available<br>and link to /etc/nginx/sites-enabled/<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp ~/faceblock/faceblock-server/docker/faceblock/nginx.conf /etc/nginx/sites-available/faceblock</div><div class="line">ln <span class="_">-s</span> /etc/nginx/sites-available/faceblock /etc/nginx/sites-enabled/faceblock</div></pre></td></tr></table></figure></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># nginx.conf</span></div><div class="line"><span class="comment"># the IP(s) on which your node server is running. I chose port 3001.</span></div><div class="line">upstream app_faceblock &#123;</div><div class="line">    server 127.0.0.1:3001;</div><div class="line">    keepalive 8;</div><div class="line">&#125;</div><div class="line"></div><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=10r/s; <span class="comment"># rate limit</span></div><div class="line"></div><div class="line"><span class="comment"># the nginx server instance</span></div><div class="line">server &#123;</div><div class="line">    listen 0.0.0.0:80;</div><div class="line">    server_name cwzc.pw www.cwzc.pw;</div><div class="line">    access_log /var/<span class="built_in">log</span>/nginx/faceblock.log;</div><div class="line"></div><div class="line">    listen 443 ssl default_server;</div><div class="line">    listen [::]:443 ssl default_server;</div><div class="line"></div><div class="line">    ssl_certificate /etc/nginx/ssl/nginx.crt;</div><div class="line">    ssl_certificate_key /etc/nginx/ssl/nginx.key;</div><div class="line"></div><div class="line">    location /static &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      root /static;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment"># pass the request to the node.js server with the correct headers</span></div><div class="line">    <span class="comment"># and much more can be added, see nginx config options</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      </div><div class="line">      proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">      proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">      proxy_set_header Host <span class="variable">$http_host</span>;</div><div class="line">      proxy_set_header X-NginX-Proxy <span class="literal">true</span>;</div><div class="line"></div><div class="line">      proxy_pass http://app_faceblock/;</div><div class="line">      proxy_redirect off;</div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-<h1 id="Free-SSL-Certification"><a href="#Free-SSL-Certification" class="headerlink" title="Free SSL Certification"></a>Free SSL Certification</h1><h2 id="Goto-sslforfree-and-get-cert-files"><a href="#Goto-sslforfree-and-get-cert-files" class="headerlink" title="Goto sslforfree and get cert files"></a>Goto <a href="https://www.sslforfree.com/" target="_blank" rel="external">sslforfree</a> and get cert files</h2><p>You will get three files ca_bundle.crt, certificate.crt, and private.key</p>
-<h2 id="Copy-files-to-etc-nginx-ssl-and-do-followings"><a href="#Copy-files-to-etc-nginx-ssl-and-do-followings" class="headerlink" title="Copy files to /etc/nginx/ssl and do followings"></a>Copy files to /etc/nginx/ssl and do followings</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mv private.key nginx.key</div><div class="line"><span class="comment">#</span></div><div class="line">cat certificate.crt ca_bundle.crt &gt;&gt; nginx.crt</div><div class="line">vim nginx.crt</div><div class="line"><span class="comment"># change -----BEGIN-----END------ to</span></div><div class="line"><span class="comment"># -----BEGIN--------</span></div><div class="line"><span class="comment"># ----END--------</span></div><div class="line">service nginx restart</div></pre></td></tr></table></figure>
-<h2 id="This-free-SSL-Certification-will-expire-after-90-days-so-you-will-have-to-go-to-sslforfree-to-get-new-Certification-before-expired"><a href="#This-free-SSL-Certification-will-expire-after-90-days-so-you-will-have-to-go-to-sslforfree-to-get-new-Certification-before-expired" class="headerlink" title="This free SSL Certification will expire after 90 days, so you will have to go to sslforfree to get new Certification before expired"></a>This free SSL Certification will expire after 90 days, so you will have to go to sslforfree to get new Certification before expired</h2>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Nginx With Node And Https config example&lt;br&gt;
-    
-    </summary>
-    
-      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
-    
-    
-      <category term="https" scheme="http://cwza.github.io/my_blog/tags/https/"/>
-    
-      <category term="ssl" scheme="http://cwza.github.io/my_blog/tags/ssl/"/>
-    
-      <category term="nodejs" scheme="http://cwza.github.io/my_blog/tags/nodejs/"/>
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
-    
-      <category term="web" scheme="http://cwza.github.io/my_blog/tags/web/"/>
     
   </entry>
   
@@ -746,112 +771,6 @@ Javascript中Composition示範code&lt;br&gt;
     
     
       <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>direnv筆記</title>
-    <link href="http://cwza.github.io/my_blog/2016/03/16/direnv%E7%AD%86%E8%A8%98/"/>
-    <id>http://cwza.github.io/my_blog/2016/03/16/direnv筆記/</id>
-    <published>2016-03-16T04:50:00.000Z</published>
-    <updated>2017-03-10T02:26:35.000Z</updated>
-    
-    <content type="html"><![CDATA[
-
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1. Install</a></li>
-<li><a href="#sec-2">2. Usage</a></li>
-<li><a href="#sec-3">3. emacs plugin</a></li>
-</ul>
-</div>
-</div>
-<p>
-direnv可用來設定Project的environment variable<br>
-當cd進project目錄時自動設定環境變數，離開時自動unload<br>
-非常好用<br>
-</p>
-
-<a id="more"></a>
-
-<p>
-<a href="https://github.com/direnv/direnv" target="_blank" rel="external">https://github.com/direnv/direnv</a><br>
-</p>
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Install</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-for mac:<br>
-</p>
-<div class="org-src-container">
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install direnv</span><br></pre></td></tr></table></figure>
-</div>
-
-<p>
-add following to .bash_profile:<br>
-</p>
-<div class="org-src-container">
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">eval</span> <span class="string">"<span class="variable">$(direnv hook bash)</span>"</span></span><br></pre></td></tr></table></figure>
-</div>
-</div>
-</div>
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Usage</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-Add .envrc file at Project root directory<br>
-</p>
-<div class="org-src-container">
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> PYTHONDONTWRITEBYTECODE=<span class="number">1</span></span><br><span class="line"><span class="built_in">export</span> env=dev</span><br></pre></td></tr></table></figure>
-</div>
-<p>
-run <code>direnv allow .</code><br>
-</p>
-</div>
-</div>
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> emacs plugin</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-<a href="https://github.com/christianromney/projectile-direnv" target="_blank" rel="external">https://github.com/christianromney/projectile-direnv</a><br>
-</p>
-</div>
-</div>
-
-Last Updated 2017-03-10 五 10:26.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="external">hexo-renderer-org</a> with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.2.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 8.2.10)
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;div id=&quot;table-of-contents&quot;&gt;
-&lt;h2&gt;Table of Contents&lt;/h2&gt;
-&lt;div id=&quot;text-table-of-contents&quot;&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#sec-1&quot;&gt;1. Install&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#sec-2&quot;&gt;2. Usage&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#sec-3&quot;&gt;3. emacs plugin&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;
-direnv可用來設定Project的environment variable&lt;br&gt;
-當cd進project目錄時自動設定環境變數，離開時自動unload&lt;br&gt;
-非常好用&lt;br&gt;
-&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="linux" scheme="http://cwza.github.io/my_blog/categories/linux/"/>
-    
-    
-      <category term="linux" scheme="http://cwza.github.io/my_blog/tags/linux/"/>
-    
-      <category term="mac" scheme="http://cwza.github.io/my_blog/tags/mac/"/>
     
   </entry>
   
