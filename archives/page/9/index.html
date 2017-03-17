@@ -225,6 +225,86 @@
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
+                                <a class="link-unstyled" href="/my_blog/2015/12/03/使用snmptrap或java-Snmp4j-send-snmp-trap筆記/">使用snmptrap或java Snmp4j send snmp trap筆記</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Thu Dec 03 2015 15:46:03 GMT+0800">
+	
+		    Dec 03, 2015
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/java/">java</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-excerpt" itemprop="articleBody">
+                        <h2 id="use-snmptrap-to-send"><a href="#use-snmptrap-to-send" class="headerlink" title="use snmptrap to send"></a>use snmptrap to send</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">snmptrap -v 2c -c public 192.168.0.1 <span class="string">""</span> .1.3.6.1.4.1.89691.100.2.1</div><div class="line">.1.3.6.1.4.1.89691.100.1.1 s “API_CATEGORY”</div><div class="line">.1.3.6.1.4.1.89691.100.1.2 i 1</div><div class="line">.1.3.6.1.4.1.89691.100.1.3 s “Alarm Caused by an exception”</div></pre></td></tr></table></figure>
+                        
+                            <a href="/my_blog/2015/12/03/使用snmptrap或java-Snmp4j-send-snmp-trap筆記/" class="postShorten-excerpt_link link">
+                                Continue reading
+                            </a>
+                            
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
+                                <a class="link-unstyled" href="/my_blog/2015/12/03/Java-HttpPost筆記/">Java HttpPost筆記</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Thu Dec 03 2015 15:40:50 GMT+0800">
+	
+		    Dec 03, 2015
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/java/">java</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-excerpt" itemprop="articleBody">
+                        <p>just a very easy httppost example for java<br>
+                        
+                            <a href="/my_blog/2015/12/03/Java-HttpPost筆記/" class="postShorten-excerpt_link link">
+                                Continue reading
+                            </a>
+                            
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
                                 <a class="link-unstyled" href="/my_blog/2015/12/03/Java-Multi-Thread-筆記/">Java Multi-Thread 筆記</a>
                         
                     </h1>
@@ -548,86 +628,6 @@
                         <p>just note<br>
                         
                             <a href="/my_blog/2015/12/03/Eclipse常用快捷鍵筆記/" class="postShorten-excerpt_link link">
-                                Continue reading
-                            </a>
-                            
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2015/12/02/使用Spring-Profile來簡化多開發環境的properties設定/">使用Spring Profile來簡化多開發環境的properties設定</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Wed Dec 02 2015 19:55:37 GMT+0800">
-	
-		    Dec 02, 2015
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/java/">java</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <p>Spring要用3.1以上版本<br><figure class="highlight xml"><figcaption><span>applicationContex.xml</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">beans</span> <span class="attr">profile</span>=<span class="string">"LOCAL"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">location</span>=<span class="string">"classpath*:META-INF/spring/local/*.properties"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">beans</span> <span class="attr">profile</span>=<span class="string">"PRODUCTION"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">location</span>=<span class="string">"classpath*:META-INF/spring/production/*.properties"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure></p>
-                        
-                            <a href="/my_blog/2015/12/02/使用Spring-Profile來簡化多開發環境的properties設定/" class="postShorten-excerpt_link link">
-                                Continue reading
-                            </a>
-                            
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2015/12/02/Windows環境下LDAP安裝筆記/">Windows環境下LDAP安裝筆記</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Wed Dec 02 2015 19:41:44 GMT+0800">
-	
-		    Dec 02, 2015
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/computer-science/">computer-science</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <h2 id="Something"><a href="#Something" class="headerlink" title="Something"></a>Something</h2><p><a href="http://blog.xuite.net/tolarku/blog/151029105-LDAP+%E5%9F%BA%E7%A4%8E%E8%AA%AA%E6%98%8E">Reference</a><br>DN(Distinguished Name)：識別名稱，絕對位置<br>RDN(Relative Distinguished Name)：相對識別名稱，相對位置<br>CN(Common Name) ：名稱 (SN:姓)<br>OU(Organizational Unit Name)：組織名稱<br>O (Organizational Unit )：組織<br>DC(Domain Componet)：網域元件<br>
-                        
-                            <a href="/my_blog/2015/12/02/Windows環境下LDAP安裝筆記/" class="postShorten-excerpt_link link">
                                 Continue reading
                             </a>
                             

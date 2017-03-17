@@ -6,18 +6,22 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="cwza&#39;s blog">
-    <title>Tag: golang - cwza&#39;s blog</title>
+    <title>golang test 筆記 - cwza&#39;s blog</title>
     <meta name="author" content="Cwza">
     
     
         <link rel="alternative" type="application/atom+xml" title="RSS" href="/my_blog/atom.xml">
     
-    <meta property="og:type" content="blog">
-<meta property="og:title" content="cwza's blog">
-<meta property="og:url" content="http://cwza.github.io/my_blog/tags/golang/index.html">
+    <meta name="description" content="Table Driven Test1234567891011121314func TestAdd(t * testing.T) &amp;#123;  case := map[string]struct&amp;#123; A, B, Expected int&amp;#125; &amp;#123;    &quot;foo&quot;: &amp;#123;1, 1, 2&amp;#125;,    &quot;bar&quot;: &amp;#123;1, -1, 0&amp;#125;,">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="golang test 筆記">
+<meta property="og:url" content="http://cwza.github.io/my_blog/2017/03/16/golang-test筆記/index.html">
 <meta property="og:site_name" content="cwza's blog">
+<meta property="og:description" content="Table Driven Test1234567891011121314func TestAdd(t * testing.T) &amp;#123;  case := map[string]struct&amp;#123; A, B, Expected int&amp;#125; &amp;#123;    &quot;foo&quot;: &amp;#123;1, 1, 2&amp;#125;,    &quot;bar&quot;: &amp;#123;1, -1, 0&amp;#125;,">
+<meta property="og:updated_time" content="2017-03-17T05:30:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="cwza's blog">
+<meta name="twitter:title" content="golang test 筆記">
+<meta name="twitter:description" content="Table Driven Test1234567891011121314func TestAdd(t * testing.T) &amp;#123;  case := map[string]struct&amp;#123; A, B, Expected int&amp;#125; &amp;#123;    &quot;foo&quot;: &amp;#123;1, 1, 2&amp;#125;,    &quot;bar&quot;: &amp;#123;1, -1, 0&amp;#125;,">
     
     
     
@@ -52,7 +56,7 @@
             <!-- Define author's picture -->
 
 
-<header id="header" data-behavior="1">
+<header id="header" data-behavior="3">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <h1 class="header-title">
         <a class="header-title-link" href="/my_blog/ ">cwza&#39;s blog</a>
@@ -74,7 +78,7 @@
 
     
 
-<nav id="sidebar" data-behavior="1">
+<nav id="sidebar" data-behavior="3">
     
         <div class="sidebar-profile">
             <a href="/my_blog/#about">
@@ -210,25 +214,21 @@
 </nav>
 
             
-            <div id="main" data-behavior="1"
+            <div id="main" data-behavior="3"
                  class="
                         hasCoverMetaIn
                         ">
                 
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
     
-
-<section class="postShorten-group main-content-wrap">
     
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2017/03/16/golang-test筆記/">golang test 筆記</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            golang test 筆記
+        </h1>
+    
+    <div class="post-meta">
     <time itemprop="datePublished" content="Thu Mar 16 2017 18:00:57 GMT+0800">
 	
 		    Mar 16, 2017
@@ -242,11 +242,11 @@
 
     
 </div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <h1 id="Table-Driven-Test"><a href="#Table-Driven-Test" class="headerlink" title="Table Driven Test"></a>Table Driven Test</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAdd</span><span class="params">(t * testing.T)</span></span> &#123;</div><div class="line">  <span class="keyword">case</span> := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">struct</span>&#123; A, B, Expected <span class="keyword">int</span>&#125; &#123;</div><div class="line">    <span class="string">"foo"</span>: &#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>&#125;,</div><div class="line">    <span class="string">"bar"</span>: &#123;<span class="number">1</span>, <span class="number">-1</span>, <span class="number">0</span>&#125;,</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">for</span> k, tc := <span class="keyword">range</span> cases &#123;</div><div class="line">    actual := tc.A + tc.B</div><div class="line">    <span class="keyword">if</span> actual != expected &#123;</div><div class="line">      t.Errorf(</div><div class="line">        <span class="string">"%s %d + %d = %d, exected %d"</span>,</div><div class="line">        k, tc.A, tc.B, actual, tc.Expected)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <h1 id="Table-Driven-Test"><a href="#Table-Driven-Test" class="headerlink" title="Table Driven Test"></a>Table Driven Test</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAdd</span><span class="params">(t * testing.T)</span></span> &#123;</div><div class="line">  <span class="keyword">case</span> := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">struct</span>&#123; A, B, Expected <span class="keyword">int</span>&#125; &#123;</div><div class="line">    <span class="string">"foo"</span>: &#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>&#125;,</div><div class="line">    <span class="string">"bar"</span>: &#123;<span class="number">1</span>, <span class="number">-1</span>, <span class="number">0</span>&#125;,</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">for</span> k, tc := <span class="keyword">range</span> cases &#123;</div><div class="line">    actual := tc.A + tc.B</div><div class="line">    <span class="keyword">if</span> actual != expected &#123;</div><div class="line">      t.Errorf(</div><div class="line">        <span class="string">"%s %d + %d = %d, exected %d"</span>,</div><div class="line">        k, tc.A, tc.B, actual, tc.Expected)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="Test-fixtures"><a href="#Test-fixtures" class="headerlink" title="Test fixtures"></a>Test fixtures</h2><p>go test set pwd as package directory<br>use relative path “test-fixtures” directory as a place to store test data(loading config, model data, binary data …etc)<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAdd</span><span class="params">(t *testing.T)</span></span> &#123;</div><div class="line">  data := filepath.Join(<span class="string">"test-fixtures"</span>, <span class="string">"daa_data.json"</span>)</div><div class="line">  <span class="comment">// Do something with data</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h2 id="Golden-files-Test-flag"><a href="#Golden-files-Test-flag" class="headerlink" title="Golden files(Test flag)"></a>Golden files(Test flag)</h2><p>expected output放在.golden file中<br>當update flag為true時, 代表需要更新expected output file<br>Very useful to test complex structures<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> update = flag.Bool(<span class="string">"update"</span>, <span class="literal">false</span>, <span class="string">"update golden files"</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAdd</span><span class="params">(t *testing.T)</span></span> &#123;</div><div class="line">  actual := doSomething(tc)</div><div class="line">  golden := filepath.Join(<span class="string">"test-fixtures"</span>, tc.Name+<span class="string">".golden"</span>)</div><div class="line">  <span class="keyword">if</span> *update &#123;</div><div class="line">    ioUtil.WriteFile(golden, actual, <span class="number">0644</span>)</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  expected, _ := ioutil.ReadFile(golden)</div><div class="line">  <span class="keyword">if</span> !bytes.Equal(actual, expected) &#123;</div><div class="line">    <span class="comment">//FAIL!</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">go <span class="built_in">test</span></div><div class="line">go <span class="built_in">test</span> -update</div></pre></td></tr></table></figure>
@@ -269,212 +269,89 @@
 </ul>
 <h2 id="Timing-Dependent-Test"><a href="#Timing-Dependent-Test" class="headerlink" title="Timing-Dependent Test"></a>Timing-Dependent Test</h2><p>timeMultiplier is configurable.<br>maybe lower at laptop and higher at server<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestThing</span><span class="params">(t * testing.T)</span></span> &#123;</div><div class="line">  timeout := <span class="number">3</span> * time.Minute * timeMultiplier</div><div class="line"></div><div class="line">  <span class="keyword">select</span> &#123;</div><div class="line">  <span class="keyword">case</span> &lt;- thingHappened:</div><div class="line">  <span class="keyword">case</span> &lt;- time.After(timeout):</div><div class="line">    t.Fatal(<span class="string">"timeout"</span>)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/my_blog/2017/03/16/golang-test筆記/#post-footer" class="postShorten-excerpt_link link">
-                                    Comment and share
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
             
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2017/03/16/golang筆記/">golang筆記</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Mar 16 2017 10:30:57 GMT+0800">
-	
-		    Mar 16, 2017
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/golang/">golang</a>
+                
 
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <p>reference from: <a href="http://blog.wuxu92.com/">http://blog.wuxu92.com/</a></p>
-<!-- toc -->
-                        
-                            <a href="/my_blog/2017/03/16/golang筆記/" class="postShorten-excerpt_link link">
-                                Continue reading
-                            </a>
-                            
-                        
-                    </div>
-                
-            </div>
             
-        </article>
-    
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
         
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2017/03/15/go-middleware筆記/">go-middleware筆記</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Wed Mar 15 2017 16:00:57 GMT+0800">
-	
-		    Mar 15, 2017
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/golang/">golang</a>
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/golang/">golang</a> <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/test/">test</a>
 
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <p>Two example about middleware in go<br>Reference: <a href="http://www.alexedwards.net/blog/making-and-using-middleware">http://www.alexedwards.net/blog/making-and-using-middleware</a></p>
-                        
-                            <a href="/my_blog/2017/03/15/go-middleware筆記/" class="postShorten-excerpt_link link">
-                                Continue reading
-                            </a>
-                            
-                        
-                    </div>
-                
             </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/03/16/golang筆記/" data-tooltip="golang筆記">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
             
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2017/03/15/glide筆記/">glide筆記</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Wed Mar 15 2017 14:13:57 GMT+0800">
-	
-		    Mar 15, 2017
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/golang/">golang</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <p><a href="https://github.com/Masterminds/glide" target="_blank" rel="external">https://github.com/Masterminds/glide</a></p>
-<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install glide</div></pre></td></tr></table></figure>
-<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>source code需要放在gopath下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ glide create                            <span class="comment"># Start a new workspace</span></div><div class="line">$ open glide.yaml                         <span class="comment"># and edit away!</span></div><div class="line">$ glide get github.com/Masterminds/cookoo <span class="comment"># Get a package and add to glide.yaml</span></div><div class="line">$ glide install                           <span class="comment"># Install packages and dependencies</span></div><div class="line"><span class="comment"># work, work, work</span></div><div class="line">$ go build                                <span class="comment"># Go tools work normally</span></div><div class="line">$ glide up                                <span class="comment"># Update to newest versions of the package</span></div></pre></td></tr></table></figure></p>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/my_blog/2017/03/15/glide筆記/#post-footer" class="postShorten-excerpt_link link">
-                                    Comment and share
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
+                <a class="post-action-btn btn btn--default" href="#">
             
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2017/03/13/gvm筆記與vscode整合/">gvm筆記與vscode整合</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Mon Mar 13 2017 18:11:57 GMT+0800">
-	
-		    Mar 13, 2017
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/golang/">golang</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <p><a href="https://github.com/moovweb/gvm" target="_blank" rel="external">https://github.com/moovweb/gvm</a></p>
-<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">xcode-select --install</div><div class="line">brew update</div><div class="line">brew install mercurial</div><div class="line">bash &lt; &lt;(curl <span class="_">-s</span> -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)</div><div class="line">gvm install go1.4 -B</div><div class="line">gvm use go1.4</div><div class="line"><span class="built_in">export</span> GOROOT_BOOTSTRAP=<span class="variable">$GOROOT</span></div><div class="line">gvm install 1.8</div></pre></td></tr></table></figure>
-<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">gvm install [version]</div><div class="line">gvm uninstall [version]</div><div class="line">gvm listall</div><div class="line">gvm list</div><div class="line">gvm use [version]</div><div class="line">gvm implode    // uninstall gvm</div></pre></td></tr></table></figure>
-<h2 id="使用gvm來管理workspace"><a href="#使用gvm來管理workspace" class="headerlink" title="使用gvm來管理workspace"></a>使用gvm來管理workspace</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">go use [version]</div><div class="line">mkdir -p ~/golang/  </div><div class="line"><span class="built_in">cd</span> ~/golang/  </div><div class="line">gvm pkgset create --local  </div><div class="line">gvm pkgset use --local  </div><div class="line">mkdir src pkg bin</div><div class="line">go env</div></pre></td></tr></table></figure>
-<p>利用pkgset將GOPATH設為自定的workspace path</p>
-<h2 id="vscode-整合"><a href="#vscode-整合" class="headerlink" title="vscode 整合"></a>vscode 整合</h2><p>設定gopath與goroot為go env的值<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">go use [version]</div><div class="line">go env</div></pre></td></tr></table></figure></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"go.gopath"</span>:<span class="string">"/Users/meep007/cwz/develop/practice/golang:/Users/meep007/cwz/develop/practice/golang/.gvm_local/pkgsets/go1.8/local:/Users/meep007/.gvm/pkgsets/go1.8/global"</span>,</div><div class="line">  <span class="attr">"go.goroot"</span>: <span class="string">"/Users/meep007/.gvm/gos/go1.8"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/my_blog/2017/03/13/gvm筆記與vscode整合/#post-footer" class="postShorten-excerpt_link link">
-                                    Comment and share
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-    <div class="pagination-bar">
-    <ul class="pagination">
-        
-        
-        <li class="pagination-number">page 1 of 1</li>
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
     </ul>
 </div>
 
-</section>
+
+        
+            <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        
+    </div>
+</article>
+
 
 
                 <footer id="footer" class="main-content-wrap">
@@ -484,6 +361,89 @@
 </footer>
 
             </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/03/16/golang筆記/" data-tooltip="golang筆記">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+                <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+                <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+                <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
             
         </div>
         <!-- Define author's picture -->
@@ -528,6 +488,17 @@
     <!--SCRIPTS-->
 <script src="/my_blog/assets/js/script.min.js"></script>
 <!--SCRIPTS END-->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'cwzablog';
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
 
 
     <script type="text/javascript">

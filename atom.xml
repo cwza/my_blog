@@ -5,7 +5,7 @@
   <link href="/my_blog/atom.xml" rel="self"/>
   
   <link href="http://cwza.github.io/my_blog/"/>
-  <updated>2017-03-15T08:07:06.000Z</updated>
+  <updated>2017-03-17T05:30:59.000Z</updated>
   <id>http://cwza.github.io/my_blog/</id>
   
   <author>
@@ -14,6 +14,95 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>golang test 筆記</title>
+    <link href="http://cwza.github.io/my_blog/2017/03/16/golang-test%E7%AD%86%E8%A8%98/"/>
+    <id>http://cwza.github.io/my_blog/2017/03/16/golang-test筆記/</id>
+    <published>2017-03-16T10:00:57.000Z</published>
+    <updated>2017-03-17T05:30:59.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Table-Driven-Test"><a href="#Table-Driven-Test" class="headerlink" title="Table Driven Test"></a>Table Driven Test</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAdd</span><span class="params">(t * testing.T)</span></span> &#123;</div><div class="line">  <span class="keyword">case</span> := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">struct</span>&#123; A, B, Expected <span class="keyword">int</span>&#125; &#123;</div><div class="line">    <span class="string">"foo"</span>: &#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>&#125;,</div><div class="line">    <span class="string">"bar"</span>: &#123;<span class="number">1</span>, <span class="number">-1</span>, <span class="number">0</span>&#125;,</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">for</span> k, tc := <span class="keyword">range</span> cases &#123;</div><div class="line">    actual := tc.A + tc.B</div><div class="line">    <span class="keyword">if</span> actual != expected &#123;</div><div class="line">      t.Errorf(</div><div class="line">        <span class="string">"%s %d + %d = %d, exected %d"</span>,</div><div class="line">        k, tc.A, tc.B, actual, tc.Expected)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Test-fixtures"><a href="#Test-fixtures" class="headerlink" title="Test fixtures"></a>Test fixtures</h2><p>go test set pwd as package directory<br>use relative path “test-fixtures” directory as a place to store test data(loading config, model data, binary data …etc)<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAdd</span><span class="params">(t *testing.T)</span></span> &#123;</div><div class="line">  data := filepath.Join(<span class="string">"test-fixtures"</span>, <span class="string">"daa_data.json"</span>)</div><div class="line">  <span class="comment">// Do something with data</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="Golden-files-Test-flag"><a href="#Golden-files-Test-flag" class="headerlink" title="Golden files(Test flag)"></a>Golden files(Test flag)</h2><p>expected output放在.golden file中<br>當update flag為true時, 代表需要更新expected output file<br>Very useful to test complex structures<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> update = flag.Bool(<span class="string">"update"</span>, <span class="literal">false</span>, <span class="string">"update golden files"</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAdd</span><span class="params">(t *testing.T)</span></span> &#123;</div><div class="line">  actual := doSomething(tc)</div><div class="line">  golden := filepath.Join(<span class="string">"test-fixtures"</span>, tc.Name+<span class="string">".golden"</span>)</div><div class="line">  <span class="keyword">if</span> *update &#123;</div><div class="line">    ioUtil.WriteFile(golden, actual, <span class="number">0644</span>)</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  expected, _ := ioutil.ReadFile(golden)</div><div class="line">  <span class="keyword">if</span> !bytes.Equal(actual, expected) &#123;</div><div class="line">    <span class="comment">//FAIL!</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">go <span class="built_in">test</span></div><div class="line">go <span class="built_in">test</span> -update</div></pre></td></tr></table></figure>
+<h2 id="Global-State"><a href="#Global-State" class="headerlink" title="Global State"></a>Global State</h2><p>Do not use global state.<br>If you have to do, Use default, and let test can easily mock it.<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> defaultPort = <span class="number">1000</span></div><div class="line"></div><div class="line"><span class="keyword">type</span> ServerOpts &#123;</div><div class="line">  Port <span class="keyword">int</span> <span class="comment">// default it to defaultPort somewhere</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="Test-Helpers"><a href="#Test-Helpers" class="headerlink" title="Test Helpers"></a>Test Helpers</h2><h3 id="TestTempFile"><a href="#TestTempFile" class="headerlink" title="TestTempFile"></a>TestTempFile</h3><p>Test helper接受testing.T參數, helper中的錯誤直接在helper中處理掉<br>helper return a function to clean<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">testTempFile</span><span class="params">(t * testing.T)</span> <span class="params">(<span class="keyword">string</span>, <span class="keyword">func</span>()</span>)</span> &#123;</div><div class="line">  tf, err := iotuil.TempFile(<span class="string">""</span>, <span class="string">"test"</span>)</div><div class="line">  <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">    t.Fatalf(<span class="string">"err: %s"</span>, err)</div><div class="line">  &#125;</div><div class="line">  tf.Close()</div><div class="line">  <span class="keyword">return</span> tf.Name(), <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123; os.Remove(tf.Name()) &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestThing</span><span class="params">(t *testing T)</span></span> &#123;</div><div class="line">  tf, tfclose := testTempFile(t)</div><div class="line">  <span class="keyword">defer</span> tfclose()</div><div class="line">  <span class="comment">// doSomething with tf</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="TestChdir"><a href="#TestChdir" class="headerlink" title="TestChdir"></a>TestChdir</h3><p>切換dir並在function結束前切換回來<br>注意testChdir會回傳一function, 該function會將dir切回原本old<br>由於defer會在defer當下處理完參數所以在defer當下即會切換到dir<br>然後在TestThing結束前呼叫os.chdir(old)<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">testChdir</span><span class="params">(t *testing.T, dir <span class="keyword">string</span>)</span> <span class="title">func</span><span class="params">()</span></span> &#123;</div><div class="line">  old, err := os.Getwd()</div><div class="line">  <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">    t.Fatalf(<span class="string">"err: %s"</span>, err)</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> err := os.Chdir(dir); err != <span class="literal">nil</span> &#123;</div><div class="line">    t.Fatalf(<span class="string">"err: %s"</span>, err)</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123; os.Chdir(old) &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestThing</span><span class="params">(t *testing.T)</span></span> &#123;</div><div class="line">  <span class="keyword">defer</span> testChdir(t, <span class="string">"/other"</span>)()</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="Networking"><a href="#Networking" class="headerlink" title="Networking"></a>Networking</h2><p>不需要mock net.Conn<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestConn</span><span class="params">(t *testing.T)</span> <span class="params">(client, server net.Conn)</span></span> &#123;</div><div class="line">  ln, err := net.Listen(<span class="string">"tcp"</span>, <span class="string">"127.0.0.1:0"</span>)</div><div class="line"></div><div class="line">  <span class="keyword">var</span> server net.Conn</div><div class="line">  <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="keyword">defer</span> ln.Close()</div><div class="line">    server, err = ln.Acccept()</div><div class="line">  &#125;()</div><div class="line"></div><div class="line">  client, err := net.Dial(<span class="string">"tcp"</span>, ln.Addr().String())</div><div class="line">  <span class="keyword">return</span> client, server</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="Test-Subprocessing"><a href="#Test-Subprocessing" class="headerlink" title="Test Subprocessing"></a>Test Subprocessing</h2><p>Check if git is installed. If not, skip test<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> testHasGit <span class="keyword">bool</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> &#123;</div><div class="line">  <span class="keyword">if</span> _, err := exec.LookPath(<span class="string">"git"</span>); err == <span class="literal">nil</span> &#123;</div><div class="line">    testHasGit = <span class="literal">true</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestGitGetter</span><span class="params">(t *testing.T)</span></span> &#123;</div><div class="line">  <span class="keyword">if</span> !testHasGit &#123;</div><div class="line">    t.Log(<span class="string">"git not found, skipping"</span>)</div><div class="line">    t.Skip()</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="Testing-as-a-public-API"><a href="#Testing-as-a-public-API" class="headerlink" title="Testing as a public API"></a>Testing as a public API</h2><p>提供使用你的package的user一個測試你的package的public API(Maybe a mock or a helper)<br><em><em>test.go will be ignored by go, so use testing</em></em>.go for Test for API<br>Example:</p>
+<ul>
+<li>API Server<ul>
+<li>TestServer(t) (net.Addr, io.Closer) =&gt; Returns a fully started in-memory server and a closer to close it.</li>
+</ul>
+</li>
+<li>interface for downloading files<ul>
+<li>TestDownloader(t, Downloader) =&gt; Tests all the properties a downloader should have.</li>
+<li>struct DownloaderMock[] =&gt; Implements Downloader as a mock</li>
+</ul>
+</li>
+</ul>
+<h2 id="Timing-Dependent-Test"><a href="#Timing-Dependent-Test" class="headerlink" title="Timing-Dependent Test"></a>Timing-Dependent Test</h2><p>timeMultiplier is configurable.<br>maybe lower at laptop and higher at server<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestThing</span><span class="params">(t * testing.T)</span></span> &#123;</div><div class="line">  timeout := <span class="number">3</span> * time.Minute * timeMultiplier</div><div class="line"></div><div class="line">  <span class="keyword">select</span> &#123;</div><div class="line">  <span class="keyword">case</span> &lt;- thingHappened:</div><div class="line">  <span class="keyword">case</span> &lt;- time.After(timeout):</div><div class="line">    t.Fatal(<span class="string">"timeout"</span>)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;Table-Driven-Test&quot;&gt;&lt;a href=&quot;#Table-Driven-Test&quot; class=&quot;headerlink&quot; title=&quot;Table Driven Test&quot;&gt;&lt;/a&gt;Table Driven Test&lt;/h1&gt;&lt;figure class
+    
+    </summary>
+    
+      <category term="golang" scheme="http://cwza.github.io/my_blog/categories/golang/"/>
+    
+    
+      <category term="golang" scheme="http://cwza.github.io/my_blog/tags/golang/"/>
+    
+      <category term="test" scheme="http://cwza.github.io/my_blog/tags/test/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>golang筆記</title>
+    <link href="http://cwza.github.io/my_blog/2017/03/16/golang%E7%AD%86%E8%A8%98/"/>
+    <id>http://cwza.github.io/my_blog/2017/03/16/golang筆記/</id>
+    <published>2017-03-16T02:30:57.000Z</published>
+    <updated>2017-03-16T07:32:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>reference from: <a href="http://blog.wuxu92.com/" target="_blank" rel="external">http://blog.wuxu92.com/</a></p>
+<!-- toc -->
+<a id="more"></a>
+<h2 id="不定參數"><a href="#不定參數" class="headerlink" title="不定參數"></a>不定參數</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">sum</span> <span class="params">(nums ...<span class="keyword">int</span>)</span></span>&#123;</div><div class="line">	total := <span class="number">0</span></div><div class="line">	<span class="keyword">for</span> _, num := <span class="keyword">range</span> nums &#123;</div><div class="line">		total += num</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> total</div><div class="line">&#125;</div><div class="line">nums := []<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</div><div class="line">t := sum(nums...)</div></pre></td></tr></table></figure>
+<h2 id="closure"><a href="#closure" class="headerlink" title="closure"></a>closure</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">intSeq</span><span class="params">()</span> <span class="title">func</span><span class="params">()</span> <span class="title">int</span></span> &#123;</div><div class="line">	i := <span class="number">0</span></div><div class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">()</span> <span class="title">int</span></span> &#123;</div><div class="line">		i += <span class="number">1</span>;</div><div class="line">		<span class="keyword">return</span> i</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">next := intSeq()</div><div class="line"><span class="comment">// next是一个命名函数了</span></div><div class="line">next()</div></pre></td></tr></table></figure>
+<h2 id="Error-handle"><a href="#Error-handle" class="headerlink" title="Error handle"></a>Error handle</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">type</span> myErr <span class="keyword">struct</span> &#123;</div><div class="line">	arg <span class="keyword">int</span></div><div class="line">	prob <span class="keyword">string</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e myErr)</span> <span class="title">Error</span><span class="params">()</span> <span class="title">string</span></span> &#123;</div><div class="line">  <span class="keyword">return</span> fmt.Sprintf(<span class="string">"%d - %s"</span>, e.arg, e.prob)</div><div class="line">&#125;</div><div class="line"><span class="keyword">type</span> Person <span class="keyword">struct</span>&#123;</div><div class="line">	age <span class="keyword">int</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p Person)</span><span class="title">buy</span><span class="params">(item <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">bool</span>, error)</span></span> &#123;</div><div class="line">  <span class="keyword">if</span> p.age &lt; <span class="number">18</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>, &amp;myErr&#123;<span class="number">0</span>, <span class="string">"too yong"</span>&#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="literal">true</span>, <span class="literal">nil</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">me := Person&#123;<span class="number">10</span>&#125;</div><div class="line">, e := me.buy(<span class="string">"shirt"</span>)</div><div class="line"><span class="keyword">if</span> me, ok := e.(*myErr); ok &#123;</div><div class="line">	<span class="comment">// with myErr return, me ref to return error</span></div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="channel"><a href="#channel" class="headerlink" title="channel"></a>channel</h2><p>channel預設是blocking的<br>channel中沒東西recieve的話會block, 若已沒有其他goroutine則會panic</p>
+<h3 id="使用channel同步goroutine"><a href="#使用channel同步goroutine" class="headerlink" title="使用channel同步goroutine"></a>使用channel同步goroutine</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">working</span><span class="params">(flagChan <span class="keyword">chan</span> <span class="keyword">bool</span>)</span></span> &#123;</div><div class="line">  fmt.Println(<span class="string">"working on it"</span>)</div><div class="line">  time.Sleep(<span class="number">2</span> * time.Second)</div><div class="line">  fmt.Println(<span class="string">"work done"</span>)            </div><div class="line"></div><div class="line">  flagChan &lt;- <span class="literal">true</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">chanSync</span><span class="params">()</span></span> &#123;</div><div class="line">  flagChan := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">bool</span>, <span class="number">1</span>)</div><div class="line">  <span class="keyword">go</span> working(flagChan)</div><div class="line"></div><div class="line">  <span class="comment">// 下面的接受操作会阻塞等待goroutine执行结束</span></div><div class="line">  done := &lt;- flagChan </div><div class="line">  fmt.Println(<span class="string">"sync goroutine output"</span>, done)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="channel-directive"><a href="#channel-directive" class="headerlink" title="channel directive"></a>channel directive</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">send</span> <span class="params">(flagChan <span class="keyword">chan</span>&lt;- <span class="keyword">bool</span>)</span></span> &#123; ... &#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">recv</span> <span class="params">(flagChan &lt;-<span class="keyword">chan</span> <span class="keyword">bool</span>)</span></span> &#123; ... &#125;</div></pre></td></tr></table></figure>
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><p>select用於從多個channel中輪訓狀態, 從已經準備就緒的channel中接受值並執行相對應代碼<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> (</div><div class="line">	<span class="string">"math/rand"</span></div><div class="line">	<span class="string">"time"</span></div><div class="line">	<span class="string">"strconv"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">gr1</span><span class="params">(c <span class="keyword">chan</span> <span class="keyword">string</span>)</span></span> &#123;</div><div class="line">  dur := rand.Intn(<span class="number">300</span>)</div><div class="line">  time.Sleep(time.Millisecond * time.Duration(dur))</div><div class="line">  c &lt;- <span class="string">"gr1 sleep done "</span> + strconv.Itoa(dur)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">gr2</span><span class="params">(c <span class="keyword">chan</span> <span class="keyword">string</span>)</span></span> &#123;</div><div class="line">  dur := rand.Intn(<span class="number">400</span>)</div><div class="line">  time.Sleep(time.Millisecond * time.Duration(dur))</div><div class="line">  c &lt;- <span class="string">"gr2 sleep done "</span> + strconv.Itoa(dur)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">selects</span><span class="params">()</span></span> &#123;</div><div class="line">  c1 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>)</div><div class="line">  c2 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>)</div><div class="line">  <span class="keyword">go</span> gr1(c1)</div><div class="line">  <span class="keyword">go</span> gr1(c1)</div><div class="line">  <span class="keyword">go</span> gr2(c2)</div><div class="line">  <span class="keyword">go</span> gr2(c2)</div><div class="line"></div><div class="line">  <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++ &#123;</div><div class="line">    <span class="keyword">select</span> &#123;</div><div class="line">    <span class="keyword">case</span> msg := &lt;-c1:</div><div class="line">      fmt.Println(msg)</div><div class="line">    <span class="keyword">case</span> msg2 := &lt;-c2:</div><div class="line">      fmt.Println(msg2)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="超時"><a href="#超時" class="headerlink" title="超時"></a>超時</h3><p>若等待超過一定時間沒有resource則執行<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> &#123;</div><div class="line"><span class="keyword">case</span> res &lt;- c1 :</div><div class="line">	fmt.Println(res)</div><div class="line"><span class="keyword">case</span> &lt;-time.After(time.Seconde * <span class="number">2</span>)</div><div class="line">	fmt.Println(<span class="string">"timeout"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="non-blocking-channel"><a href="#non-blocking-channel" class="headerlink" title="non-blocking channel"></a>non-blocking channel</h3><p>所有case的channel都没有就绪的时候执行default<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> &#123;</div><div class="line"><span class="keyword">case</span> msg := &lt;-c1:</div><div class="line">  fmt.Println(msg)</div><div class="line"><span class="keyword">case</span> msg2 := &lt;-c2:</div><div class="line">  fmt.Println(msg2)</div><div class="line"><span class="keyword">default</span>:</div><div class="line">  <span class="comment">// non-blocking channel</span></div><div class="line">  fmt.Println(<span class="string">"select default"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="range-over-channel"><a href="#range-over-channel" class="headerlink" title="range over channel"></a>range over channel</h3><p>对于一个close了得channel，range能自动判断是否遍历结束，但是如果channel没有调用过close，在下面的代码中，会在接受第三个值的时候阻塞(异常退出)<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">rangeChannel</span><span class="params">()</span></span> &#123;</div><div class="line">  c := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">2</span>)</div><div class="line">  c &lt;- <span class="string">"tomorrow is monday"</span></div><div class="line">  c &lt;- <span class="string">"fee out"</span></div><div class="line">  <span class="built_in">close</span>(c)</div><div class="line">  <span class="keyword">for</span> str := <span class="keyword">range</span> c &#123;</div><div class="line">    fmt.Println(str)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="Timer-amp-Ticker"><a href="#Timer-amp-Ticker" class="headerlink" title="Timer &amp; Ticker"></a>Timer &amp; Ticker</h2><h3 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h3><p>timer is like a channel<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="string">"time"</span></div><div class="line">...</div><div class="line"><span class="comment">// 定义一个timer，超时设定2秒</span></div><div class="line">timer1 := time.NewTimer(time.Second *２）</div><div class="line"><span class="comment">// 在此等待2s</span></div><div class="line">&lt;- timer1.C  <span class="comment">//注意.C</span></div></pre></td></tr></table></figure></p>
+<h3 id="Tickers"><a href="#Tickers" class="headerlink" title="Tickers"></a>Tickers</h3><p>ticker就像打点器一样循环执行某代码<br>ticker看作一个channel，在初始化时定义一个循环时间，每过一段时间往channel里面塞一个数，然后我们循环去取<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">t1 := time.NewTicker(time.Millisecond * <span class="number">500</span>)</div><div class="line"><span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">	<span class="keyword">for</span> t := <span class="keyword">range</span> t1.C &#123;</div><div class="line">		fmt.Println(<span class="string">"tick tick @ "</span>, t)</div><div class="line">	&#125;</div><div class="line">&#125;()</div><div class="line">time.Sleep(time.Second * <span class="number">3</span>)</div><div class="line">t1.Stop()</div><div class="line">fmt.Println(<span class="string">"tick tick stop"</span>)</div></pre></td></tr></table></figure></p>
+<h3 id="worker-pool-worker池"><a href="#worker-pool-worker池" class="headerlink" title="worker pool/worker池"></a>worker pool/worker池</h3><p>可以把一个goroutine看作一个worker。给多个worker传入相同的channel，worker从channel中取任务并处理，主线程往channel中添加任务，这样过个goroutine处理一个任务队列。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">jobs := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">100</span>)</div><div class="line">result := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">100</span>)</div><div class="line"><span class="comment">// use five workers</span></div><div class="line"><span class="keyword">for</span> w:=<span class="number">0</span>; w&lt;<span class="number">5</span>; w++ &#123;</div><div class="line">  <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(w <span class="keyword">int</span>, jobs &lt;-<span class="keyword">chan</span> <span class="keyword">int</span>, result <span class="keyword">chan</span>&lt;- <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">    <span class="keyword">for</span> j:= <span class="keyword">range</span> jobs &#123;</div><div class="line">      fmt.Println(<span class="string">"worker"</span>, w, <span class="string">"processing on"</span>, j)    </div><div class="line">      time.Sleep(time.Millisecond * time.Duration(rand.Intn(<span class="number">600</span>))) <span class="comment">// sleep a random time</span></div><div class="line">      result &lt;- j * <span class="number">2</span></div><div class="line">    &#125;</div><div class="line">  &#125;(w, jobs, result)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// insert jobs</span></div><div class="line"><span class="keyword">for</span> j:=<span class="number">0</span>; j&lt;<span class="number">10</span>; j++ &#123;</div><div class="line">  jobs &lt;- j</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">close</span>(jobs)</div><div class="line"></div><div class="line"><span class="comment">// can do some others here</span></div><div class="line"></div><div class="line"><span class="comment">// sync here, may wait for works done</span></div><div class="line"><span class="keyword">for</span> a :=<span class="number">0</span>; a&lt;<span class="number">10</span>; a++ &#123;</div><div class="line">  &lt;- result</div><div class="line">&#125;</div><div class="line">fmt.Println(<span class="string">"all work done here"</span>)</div></pre></td></tr></table></figure></p>
+<h3 id="rate-limiting"><a href="#rate-limiting" class="headerlink" title="rate-limiting"></a>rate-limiting</h3><p>使用goroutine，channel， ticker合作实现该特性<br>使用两个channel协同，一个用于处理速率的控制，一个用于请求的缓冲。使用一个goroutine不断的定时填充速率控制goroutine，而请求channel则用一个for-range不停行从里面取请求<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">rateControlChan := <span class="built_in">make</span>(<span class="keyword">chan</span> time.Time, <span class="number">3</span>) <span class="comment">// 用于控制速率的channel</span></div><div class="line"><span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++ &#123;</div><div class="line">  rateControlChan &lt;- time.Now()</div><div class="line">&#125;</div><div class="line"><span class="comment">// send value per 200 millisecond</span></div><div class="line"><span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">  <span class="keyword">for</span> t := <span class="keyword">range</span> time.Tick(time.Millisecond * <span class="number">200</span>) &#123;</div><div class="line">    rateControlChan &lt;- t</div><div class="line">  &#125;</div><div class="line">&#125;()</div><div class="line"></div><div class="line">reqChannel := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">5</span>) <span class="comment">// 缓存请求的channel</span></div><div class="line"><span class="keyword">for</span> i:=<span class="number">0</span>; i&lt; <span class="number">5</span>; i++ &#123;</div><div class="line">  reqChannel &lt;- i</div><div class="line">&#125;</div><div class="line"><span class="built_in">close</span>(reqChannel)</div><div class="line"><span class="keyword">for</span> r:= <span class="keyword">range</span> reqChannel &#123;</div><div class="line">  ht := &lt;- rateControlChan <span class="comment">// wait for rate-control condition</span></div><div class="line">  <span class="comment">// handle request here</span></div><div class="line">  fmt.Println(<span class="string">"req"</span>, r, <span class="string">"handle at"</span>, ht)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="rand"><a href="#rand" class="headerlink" title="rand"></a>rand</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">rs := rand.NewSource(time.Now().UnixNano())</div><div class="line">r := rand.New(rs)</div><div class="line"><span class="comment">// r此时是一个新的随机数生成器</span></div><div class="line"><span class="comment">// 正式使用应该这样</span></div><div class="line">r.Intn(<span class="number">100</span>)</div><div class="line">rand.Float64()  <span class="comment">// 返回0-1之间的一个浮点数</span></div><div class="line">rand.Int31()</div><div class="line">rand.Uint32()</div></pre></td></tr></table></figure>
+<h2 id="strconv"><a href="#strconv" class="headerlink" title="strconv"></a>strconv</h2><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// parseFloat原型</div><div class="line">func ParseFloat(s string, bitSize int) (f float64, err error)</div><div class="line">f,_ := strconv.ParseFloat("1.23", 64)   // 转换到64位Float，不处理转换的错误</div><div class="line"></div><div class="line">// parseInt的原型， base从2-36</div><div class="line">func ParseInt(s string, base int, bitSize int) (i int64, err error)</div><div class="line"></div><div class="line">// 更常用的</div><div class="line">k,_ := strconv.Atoi("123")  // k=123</div><div class="line">_,e := strconv.Atoi("wrongFormat")  // will return error</div></pre></td></tr></table></figure>
+<h2 id="url-parse"><a href="#url-parse" class="headerlink" title="url parse"></a>url parse</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="string">"net/url"</span></div><div class="line"></div><div class="line">urlStr := <span class="string">"https://gobyexample.com/url-parsing?from=goole#url-parsing"</span></div><div class="line">u, err := url.Parse(urlStr)</div><div class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;  fmt.Println(err)</div><div class="line">&#125;</div><div class="line">fmt.Println(u.Scheme,u.Host, u.Path, u.Fragment, u.RawQuery)</div><div class="line">host, port, _ := net.SplitHostPort(u.Host)</div><div class="line"></div><div class="line">user := u.User</div><div class="line">username := <span class="string">"null"</span></div><div class="line"><span class="keyword">if</span> user != <span class="literal">nil</span> &#123;</div><div class="line">  username = user.Username()  <span class="comment">// user.Password()</span></div><div class="line">&#125;</div><div class="line">fmt.Println(<span class="string">"username"</span>, username)</div><div class="line"><span class="comment">// 解析queryString</span></div><div class="line">query, _ := url.ParseQuery(u.RawQuery)</div><div class="line">fmt.Println(query, query[<span class="string">"from"</span>][<span class="number">0</span>])</div></pre></td></tr></table></figure>
+<h2 id="A-Full-Example-For-Polymorphism-amp-Composition"><a href="#A-Full-Example-For-Polymorphism-amp-Composition" class="headerlink" title="A Full Example For Polymorphism &amp; Composition"></a>A Full Example For Polymorphism &amp; Composition</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Sample program to show what happens when the outer and inner</span></div><div class="line"><span class="comment">// type implement the same interface.</span></div><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">	<span class="string">"fmt"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="comment">// notifier is an interface that defined notification</span></div><div class="line"><span class="comment">// type behavior.</span></div><div class="line"><span class="keyword">type</span> notifier <span class="keyword">interface</span> &#123;</div><div class="line">	notify()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// user defines a user in the program.</span></div><div class="line"><span class="keyword">type</span> user <span class="keyword">struct</span> &#123;</div><div class="line">	name  <span class="keyword">string</span></div><div class="line">	email <span class="keyword">string</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// admin represents an admin user with privileges.</span></div><div class="line"><span class="keyword">type</span> admin <span class="keyword">struct</span> &#123;</div><div class="line">	user</div><div class="line">	level <span class="keyword">string</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// notify implements a method that can be called via</span></div><div class="line"><span class="comment">// a value of type user.</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(u *user)</span> <span class="title">notify</span><span class="params">()</span></span> &#123;</div><div class="line">	fmt.Printf(<span class="string">"user: Sending user email To %s&lt;%s&gt;\n"</span>,</div><div class="line">		u.name,</div><div class="line">		u.email)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// notify implements a method that can be called via</span></div><div class="line"><span class="comment">// a value of type Admin.</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a *admin)</span> <span class="title">notify</span><span class="params">()</span></span> &#123;</div><div class="line">	fmt.Printf(<span class="string">"User: Sending Admin Email To %s&lt;%s&gt;\n"</span>,</div><div class="line">		a.name,</div><div class="line">		a.email)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// main is the entry point for the application.</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	<span class="comment">// Create an admin user.</span></div><div class="line">	ad := admin&#123;</div><div class="line">		user: user&#123;</div><div class="line">			name:  <span class="string">"john smith"</span>,</div><div class="line">			email: <span class="string">"john@yahoo.com"</span>,</div><div class="line">		&#125;,</div><div class="line">		level: <span class="string">"super"</span>,</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// Send the admin user a notification.</span></div><div class="line">	<span class="comment">// The embedded inner type's implementation of the</span></div><div class="line">	<span class="comment">// interface is NOT "promoted" to the outer type.</span></div><div class="line">	sendNotification(&amp;ad)</div><div class="line"></div><div class="line">	<span class="comment">// We can access the inner type's method directly.</span></div><div class="line">	ad.user.notify()</div><div class="line"></div><div class="line">	<span class="comment">// The inner type's method is NOT promoted.</span></div><div class="line">	ad.notify()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// sendNotification accepts values that implement the notifier</span></div><div class="line"><span class="comment">// interface and sends notifications.</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">sendNotification</span><span class="params">(n notifier)</span></span> &#123;</div><div class="line">	n.notify()</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;reference from: &lt;a href=&quot;http://blog.wuxu92.com/&quot;&gt;http://blog.wuxu92.com/&lt;/a&gt;&lt;/p&gt;
+&lt;!-- toc --&gt;
+    
+    </summary>
+    
+      <category term="golang" scheme="http://cwza.github.io/my_blog/categories/golang/"/>
+    
+    
+      <category term="golang" scheme="http://cwza.github.io/my_blog/tags/golang/"/>
+    
+  </entry>
   
   <entry>
     <title>go-middleware筆記</title>
@@ -100,6 +189,31 @@
   </entry>
   
   <entry>
+    <title>nginx connection limit bandwith limit rate limit</title>
+    <link href="http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/"/>
+    <id>http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/</id>
+    <published>2017-02-13T08:30:57.000Z</published>
+    <updated>2017-03-13T10:22:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="connection-limit"><a href="#connection-limit" class="headerlink" title="connection limit"></a>connection limit</h2><p>每一ip最多50連線數<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_conn connlimit 50;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="bandwith-limit"><a href="#bandwith-limit" class="headerlink" title="bandwith limit"></a>bandwith limit</h2><p>當流量超過500k時限制速度為50k<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_rate 50k;</div><div class="line">      limit_rate_after 500k;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="rate-limit"><a href="#rate-limit" class="headerlink" title="rate limit"></a>rate limit</h2><p>每秒最多50 request<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=50r/s;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;connection-limit&quot;&gt;&lt;a href=&quot;#connection-limit&quot; class=&quot;headerlink&quot; title=&quot;connection limit&quot;&gt;&lt;/a&gt;connection limit&lt;/h2&gt;&lt;p&gt;每一ip最多50連線數&lt;br
+    
+    </summary>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
+    
+    
+      <category term="nginx" scheme="http://cwza.github.io/my_blog/tags/nginx/"/>
+    
+  </entry>
+  
+  <entry>
     <title>nginx and ufw add rate limit</title>
     <link href="http://cwza.github.io/my_blog/2017/02/13/nginx-and-ufw-add-rate-limit/"/>
     <id>http://cwza.github.io/my_blog/2017/02/13/nginx-and-ufw-add-rate-limit/</id>
@@ -127,31 +241,6 @@
       <category term="firewall" scheme="http://cwza.github.io/my_blog/tags/firewall/"/>
     
       <category term="ubuntu" scheme="http://cwza.github.io/my_blog/tags/ubuntu/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>nginx connection limit bandwith limit rate limit</title>
-    <link href="http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/"/>
-    <id>http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/</id>
-    <published>2017-02-13T08:30:57.000Z</published>
-    <updated>2017-03-13T10:22:07.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="connection-limit"><a href="#connection-limit" class="headerlink" title="connection limit"></a>connection limit</h2><p>每一ip最多50連線數<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_conn connlimit 50;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-<h2 id="bandwith-limit"><a href="#bandwith-limit" class="headerlink" title="bandwith limit"></a>bandwith limit</h2><p>當流量超過500k時限制速度為50k<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_rate 50k;</div><div class="line">      limit_rate_after 500k;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-<h2 id="rate-limit"><a href="#rate-limit" class="headerlink" title="rate limit"></a>rate limit</h2><p>每秒最多50 request<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=50r/s;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;connection-limit&quot;&gt;&lt;a href=&quot;#connection-limit&quot; class=&quot;headerlink&quot; title=&quot;connection limit&quot;&gt;&lt;/a&gt;connection limit&lt;/h2&gt;&lt;p&gt;每一ip最多50連線數&lt;br
-    
-    </summary>
-    
-      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
-    
-    
-      <category term="nginx" scheme="http://cwza.github.io/my_blog/tags/nginx/"/>
     
   </entry>
   
@@ -440,34 +529,6 @@
   </entry>
   
   <entry>
-    <title>Higher Order Component</title>
-    <link href="http://cwza.github.io/my_blog/2017/01/19/Higher-Order-Component/"/>
-    <id>http://cwza.github.io/my_blog/2017/01/19/Higher-Order-Component/</id>
-    <published>2017-01-19T06:48:57.000Z</published>
-    <updated>2017-03-10T02:26:35.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>A Simple Higher Order Component example</p>
-<h2 id="Simple-example"><a href="#Simple-example" class="headerlink" title="Simple example"></a>Simple example</h2><p>For loading spinner with different Component<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// HOC declaration</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">withLoadingSpinner</span>(<span class="params">Component</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">EnhancedComponent</span>(<span class="params">&#123; isLoading, ...props &#125;</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!isLoading) &#123;</div><div class="line">      <span class="keyword">return</span> &lt;Component &#123; ...props &#125; /&gt;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return &lt;LoadingSpinner /&gt;;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Usage</div><div class="line"></div><div class="line">const ListItemsWithLoadingIndicator = withLoadingSpinner(ListItems);</div><div class="line"></div><div class="line">&lt;ListItemsWithLoadingIndicator</div><div class="line">  isLoading=&#123;props.isLoading&#125;</div><div class="line">  list=&#123;props.list&#125;</div><div class="line">/&gt;</div></pre></td></tr></table></figure></p>
-<h1 id="Recompose"><a href="#Recompose" class="headerlink" title="Recompose"></a>Recompose</h1><p><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">https://github.com/rafrex/spa-github-pages</a><br>A React Library for HOC</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;A Simple Higher Order Component example&lt;/p&gt;
-&lt;h2 id=&quot;Simple-example&quot;&gt;&lt;a href=&quot;#Simple-example&quot; class=&quot;headerlink&quot; title=&quot;Simple example&quot;&gt;&lt;
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
-    
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
-    
-      <category term="react" scheme="http://cwza.github.io/my_blog/tags/react/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Deploy react app to github page</title>
     <link href="http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/"/>
     <id>http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/</id>
@@ -488,6 +549,34 @@
     
     
       <category term="github" scheme="http://cwza.github.io/my_blog/tags/github/"/>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
+    
+      <category term="react" scheme="http://cwza.github.io/my_blog/tags/react/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Higher Order Component</title>
+    <link href="http://cwza.github.io/my_blog/2017/01/19/Higher-Order-Component/"/>
+    <id>http://cwza.github.io/my_blog/2017/01/19/Higher-Order-Component/</id>
+    <published>2017-01-19T06:48:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>A Simple Higher Order Component example</p>
+<h2 id="Simple-example"><a href="#Simple-example" class="headerlink" title="Simple example"></a>Simple example</h2><p>For loading spinner with different Component<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// HOC declaration</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">withLoadingSpinner</span>(<span class="params">Component</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">EnhancedComponent</span>(<span class="params">&#123; isLoading, ...props &#125;</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!isLoading) &#123;</div><div class="line">      <span class="keyword">return</span> &lt;Component &#123; ...props &#125; /&gt;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return &lt;LoadingSpinner /&gt;;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Usage</div><div class="line"></div><div class="line">const ListItemsWithLoadingIndicator = withLoadingSpinner(ListItems);</div><div class="line"></div><div class="line">&lt;ListItemsWithLoadingIndicator</div><div class="line">  isLoading=&#123;props.isLoading&#125;</div><div class="line">  list=&#123;props.list&#125;</div><div class="line">/&gt;</div></pre></td></tr></table></figure></p>
+<h1 id="Recompose"><a href="#Recompose" class="headerlink" title="Recompose"></a>Recompose</h1><p><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">https://github.com/rafrex/spa-github-pages</a><br>A React Library for HOC</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;A Simple Higher Order Component example&lt;/p&gt;
+&lt;h2 id=&quot;Simple-example&quot;&gt;&lt;a href=&quot;#Simple-example&quot; class=&quot;headerlink&quot; title=&quot;Simple example&quot;&gt;&lt;
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
+    
     
       <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
     
@@ -606,171 +695,6 @@
       <category term="mac" scheme="http://cwza.github.io/my_blog/tags/mac/"/>
     
       <category term="zsh" scheme="http://cwza.github.io/my_blog/tags/zsh/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>javascript reduce basic example</title>
-    <link href="http://cwza.github.io/my_blog/2016/10/27/javascript-reduce-basic-example/"/>
-    <id>http://cwza.github.io/my_blog/2016/10/27/javascript-reduce-basic-example/</id>
-    <published>2016-10-27T09:11:00.000Z</published>
-    <updated>2017-03-10T02:26:35.000Z</updated>
-    
-    <content type="html"><![CDATA[
-
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1. Basic Example</a></li>
-<li><a href="#sec-2">2. map and filter is also a reduce</a></li>
-</ul>
-</div>
-</div>
-<p>
-Reduce is a function to transform an array to another something<br>
-</p>
-
-<a id="more"></a>
-
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Basic Example</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-input: votes<br>
-output: { angular: 3, react: 4, ember: 1, vanilla: 1 }<br>
-</p>
-
-<div class="org-src-container">
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> votes = [</span><br><span class="line">    <span class="string">"angular"</span>,</span><br><span class="line">    <span class="string">"angular"</span>,</span><br><span class="line">    <span class="string">"react"</span>,</span><br><span class="line">    <span class="string">"react"</span>,</span><br><span class="line">    <span class="string">"react"</span>,</span><br><span class="line">    <span class="string">"angular"</span>,</span><br><span class="line">    <span class="string">"ember"</span>,</span><br><span class="line">    <span class="string">"react"</span>,</span><br><span class="line">    <span class="string">"vanilla"</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> initialVaue = {};</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> reducer = <span class="function"><span class="keyword">function</span>(<span class="params">tally, vote</span>) </span>{</span><br><span class="line">    <span class="keyword">if</span>(!tally[vote]) {</span><br><span class="line">	tally[vote] = <span class="number">1</span>;</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">	tally[vote] = tally[vote] + <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> tally;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result = votes.reduce(reducer, initialValue);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result);</span><br></pre></td></tr></table></figure>
-</div>
-</div>
-</div>
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> map and filter is also a reduce</h2>
-<div class="outline-text-2" id="text-2">
-<div class="org-src-container">
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// contents of doubled === doubleMapped</span></span><br><span class="line"><span class="keyword">var</span> data = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> doubled = data.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">acc, value</span>) </span>{</span><br><span class="line">    acc.push(value * <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">return</span> acc;</span><br><span class="line">}, []);</span><br><span class="line"><span class="keyword">var</span> doubleMapped = data.map(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>) </span>{</span><br><span class="line">    <span class="keyword">return</span> item * <span class="number">2</span>;</span><br><span class="line">});</span><br><span class="line"></span><br><span class="line"><span class="comment">// contentes of evens === evenFiltered</span></span><br><span class="line"><span class="keyword">var</span> data2 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">var</span> evens = data2.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">acc, value</span>) </span>{</span><br><span class="line">    <span class="keyword">if</span>(value % <span class="number">2</span> ===<span class="number">0</span>) {</span><br><span class="line">	acc.push(value);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> acc;</span><br><span class="line">}, []);</span><br><span class="line"><span class="keyword">var</span> evenFiltered = data2.filter(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>) </span>{</span><br><span class="line">    <span class="keyword">return</span> (item % <span class="number">2</span> ===<span class="number">0</span>);</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
-</div>
-</div>
-</div>
-
-Last Updated 2017-03-10 五 10:26.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="external">hexo-renderer-org</a> with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.2.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 8.2.10)
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;div id=&quot;table-of-contents&quot;&gt;
-&lt;h2&gt;Table of Contents&lt;/h2&gt;
-&lt;div id=&quot;text-table-of-contents&quot;&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#sec-1&quot;&gt;1. Basic Example&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#sec-2&quot;&gt;2. map and filter is also a reduce&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;
-Reduce is a function to transform an array to another something&lt;br&gt;
-&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
-    
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Javascript Composition Over Inheritance</title>
-    <link href="http://cwza.github.io/my_blog/2016/10/25/javascript-composition-over-inheritance/"/>
-    <id>http://cwza.github.io/my_blog/2016/10/25/javascript-composition-over-inheritance/</id>
-    <published>2016-10-25T07:00:00.000Z</published>
-    <updated>2017-03-10T02:26:35.000Z</updated>
-    
-    <content type="html"><![CDATA[
-
-<p>
-Javascript中Composition示範code<br>
-當在javascript中需要多重繼承概念時可考慮使用Composition<br>
-</p>
-<a id="more"></a>
-
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Factory functions</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-Compare to prototype factory function is a more flexible way to create object using JS.<br>
-</p>
-
-<p>
-OO形式（using prototype）：<br>
-</p>
-<div class="org-src-container">
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span> </span>{</span><br><span class="line">  constructor() {</span><br><span class="line">    <span class="keyword">this</span>.sound = <span class="string">'woof'</span></span><br><span class="line">  }</span><br><span class="line">  talk() {</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.sound)</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">const</span> sniffles = <span class="keyword">new</span> Dog()</span><br><span class="line">sniffles.talk() <span class="comment">// Outputs: "woof"</span></span><br></pre></td></tr></table></figure>
-</div>
-
-<p>
-以Factory改寫：<br>
-</p>
-<div class="org-src-container">
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> dog = () =&amp;gt; {</span><br><span class="line">  <span class="keyword">const</span> sound = <span class="string">'woof'</span></span><br><span class="line">  <span class="keyword">return</span> {</span><br><span class="line">    talk: () =&amp;gt; <span class="built_in">console</span>.log(sound)</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">const</span> sniffles = dog()</span><br><span class="line">sniffles.talk() <span class="comment">// Outputs: "woof"</span></span><br></pre></td></tr></table></figure>
-</div>
-</div>
-</div>
-
-
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Composition</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-假設我們想建立以下物件關係<br>
-</p>
-<div class="org-src-container">
-
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">dog            = pooper + barker //dog can poop and bark&#10;cat            = pooper + meower //cat can poop and meow&#10;cleaningRobot  = driver + cleaner //cleaningRobot can be driven and clean&#10;murderRobot    = driver + killer&#10;murderRobotDog = driver + killer + barker</span><br></pre></td></tr></table></figure>
-</div>
-<p>
-以上需求可使用prototype多重繼承達成，但在javascript中我們也可用Composition來處理，以下範例使用到上述的Factory<br>
-</p>
-
-<div class="org-src-container">
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> barker = (state) =&amp;gt; ({</span><br><span class="line">  bark: () =&amp;gt; <span class="built_in">console</span>.log(<span class="string">'Woof, I am '</span> + state.name)</span><br><span class="line">})</span><br><span class="line"><span class="keyword">const</span> driver = (state) =&amp;gt; ({</span><br><span class="line">  drive: () =&amp;gt; state.position = state.position + state.speed</span><br><span class="line">})</span><br></pre></td></tr></table></figure>
-</div>
-<div class="org-src-container">
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> murderRobotDog = (name)  =&amp;gt; {</span><br><span class="line">  <span class="keyword">let</span> state = {</span><br><span class="line">    name,</span><br><span class="line">    speed: <span class="number">100</span>,</span><br><span class="line">    position: <span class="number">0</span></span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Object</span>.assign(</span><br><span class="line">	{},</span><br><span class="line">	barker(state),</span><br><span class="line">	driver(state),</span><br><span class="line">	killer(state)</span><br><span class="line">    )</span><br><span class="line">}</span><br><span class="line"><span class="keyword">const</span> bruno =  murderRobotDog(<span class="string">'bruno'</span>)</span><br><span class="line">bruno.bark() <span class="comment">// "Woof, I am Bruno"</span></span><br></pre></td></tr></table></figure>
-</div>
-
-<p>
-可以注意到的是，Composition比起多重繼承有更大的彈性，繼承需要在一開始就設計好整個繼承架構，而Composition則是可以在任何時候疊加上去即可<br>
-在JS中可以多多利用Composition<br>
-</p>
-</div>
-</div>
-
-Last Updated 2017-03-10 五 10:26.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="external">hexo-renderer-org</a> with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.2.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 8.2.10)
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;
-Javascript中Composition示範code&lt;br&gt;
-當在javascript中需要多重繼承概念時可考慮使用Composition&lt;br&gt;
-&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
-    
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
     
   </entry>
   

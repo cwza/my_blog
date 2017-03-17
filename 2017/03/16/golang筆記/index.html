@@ -1,0 +1,512 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="cwza&#39;s blog">
+    <title>golang筆記 - cwza&#39;s blog</title>
+    <meta name="author" content="Cwza">
+    
+    
+        <link rel="alternative" type="application/atom+xml" title="RSS" href="/my_blog/atom.xml">
+    
+    <meta name="description" content="reference from: http://blog.wuxu92.com/">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="golang筆記">
+<meta property="og:url" content="http://cwza.github.io/my_blog/2017/03/16/golang筆記/index.html">
+<meta property="og:site_name" content="cwza's blog">
+<meta property="og:description" content="reference from: http://blog.wuxu92.com/">
+<meta property="og:updated_time" content="2017-03-16T07:32:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="golang筆記">
+<meta name="twitter:description" content="reference from: http://blog.wuxu92.com/">
+    
+    
+    
+        <meta property="og:image" content="https://www.gravatar.com/avatar/f563bb5ba525d2aa148cd22fb4c2db26?s=640"/>
+    
+    
+    
+    
+
+    <!--add google search console verification-->
+    
+
+    <!--STYLES-->
+    <link rel="stylesheet" href="/my_blog/assets/css/style.min.css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-70916999-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/my_blog/ ">cwza&#39;s blog</a>
+    </h1>
+    
+        
+            <a  class="header-right-icon st-search-show-outputs"
+                href="#search">
+        
+        
+            <i class="fa fa-lg fa-search"></i>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/my_blog/#about">
+                    <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/f563bb5ba525d2aa148cd22fb4c2db26?s=110"/>
+            </a>
+            <span class="sidebar-profile-name">Cwza</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">Home</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">Categories</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">Tags</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">Archives</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">Search</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">About</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/cwza" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://facebook.com/profile.php?id=100001791342932" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-facebook"></i>
+                    <span class="sidebar-button-desc">Facebook</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:cwz0205a@gmail.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">Mail</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            golang筆記
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Thu Mar 16 2017 10:30:57 GMT+0800">
+	
+		    Mar 16, 2017
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/golang/">golang</a>
+
+
+    
+</div>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>reference from: <a href="http://blog.wuxu92.com/" target="_blank" rel="external">http://blog.wuxu92.com/</a></p>
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#不定參數"><span class="toc-text">不定參數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#closure"><span class="toc-text">closure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Error-handle"><span class="toc-text">Error handle</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#channel"><span class="toc-text">channel</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用channel同步goroutine"><span class="toc-text">使用channel同步goroutine</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#channel-directive"><span class="toc-text">channel directive</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#select"><span class="toc-text">select</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#超時"><span class="toc-text">超時</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#non-blocking-channel"><span class="toc-text">non-blocking channel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#range-over-channel"><span class="toc-text">range over channel</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Timer-amp-Ticker"><span class="toc-text">Timer & Ticker</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Timer"><span class="toc-text">Timer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tickers"><span class="toc-text">Tickers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#worker-pool-worker池"><span class="toc-text">worker pool/worker池</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rate-limiting"><span class="toc-text">rate-limiting</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rand"><span class="toc-text">rand</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#strconv"><span class="toc-text">strconv</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#url-parse"><span class="toc-text">url parse</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#A-Full-Example-For-Polymorphism-amp-Composition"><span class="toc-text">A Full Example For Polymorphism & Composition</span></a></li></ol>
+<a id="more"></a>
+<h2 id="不定參數"><a href="#不定參數" class="headerlink" title="不定參數"></a>不定參數</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">sum</span> <span class="params">(nums ...<span class="keyword">int</span>)</span></span>&#123;</div><div class="line">	total := <span class="number">0</span></div><div class="line">	<span class="keyword">for</span> _, num := <span class="keyword">range</span> nums &#123;</div><div class="line">		total += num</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> total</div><div class="line">&#125;</div><div class="line">nums := []<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</div><div class="line">t := sum(nums...)</div></pre></td></tr></table></figure>
+<h2 id="closure"><a href="#closure" class="headerlink" title="closure"></a>closure</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">intSeq</span><span class="params">()</span> <span class="title">func</span><span class="params">()</span> <span class="title">int</span></span> &#123;</div><div class="line">	i := <span class="number">0</span></div><div class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">()</span> <span class="title">int</span></span> &#123;</div><div class="line">		i += <span class="number">1</span>;</div><div class="line">		<span class="keyword">return</span> i</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">next := intSeq()</div><div class="line"><span class="comment">// next是一个命名函数了</span></div><div class="line">next()</div></pre></td></tr></table></figure>
+<h2 id="Error-handle"><a href="#Error-handle" class="headerlink" title="Error handle"></a>Error handle</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">type</span> myErr <span class="keyword">struct</span> &#123;</div><div class="line">	arg <span class="keyword">int</span></div><div class="line">	prob <span class="keyword">string</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e myErr)</span> <span class="title">Error</span><span class="params">()</span> <span class="title">string</span></span> &#123;</div><div class="line">  <span class="keyword">return</span> fmt.Sprintf(<span class="string">"%d - %s"</span>, e.arg, e.prob)</div><div class="line">&#125;</div><div class="line"><span class="keyword">type</span> Person <span class="keyword">struct</span>&#123;</div><div class="line">	age <span class="keyword">int</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p Person)</span><span class="title">buy</span><span class="params">(item <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">bool</span>, error)</span></span> &#123;</div><div class="line">  <span class="keyword">if</span> p.age &lt; <span class="number">18</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>, &amp;myErr&#123;<span class="number">0</span>, <span class="string">"too yong"</span>&#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="literal">true</span>, <span class="literal">nil</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">me := Person&#123;<span class="number">10</span>&#125;</div><div class="line">, e := me.buy(<span class="string">"shirt"</span>)</div><div class="line"><span class="keyword">if</span> me, ok := e.(*myErr); ok &#123;</div><div class="line">	<span class="comment">// with myErr return, me ref to return error</span></div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="channel"><a href="#channel" class="headerlink" title="channel"></a>channel</h2><p>channel預設是blocking的<br>channel中沒東西recieve的話會block, 若已沒有其他goroutine則會panic</p>
+<h3 id="使用channel同步goroutine"><a href="#使用channel同步goroutine" class="headerlink" title="使用channel同步goroutine"></a>使用channel同步goroutine</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">working</span><span class="params">(flagChan <span class="keyword">chan</span> <span class="keyword">bool</span>)</span></span> &#123;</div><div class="line">  fmt.Println(<span class="string">"working on it"</span>)</div><div class="line">  time.Sleep(<span class="number">2</span> * time.Second)</div><div class="line">  fmt.Println(<span class="string">"work done"</span>)            </div><div class="line"></div><div class="line">  flagChan &lt;- <span class="literal">true</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">chanSync</span><span class="params">()</span></span> &#123;</div><div class="line">  flagChan := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">bool</span>, <span class="number">1</span>)</div><div class="line">  <span class="keyword">go</span> working(flagChan)</div><div class="line"></div><div class="line">  <span class="comment">// 下面的接受操作会阻塞等待goroutine执行结束</span></div><div class="line">  done := &lt;- flagChan </div><div class="line">  fmt.Println(<span class="string">"sync goroutine output"</span>, done)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="channel-directive"><a href="#channel-directive" class="headerlink" title="channel directive"></a>channel directive</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">send</span> <span class="params">(flagChan <span class="keyword">chan</span>&lt;- <span class="keyword">bool</span>)</span></span> &#123; ... &#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">recv</span> <span class="params">(flagChan &lt;-<span class="keyword">chan</span> <span class="keyword">bool</span>)</span></span> &#123; ... &#125;</div></pre></td></tr></table></figure>
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><p>select用於從多個channel中輪訓狀態, 從已經準備就緒的channel中接受值並執行相對應代碼<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> (</div><div class="line">	<span class="string">"math/rand"</span></div><div class="line">	<span class="string">"time"</span></div><div class="line">	<span class="string">"strconv"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">gr1</span><span class="params">(c <span class="keyword">chan</span> <span class="keyword">string</span>)</span></span> &#123;</div><div class="line">  dur := rand.Intn(<span class="number">300</span>)</div><div class="line">  time.Sleep(time.Millisecond * time.Duration(dur))</div><div class="line">  c &lt;- <span class="string">"gr1 sleep done "</span> + strconv.Itoa(dur)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">gr2</span><span class="params">(c <span class="keyword">chan</span> <span class="keyword">string</span>)</span></span> &#123;</div><div class="line">  dur := rand.Intn(<span class="number">400</span>)</div><div class="line">  time.Sleep(time.Millisecond * time.Duration(dur))</div><div class="line">  c &lt;- <span class="string">"gr2 sleep done "</span> + strconv.Itoa(dur)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">selects</span><span class="params">()</span></span> &#123;</div><div class="line">  c1 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>)</div><div class="line">  c2 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>)</div><div class="line">  <span class="keyword">go</span> gr1(c1)</div><div class="line">  <span class="keyword">go</span> gr1(c1)</div><div class="line">  <span class="keyword">go</span> gr2(c2)</div><div class="line">  <span class="keyword">go</span> gr2(c2)</div><div class="line"></div><div class="line">  <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++ &#123;</div><div class="line">    <span class="keyword">select</span> &#123;</div><div class="line">    <span class="keyword">case</span> msg := &lt;-c1:</div><div class="line">      fmt.Println(msg)</div><div class="line">    <span class="keyword">case</span> msg2 := &lt;-c2:</div><div class="line">      fmt.Println(msg2)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="超時"><a href="#超時" class="headerlink" title="超時"></a>超時</h3><p>若等待超過一定時間沒有resource則執行<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> &#123;</div><div class="line"><span class="keyword">case</span> res &lt;- c1 :</div><div class="line">	fmt.Println(res)</div><div class="line"><span class="keyword">case</span> &lt;-time.After(time.Seconde * <span class="number">2</span>)</div><div class="line">	fmt.Println(<span class="string">"timeout"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="non-blocking-channel"><a href="#non-blocking-channel" class="headerlink" title="non-blocking channel"></a>non-blocking channel</h3><p>所有case的channel都没有就绪的时候执行default<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> &#123;</div><div class="line"><span class="keyword">case</span> msg := &lt;-c1:</div><div class="line">  fmt.Println(msg)</div><div class="line"><span class="keyword">case</span> msg2 := &lt;-c2:</div><div class="line">  fmt.Println(msg2)</div><div class="line"><span class="keyword">default</span>:</div><div class="line">  <span class="comment">// non-blocking channel</span></div><div class="line">  fmt.Println(<span class="string">"select default"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="range-over-channel"><a href="#range-over-channel" class="headerlink" title="range over channel"></a>range over channel</h3><p>对于一个close了得channel，range能自动判断是否遍历结束，但是如果channel没有调用过close，在下面的代码中，会在接受第三个值的时候阻塞(异常退出)<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">rangeChannel</span><span class="params">()</span></span> &#123;</div><div class="line">  c := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">2</span>)</div><div class="line">  c &lt;- <span class="string">"tomorrow is monday"</span></div><div class="line">  c &lt;- <span class="string">"fee out"</span></div><div class="line">  <span class="built_in">close</span>(c)</div><div class="line">  <span class="keyword">for</span> str := <span class="keyword">range</span> c &#123;</div><div class="line">    fmt.Println(str)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="Timer-amp-Ticker"><a href="#Timer-amp-Ticker" class="headerlink" title="Timer &amp; Ticker"></a>Timer &amp; Ticker</h2><h3 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h3><p>timer is like a channel<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="string">"time"</span></div><div class="line">...</div><div class="line"><span class="comment">// 定义一个timer，超时设定2秒</span></div><div class="line">timer1 := time.NewTimer(time.Second *２）</div><div class="line"><span class="comment">// 在此等待2s</span></div><div class="line">&lt;- timer1.C  <span class="comment">//注意.C</span></div></pre></td></tr></table></figure></p>
+<h3 id="Tickers"><a href="#Tickers" class="headerlink" title="Tickers"></a>Tickers</h3><p>ticker就像打点器一样循环执行某代码<br>ticker看作一个channel，在初始化时定义一个循环时间，每过一段时间往channel里面塞一个数，然后我们循环去取<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">t1 := time.NewTicker(time.Millisecond * <span class="number">500</span>)</div><div class="line"><span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">	<span class="keyword">for</span> t := <span class="keyword">range</span> t1.C &#123;</div><div class="line">		fmt.Println(<span class="string">"tick tick @ "</span>, t)</div><div class="line">	&#125;</div><div class="line">&#125;()</div><div class="line">time.Sleep(time.Second * <span class="number">3</span>)</div><div class="line">t1.Stop()</div><div class="line">fmt.Println(<span class="string">"tick tick stop"</span>)</div></pre></td></tr></table></figure></p>
+<h3 id="worker-pool-worker池"><a href="#worker-pool-worker池" class="headerlink" title="worker pool/worker池"></a>worker pool/worker池</h3><p>可以把一个goroutine看作一个worker。给多个worker传入相同的channel，worker从channel中取任务并处理，主线程往channel中添加任务，这样过个goroutine处理一个任务队列。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">jobs := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">100</span>)</div><div class="line">result := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">100</span>)</div><div class="line"><span class="comment">// use five workers</span></div><div class="line"><span class="keyword">for</span> w:=<span class="number">0</span>; w&lt;<span class="number">5</span>; w++ &#123;</div><div class="line">  <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(w <span class="keyword">int</span>, jobs &lt;-<span class="keyword">chan</span> <span class="keyword">int</span>, result <span class="keyword">chan</span>&lt;- <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">    <span class="keyword">for</span> j:= <span class="keyword">range</span> jobs &#123;</div><div class="line">      fmt.Println(<span class="string">"worker"</span>, w, <span class="string">"processing on"</span>, j)    </div><div class="line">      time.Sleep(time.Millisecond * time.Duration(rand.Intn(<span class="number">600</span>))) <span class="comment">// sleep a random time</span></div><div class="line">      result &lt;- j * <span class="number">2</span></div><div class="line">    &#125;</div><div class="line">  &#125;(w, jobs, result)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// insert jobs</span></div><div class="line"><span class="keyword">for</span> j:=<span class="number">0</span>; j&lt;<span class="number">10</span>; j++ &#123;</div><div class="line">  jobs &lt;- j</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">close</span>(jobs)</div><div class="line"></div><div class="line"><span class="comment">// can do some others here</span></div><div class="line"></div><div class="line"><span class="comment">// sync here, may wait for works done</span></div><div class="line"><span class="keyword">for</span> a :=<span class="number">0</span>; a&lt;<span class="number">10</span>; a++ &#123;</div><div class="line">  &lt;- result</div><div class="line">&#125;</div><div class="line">fmt.Println(<span class="string">"all work done here"</span>)</div></pre></td></tr></table></figure></p>
+<h3 id="rate-limiting"><a href="#rate-limiting" class="headerlink" title="rate-limiting"></a>rate-limiting</h3><p>使用goroutine，channel， ticker合作实现该特性<br>使用两个channel协同，一个用于处理速率的控制，一个用于请求的缓冲。使用一个goroutine不断的定时填充速率控制goroutine，而请求channel则用一个for-range不停行从里面取请求<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">rateControlChan := <span class="built_in">make</span>(<span class="keyword">chan</span> time.Time, <span class="number">3</span>) <span class="comment">// 用于控制速率的channel</span></div><div class="line"><span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++ &#123;</div><div class="line">  rateControlChan &lt;- time.Now()</div><div class="line">&#125;</div><div class="line"><span class="comment">// send value per 200 millisecond</span></div><div class="line"><span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">  <span class="keyword">for</span> t := <span class="keyword">range</span> time.Tick(time.Millisecond * <span class="number">200</span>) &#123;</div><div class="line">    rateControlChan &lt;- t</div><div class="line">  &#125;</div><div class="line">&#125;()</div><div class="line"></div><div class="line">reqChannel := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">5</span>) <span class="comment">// 缓存请求的channel</span></div><div class="line"><span class="keyword">for</span> i:=<span class="number">0</span>; i&lt; <span class="number">5</span>; i++ &#123;</div><div class="line">  reqChannel &lt;- i</div><div class="line">&#125;</div><div class="line"><span class="built_in">close</span>(reqChannel)</div><div class="line"><span class="keyword">for</span> r:= <span class="keyword">range</span> reqChannel &#123;</div><div class="line">  ht := &lt;- rateControlChan <span class="comment">// wait for rate-control condition</span></div><div class="line">  <span class="comment">// handle request here</span></div><div class="line">  fmt.Println(<span class="string">"req"</span>, r, <span class="string">"handle at"</span>, ht)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="rand"><a href="#rand" class="headerlink" title="rand"></a>rand</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">rs := rand.NewSource(time.Now().UnixNano())</div><div class="line">r := rand.New(rs)</div><div class="line"><span class="comment">// r此时是一个新的随机数生成器</span></div><div class="line"><span class="comment">// 正式使用应该这样</span></div><div class="line">r.Intn(<span class="number">100</span>)</div><div class="line">rand.Float64()  <span class="comment">// 返回0-1之间的一个浮点数</span></div><div class="line">rand.Int31()</div><div class="line">rand.Uint32()</div></pre></td></tr></table></figure>
+<h2 id="strconv"><a href="#strconv" class="headerlink" title="strconv"></a>strconv</h2><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// parseFloat原型</div><div class="line">func ParseFloat(s string, bitSize int) (f float64, err error)</div><div class="line">f,_ := strconv.ParseFloat("1.23", 64)   // 转换到64位Float，不处理转换的错误</div><div class="line"></div><div class="line">// parseInt的原型， base从2-36</div><div class="line">func ParseInt(s string, base int, bitSize int) (i int64, err error)</div><div class="line"></div><div class="line">// 更常用的</div><div class="line">k,_ := strconv.Atoi("123")  // k=123</div><div class="line">_,e := strconv.Atoi("wrongFormat")  // will return error</div></pre></td></tr></table></figure>
+<h2 id="url-parse"><a href="#url-parse" class="headerlink" title="url parse"></a>url parse</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="string">"net/url"</span></div><div class="line"></div><div class="line">urlStr := <span class="string">"https://gobyexample.com/url-parsing?from=goole#url-parsing"</span></div><div class="line">u, err := url.Parse(urlStr)</div><div class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;  fmt.Println(err)</div><div class="line">&#125;</div><div class="line">fmt.Println(u.Scheme,u.Host, u.Path, u.Fragment, u.RawQuery)</div><div class="line">host, port, _ := net.SplitHostPort(u.Host)</div><div class="line"></div><div class="line">user := u.User</div><div class="line">username := <span class="string">"null"</span></div><div class="line"><span class="keyword">if</span> user != <span class="literal">nil</span> &#123;</div><div class="line">  username = user.Username()  <span class="comment">// user.Password()</span></div><div class="line">&#125;</div><div class="line">fmt.Println(<span class="string">"username"</span>, username)</div><div class="line"><span class="comment">// 解析queryString</span></div><div class="line">query, _ := url.ParseQuery(u.RawQuery)</div><div class="line">fmt.Println(query, query[<span class="string">"from"</span>][<span class="number">0</span>])</div></pre></td></tr></table></figure>
+<h2 id="A-Full-Example-For-Polymorphism-amp-Composition"><a href="#A-Full-Example-For-Polymorphism-amp-Composition" class="headerlink" title="A Full Example For Polymorphism &amp; Composition"></a>A Full Example For Polymorphism &amp; Composition</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Sample program to show what happens when the outer and inner</span></div><div class="line"><span class="comment">// type implement the same interface.</span></div><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">	<span class="string">"fmt"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="comment">// notifier is an interface that defined notification</span></div><div class="line"><span class="comment">// type behavior.</span></div><div class="line"><span class="keyword">type</span> notifier <span class="keyword">interface</span> &#123;</div><div class="line">	notify()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// user defines a user in the program.</span></div><div class="line"><span class="keyword">type</span> user <span class="keyword">struct</span> &#123;</div><div class="line">	name  <span class="keyword">string</span></div><div class="line">	email <span class="keyword">string</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// admin represents an admin user with privileges.</span></div><div class="line"><span class="keyword">type</span> admin <span class="keyword">struct</span> &#123;</div><div class="line">	user</div><div class="line">	level <span class="keyword">string</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// notify implements a method that can be called via</span></div><div class="line"><span class="comment">// a value of type user.</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(u *user)</span> <span class="title">notify</span><span class="params">()</span></span> &#123;</div><div class="line">	fmt.Printf(<span class="string">"user: Sending user email To %s&lt;%s&gt;\n"</span>,</div><div class="line">		u.name,</div><div class="line">		u.email)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// notify implements a method that can be called via</span></div><div class="line"><span class="comment">// a value of type Admin.</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a *admin)</span> <span class="title">notify</span><span class="params">()</span></span> &#123;</div><div class="line">	fmt.Printf(<span class="string">"User: Sending Admin Email To %s&lt;%s&gt;\n"</span>,</div><div class="line">		a.name,</div><div class="line">		a.email)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// main is the entry point for the application.</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	<span class="comment">// Create an admin user.</span></div><div class="line">	ad := admin&#123;</div><div class="line">		user: user&#123;</div><div class="line">			name:  <span class="string">"john smith"</span>,</div><div class="line">			email: <span class="string">"john@yahoo.com"</span>,</div><div class="line">		&#125;,</div><div class="line">		level: <span class="string">"super"</span>,</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// Send the admin user a notification.</span></div><div class="line">	<span class="comment">// The embedded inner type's implementation of the</span></div><div class="line">	<span class="comment">// interface is NOT "promoted" to the outer type.</span></div><div class="line">	sendNotification(&amp;ad)</div><div class="line"></div><div class="line">	<span class="comment">// We can access the inner type's method directly.</span></div><div class="line">	ad.user.notify()</div><div class="line"></div><div class="line">	<span class="comment">// The inner type's method is NOT promoted.</span></div><div class="line">	ad.notify()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// sendNotification accepts values that implement the notifier</span></div><div class="line"><span class="comment">// interface and sends notifications.</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">sendNotification</span><span class="params">(n notifier)</span></span> &#123;</div><div class="line">	n.notify()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+            
+                
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/golang/">golang</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/03/16/golang-test筆記/"  data-tooltip="golang test 筆記">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/03/15/go-middleware筆記/" data-tooltip="go-middleware筆記">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang筆記/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang筆記/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang筆記/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 Cwza. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/03/16/golang-test筆記/"  data-tooltip="golang test 筆記">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/03/15/go-middleware筆記/" data-tooltip="go-middleware筆記">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang筆記/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang筆記/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang筆記/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang筆記/">
+                <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang筆記/">
+                <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang筆記/">
+                <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        <!-- Define author's picture -->
+
+
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="https://www.gravatar.com/avatar/f563bb5ba525d2aa148cd22fb4c2db26?s=110"/>
+        
+            <h4 id="about-card-name">Cwza</h4>
+        
+            <h5 id="about-card-bio"><p>Hello everyone.</br> I’m cwza.</br> Welcome to my blog.</br></p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Taiwan/Taipei
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/my_blog/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/my_blog/assets/js/script.min.js"></script>
+<!--SCRIPTS END-->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'cwzablog';
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+
+    <script type="text/javascript">
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+            e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','rxPzK7_9dZFEqRaWyGy2','2.0.0');
+    </script>
+
+
+</html>
