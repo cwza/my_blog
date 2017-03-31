@@ -225,6 +225,53 @@
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
+                                <a class="link-unstyled" href="/my_blog/2017/03/31/go_test_tool筆記/">go test tool筆記</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Fri Mar 31 2017 11:38:57 GMT+0800">
+	
+		    Mar 31, 2017
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/golang/">golang</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <h2 id="run-all-test-except-vendor"><a href="#run-all-test-except-vendor" class="headerlink" title="run all test except vendor"></a>run all test except vendor</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go <span class="built_in">test</span> $(go list ./... | grep -v /vendor/)</div></pre></td></tr></table></figure>
+<h2 id="go-tool-cover"><a href="#go-tool-cover" class="headerlink" title="go tool cover"></a>go tool cover</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">go <span class="built_in">test</span> -coverprofile coverage.txt &lt;package name&gt;</div><div class="line">go tool cover -html=coverage.txt -o coverage.html</div><div class="line">chrome coverage.html</div></pre></td></tr></table></figure>
+<h2 id="example-script-to-run-all-package-test-and-generate-coverage-file"><a href="#example-script-to-run-all-package-test-and-generate-coverage-file" class="headerlink" title="example script to run all package test and generate coverage file"></a>example script to run all package test and generate coverage file</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/env bash</span></div><div class="line"></div><div class="line"><span class="built_in">set</span> <span class="_">-e</span></div><div class="line">out=<span class="string">"coverage.txt"</span></div><div class="line">tmp=<span class="string">"profile.coverage.out"</span></div><div class="line">except=<span class="string">"example|testproto"</span></div><div class="line"></div><div class="line">: &gt; <span class="variable">$out</span></div><div class="line"></div><div class="line">i=0</div><div class="line"><span class="keyword">for</span> d <span class="keyword">in</span> $(go list ./... | grep -v vendor); <span class="keyword">do</span></div><div class="line">    <span class="comment"># except some package</span></div><div class="line">    <span class="keyword">if</span> [[ <span class="variable">$d</span> =~ <span class="variable">$except</span> ]]; <span class="keyword">then</span></div><div class="line">        <span class="built_in">continue</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"TESTS FOR: for \033[0;35m<span class="variable">$&#123;d&#125;</span>\033[0m"</span></div><div class="line">    go <span class="built_in">test</span> -v -coverprofile=<span class="variable">$tmp</span> <span class="variable">$d</span></div><div class="line">    <span class="keyword">if</span> [ <span class="_">-f</span> <span class="variable">$tmp</span> ]; <span class="keyword">then</span></div><div class="line">        <span class="comment"># remove mode:xxx if not first package for go tool cover</span></div><div class="line">        <span class="keyword">if</span> [ <span class="string">"<span class="variable">$i</span>"</span> != 0 ]; <span class="keyword">then</span></div><div class="line">            sed -i <span class="string">''</span> <span class="_">-e</span> <span class="string">'/^mode:/d'</span> ./<span class="variable">$tmp</span></div><div class="line">        <span class="keyword">fi</span></div><div class="line">        cat <span class="variable">$tmp</span> &gt;&gt; <span class="variable">$out</span></div><div class="line">        rm <span class="variable">$tmp</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">""</span></div><div class="line">    ((i++))</div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/my_blog/2017/03/31/go_test_tool筆記/#post-footer" class="postShorten-excerpt_link link">
+                                    Comment and share
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
                                 <a class="link-unstyled" href="/my_blog/2017/03/16/golang-test筆記/">golang test 筆記</a>
                         
                     </h1>
@@ -635,57 +682,6 @@
                                 Continue reading
                             </a>
                             
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2017/02/09/Digital-Ocean-Domain-And-Swap-Setting/">Digital Ocean Domain And Swap Setting</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Feb 09 2017 16:21:57 GMT+0800">
-	
-		    Feb 09, 2017
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/web/">web</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <h2 id="Domain-Setting"><a href="#Domain-Setting" class="headerlink" title="Domain Setting"></a>Domain Setting</h2><ol>
-<li>買一個domain(namecheap之類的)</li>
-<li>照著官方文件做吧<br><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-a-host-name-with-digitalocean" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-set-up-a-host-name-with-digitalocean</a></li>
-</ol>
-<h2 id="Swap-Setting"><a href="#Swap-Setting" class="headerlink" title="Swap Setting"></a>Swap Setting</h2><p>Digital Ocean每月5美金的那個VPS，記憶體只有512MB<br>並且Digital Ocean預設OS的Swap是關閉的（官方說明SSD不建議使用swap）<br>若在上面再用docker的話高機率因為記憶體不足process被kill掉<br>若是真的不想加錢買更多記憶體的話還是可以手動開啟swap</p>
-<p>一樣官方文件照著做就好<br><a href="https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04</a></p>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/my_blog/2017/02/09/Digital-Ocean-Domain-And-Swap-Setting/#post-footer" class="postShorten-excerpt_link link">
-                                    Comment and share
-                                </a>
-                            </p>
                         
                     </div>
                 

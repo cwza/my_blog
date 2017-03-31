@@ -1,0 +1,497 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="cwza&#39;s blog">
+    <title>go test tool筆記 - cwza&#39;s blog</title>
+    <meta name="author" content="Cwza">
+    
+    
+        <link rel="alternative" type="application/atom+xml" title="RSS" href="/my_blog/atom.xml">
+    
+    <meta name="description" content="run all test except vendor1go test $(go list ./... | grep -v /vendor/)
+go tool cover123go test -coverprofile coverage.txt &amp;lt;package name&amp;gt;go tool cover -html=coverage.txt -o coverage.htmlchrome co">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="go test tool筆記">
+<meta property="og:url" content="http://cwza.github.io/my_blog/2017/03/31/go_test_tool筆記/index.html">
+<meta property="og:site_name" content="cwza's blog">
+<meta property="og:description" content="run all test except vendor1go test $(go list ./... | grep -v /vendor/)
+go tool cover123go test -coverprofile coverage.txt &amp;lt;package name&amp;gt;go tool cover -html=coverage.txt -o coverage.htmlchrome co">
+<meta property="og:updated_time" content="2017-03-31T03:45:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="go test tool筆記">
+<meta name="twitter:description" content="run all test except vendor1go test $(go list ./... | grep -v /vendor/)
+go tool cover123go test -coverprofile coverage.txt &amp;lt;package name&amp;gt;go tool cover -html=coverage.txt -o coverage.htmlchrome co">
+    
+    
+    
+        <meta property="og:image" content="https://www.gravatar.com/avatar/f563bb5ba525d2aa148cd22fb4c2db26?s=640"/>
+    
+    
+    
+    
+
+    <!--add google search console verification-->
+    
+
+    <!--STYLES-->
+    <link rel="stylesheet" href="/my_blog/assets/css/style.min.css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-70916999-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/my_blog/ ">cwza&#39;s blog</a>
+    </h1>
+    
+        
+            <a  class="header-right-icon st-search-show-outputs"
+                href="#search">
+        
+        
+            <i class="fa fa-lg fa-search"></i>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/my_blog/#about">
+                    <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/f563bb5ba525d2aa148cd22fb4c2db26?s=110"/>
+            </a>
+            <span class="sidebar-profile-name">Cwza</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">Home</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">Categories</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">Tags</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">Archives</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">Search</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">About</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/cwza" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://facebook.com/profile.php?id=100001791342932" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-facebook"></i>
+                    <span class="sidebar-button-desc">Facebook</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:cwz0205a@gmail.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">Mail</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/my_blog/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            go test tool筆記
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Fri Mar 31 2017 11:38:57 GMT+0800">
+	
+		    Mar 31, 2017
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/golang/">golang</a>
+
+
+    
+</div>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <h2 id="run-all-test-except-vendor"><a href="#run-all-test-except-vendor" class="headerlink" title="run all test except vendor"></a>run all test except vendor</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go <span class="built_in">test</span> $(go list ./... | grep -v /vendor/)</div></pre></td></tr></table></figure>
+<h2 id="go-tool-cover"><a href="#go-tool-cover" class="headerlink" title="go tool cover"></a>go tool cover</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">go <span class="built_in">test</span> -coverprofile coverage.txt &lt;package name&gt;</div><div class="line">go tool cover -html=coverage.txt -o coverage.html</div><div class="line">chrome coverage.html</div></pre></td></tr></table></figure>
+<h2 id="example-script-to-run-all-package-test-and-generate-coverage-file"><a href="#example-script-to-run-all-package-test-and-generate-coverage-file" class="headerlink" title="example script to run all package test and generate coverage file"></a>example script to run all package test and generate coverage file</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/env bash</span></div><div class="line"></div><div class="line"><span class="built_in">set</span> <span class="_">-e</span></div><div class="line">out=<span class="string">"coverage.txt"</span></div><div class="line">tmp=<span class="string">"profile.coverage.out"</span></div><div class="line">except=<span class="string">"example|testproto"</span></div><div class="line"></div><div class="line">: &gt; <span class="variable">$out</span></div><div class="line"></div><div class="line">i=0</div><div class="line"><span class="keyword">for</span> d <span class="keyword">in</span> $(go list ./... | grep -v vendor); <span class="keyword">do</span></div><div class="line">    <span class="comment"># except some package</span></div><div class="line">    <span class="keyword">if</span> [[ <span class="variable">$d</span> =~ <span class="variable">$except</span> ]]; <span class="keyword">then</span></div><div class="line">        <span class="built_in">continue</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"TESTS FOR: for \033[0;35m<span class="variable">$&#123;d&#125;</span>\033[0m"</span></div><div class="line">    go <span class="built_in">test</span> -v -coverprofile=<span class="variable">$tmp</span> <span class="variable">$d</span></div><div class="line">    <span class="keyword">if</span> [ <span class="_">-f</span> <span class="variable">$tmp</span> ]; <span class="keyword">then</span></div><div class="line">        <span class="comment"># remove mode:xxx if not first package for go tool cover</span></div><div class="line">        <span class="keyword">if</span> [ <span class="string">"<span class="variable">$i</span>"</span> != 0 ]; <span class="keyword">then</span></div><div class="line">            sed -i <span class="string">''</span> <span class="_">-e</span> <span class="string">'/^mode:/d'</span> ./<span class="variable">$tmp</span></div><div class="line">        <span class="keyword">fi</span></div><div class="line">        cat <span class="variable">$tmp</span> &gt;&gt; <span class="variable">$out</span></div><div class="line">        rm <span class="variable">$tmp</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">""</span></div><div class="line">    ((i++))</div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
+            
+                
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/golang/">golang</a> <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/test/">test</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/03/16/golang-test筆記/" data-tooltip="golang test 筆記">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 Cwza. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/03/16/golang-test筆記/" data-tooltip="golang test 筆記">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+                <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+                <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+                <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        <!-- Define author's picture -->
+
+
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="https://www.gravatar.com/avatar/f563bb5ba525d2aa148cd22fb4c2db26?s=110"/>
+        
+            <h4 id="about-card-name">Cwza</h4>
+        
+            <h5 id="about-card-bio"><p>Hello everyone.</br> I’m cwza.</br> Welcome to my blog.</br></p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Taiwan/Taipei
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/my_blog/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/my_blog/assets/js/script.min.js"></script>
+<!--SCRIPTS END-->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'cwzablog';
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+
+    <script type="text/javascript">
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+            e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','rxPzK7_9dZFEqRaWyGy2','2.0.0');
+    </script>
+
+
+</html>
