@@ -160,11 +160,12 @@
     <link href="http://cwza.github.io/my_blog/2017/03/15/glide%E7%AD%86%E8%A8%98/"/>
     <id>http://cwza.github.io/my_blog/2017/03/15/glide筆記/</id>
     <published>2017-03-15T06:13:57.000Z</published>
-    <updated>2017-03-15T08:03:59.000Z</updated>
+    <updated>2017-03-31T05:00:58.000Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://github.com/Masterminds/glide" target="_blank" rel="external">https://github.com/Masterminds/glide</a></p>
 <h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install glide</div></pre></td></tr></table></figure>
 <h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>source code需要放在gopath下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ glide create                            <span class="comment"># Start a new workspace</span></div><div class="line">$ open glide.yaml                         <span class="comment"># and edit away!</span></div><div class="line">$ glide get github.com/Masterminds/cookoo <span class="comment"># Get a package and add to glide.yaml</span></div><div class="line">$ glide install                           <span class="comment"># Install packages and dependencies</span></div><div class="line"><span class="comment"># work, work, work</span></div><div class="line">$ go build                                <span class="comment"># Go tools work normally</span></div><div class="line">$ glide up                                <span class="comment"># Update to newest versions of the package</span></div></pre></td></tr></table></figure></p>
+<p>get 3rd party library and all their dependencies<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">glide get --all-dependencies &lt;path&gt;</div><div class="line">glide up --all-dependencies</div></pre></td></tr></table></figure></p>
 ]]></content>
     
     <summary type="html">
@@ -519,42 +520,6 @@
   </entry>
   
   <entry>
-    <title>Nginx With Node And Https config</title>
-    <link href="http://cwza.github.io/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/"/>
-    <id>http://cwza.github.io/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/</id>
-    <published>2017-01-19T06:48:57.000Z</published>
-    <updated>2017-03-10T02:26:35.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Nginx With Node And Https config example<br><a id="more"></a></p>
-<h1 id="nginx-config-examaple"><a href="#nginx-config-examaple" class="headerlink" title="nginx config examaple"></a>nginx config examaple</h1><p>pass all request to nodejs server</p>
-<p>copy ssl cert files to /etc/nginx/ssl/<br>copy nginx.conf file to /etc/nginx/sites-available<br>and link to /etc/nginx/sites-enabled/<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp ~/faceblock/faceblock-server/docker/faceblock/nginx.conf /etc/nginx/sites-available/faceblock</div><div class="line">ln <span class="_">-s</span> /etc/nginx/sites-available/faceblock /etc/nginx/sites-enabled/faceblock</div></pre></td></tr></table></figure></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># nginx.conf</span></div><div class="line"><span class="comment"># the IP(s) on which your node server is running. I chose port 3001.</span></div><div class="line">upstream app_faceblock &#123;</div><div class="line">    server 127.0.0.1:3001;</div><div class="line">    keepalive 8;</div><div class="line">&#125;</div><div class="line"></div><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=10r/s; <span class="comment"># rate limit</span></div><div class="line"></div><div class="line"><span class="comment"># the nginx server instance</span></div><div class="line">server &#123;</div><div class="line">    listen 0.0.0.0:80;</div><div class="line">    server_name cwzc.pw www.cwzc.pw;</div><div class="line">    access_log /var/<span class="built_in">log</span>/nginx/faceblock.log;</div><div class="line"></div><div class="line">    listen 443 ssl default_server;</div><div class="line">    listen [::]:443 ssl default_server;</div><div class="line"></div><div class="line">    ssl_certificate /etc/nginx/ssl/nginx.crt;</div><div class="line">    ssl_certificate_key /etc/nginx/ssl/nginx.key;</div><div class="line"></div><div class="line">    location /static &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      root /static;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment"># pass the request to the node.js server with the correct headers</span></div><div class="line">    <span class="comment"># and much more can be added, see nginx config options</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      </div><div class="line">      proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">      proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">      proxy_set_header Host <span class="variable">$http_host</span>;</div><div class="line">      proxy_set_header X-NginX-Proxy <span class="literal">true</span>;</div><div class="line"></div><div class="line">      proxy_pass http://app_faceblock/;</div><div class="line">      proxy_redirect off;</div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-<h1 id="Free-SSL-Certification"><a href="#Free-SSL-Certification" class="headerlink" title="Free SSL Certification"></a>Free SSL Certification</h1><h2 id="Goto-sslforfree-and-get-cert-files"><a href="#Goto-sslforfree-and-get-cert-files" class="headerlink" title="Goto sslforfree and get cert files"></a>Goto <a href="https://www.sslforfree.com/" target="_blank" rel="external">sslforfree</a> and get cert files</h2><p>You will get three files ca_bundle.crt, certificate.crt, and private.key</p>
-<h2 id="Copy-files-to-etc-nginx-ssl-and-do-followings"><a href="#Copy-files-to-etc-nginx-ssl-and-do-followings" class="headerlink" title="Copy files to /etc/nginx/ssl and do followings"></a>Copy files to /etc/nginx/ssl and do followings</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mv private.key nginx.key</div><div class="line"><span class="comment">#</span></div><div class="line">cat certificate.crt ca_bundle.crt &gt;&gt; nginx.crt</div><div class="line">vim nginx.crt</div><div class="line"><span class="comment"># change -----BEGIN-----END------ to</span></div><div class="line"><span class="comment"># -----BEGIN--------</span></div><div class="line"><span class="comment"># ----END--------</span></div><div class="line">service nginx restart</div></pre></td></tr></table></figure>
-<h2 id="This-free-SSL-Certification-will-expire-after-90-days-so-you-will-have-to-go-to-sslforfree-to-get-new-Certification-before-expired"><a href="#This-free-SSL-Certification-will-expire-after-90-days-so-you-will-have-to-go-to-sslforfree-to-get-new-Certification-before-expired" class="headerlink" title="This free SSL Certification will expire after 90 days, so you will have to go to sslforfree to get new Certification before expired"></a>This free SSL Certification will expire after 90 days, so you will have to go to sslforfree to get new Certification before expired</h2>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Nginx With Node And Https config example&lt;br&gt;
-    
-    </summary>
-    
-      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
-    
-    
-      <category term="https" scheme="http://cwza.github.io/my_blog/tags/https/"/>
-    
-      <category term="ssl" scheme="http://cwza.github.io/my_blog/tags/ssl/"/>
-    
-      <category term="nodejs" scheme="http://cwza.github.io/my_blog/tags/nodejs/"/>
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
-    
-      <category term="web" scheme="http://cwza.github.io/my_blog/tags/web/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Deploy react app to github page</title>
     <link href="http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/"/>
     <id>http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/</id>
@@ -607,6 +572,42 @@
       <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
     
       <category term="react" scheme="http://cwza.github.io/my_blog/tags/react/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nginx With Node And Https config</title>
+    <link href="http://cwza.github.io/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/"/>
+    <id>http://cwza.github.io/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/</id>
+    <published>2017-01-19T06:48:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Nginx With Node And Https config example<br><a id="more"></a></p>
+<h1 id="nginx-config-examaple"><a href="#nginx-config-examaple" class="headerlink" title="nginx config examaple"></a>nginx config examaple</h1><p>pass all request to nodejs server</p>
+<p>copy ssl cert files to /etc/nginx/ssl/<br>copy nginx.conf file to /etc/nginx/sites-available<br>and link to /etc/nginx/sites-enabled/<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp ~/faceblock/faceblock-server/docker/faceblock/nginx.conf /etc/nginx/sites-available/faceblock</div><div class="line">ln <span class="_">-s</span> /etc/nginx/sites-available/faceblock /etc/nginx/sites-enabled/faceblock</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># nginx.conf</span></div><div class="line"><span class="comment"># the IP(s) on which your node server is running. I chose port 3001.</span></div><div class="line">upstream app_faceblock &#123;</div><div class="line">    server 127.0.0.1:3001;</div><div class="line">    keepalive 8;</div><div class="line">&#125;</div><div class="line"></div><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=10r/s; <span class="comment"># rate limit</span></div><div class="line"></div><div class="line"><span class="comment"># the nginx server instance</span></div><div class="line">server &#123;</div><div class="line">    listen 0.0.0.0:80;</div><div class="line">    server_name cwzc.pw www.cwzc.pw;</div><div class="line">    access_log /var/<span class="built_in">log</span>/nginx/faceblock.log;</div><div class="line"></div><div class="line">    listen 443 ssl default_server;</div><div class="line">    listen [::]:443 ssl default_server;</div><div class="line"></div><div class="line">    ssl_certificate /etc/nginx/ssl/nginx.crt;</div><div class="line">    ssl_certificate_key /etc/nginx/ssl/nginx.key;</div><div class="line"></div><div class="line">    location /static &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      root /static;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment"># pass the request to the node.js server with the correct headers</span></div><div class="line">    <span class="comment"># and much more can be added, see nginx config options</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      </div><div class="line">      proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">      proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">      proxy_set_header Host <span class="variable">$http_host</span>;</div><div class="line">      proxy_set_header X-NginX-Proxy <span class="literal">true</span>;</div><div class="line"></div><div class="line">      proxy_pass http://app_faceblock/;</div><div class="line">      proxy_redirect off;</div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<h1 id="Free-SSL-Certification"><a href="#Free-SSL-Certification" class="headerlink" title="Free SSL Certification"></a>Free SSL Certification</h1><h2 id="Goto-sslforfree-and-get-cert-files"><a href="#Goto-sslforfree-and-get-cert-files" class="headerlink" title="Goto sslforfree and get cert files"></a>Goto <a href="https://www.sslforfree.com/" target="_blank" rel="external">sslforfree</a> and get cert files</h2><p>You will get three files ca_bundle.crt, certificate.crt, and private.key</p>
+<h2 id="Copy-files-to-etc-nginx-ssl-and-do-followings"><a href="#Copy-files-to-etc-nginx-ssl-and-do-followings" class="headerlink" title="Copy files to /etc/nginx/ssl and do followings"></a>Copy files to /etc/nginx/ssl and do followings</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mv private.key nginx.key</div><div class="line"><span class="comment">#</span></div><div class="line">cat certificate.crt ca_bundle.crt &gt;&gt; nginx.crt</div><div class="line">vim nginx.crt</div><div class="line"><span class="comment"># change -----BEGIN-----END------ to</span></div><div class="line"><span class="comment"># -----BEGIN--------</span></div><div class="line"><span class="comment"># ----END--------</span></div><div class="line">service nginx restart</div></pre></td></tr></table></figure>
+<h2 id="This-free-SSL-Certification-will-expire-after-90-days-so-you-will-have-to-go-to-sslforfree-to-get-new-Certification-before-expired"><a href="#This-free-SSL-Certification-will-expire-after-90-days-so-you-will-have-to-go-to-sslforfree-to-get-new-Certification-before-expired" class="headerlink" title="This free SSL Certification will expire after 90 days, so you will have to go to sslforfree to get new Certification before expired"></a>This free SSL Certification will expire after 90 days, so you will have to go to sslforfree to get new Certification before expired</h2>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Nginx With Node And Https config example&lt;br&gt;
+    
+    </summary>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
+    
+    
+      <category term="https" scheme="http://cwza.github.io/my_blog/tags/https/"/>
+    
+      <category term="ssl" scheme="http://cwza.github.io/my_blog/tags/ssl/"/>
+    
+      <category term="nodejs" scheme="http://cwza.github.io/my_blog/tags/nodejs/"/>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/tags/web/"/>
     
   </entry>
   
