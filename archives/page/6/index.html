@@ -220,6 +220,111 @@
 <section class="postShorten-group main-content-wrap">
     
         
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
+                                <a class="link-unstyled" href="/my_blog/2015/12/03/Remove-jdk1-8-at-Mac-OSX筆記/">Remove jdk1.8 at Mac OSX筆記</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Thu Dec 03 2015 18:52:26 GMT+0800">
+	
+		    Dec 03, 2015
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/mac/">mac</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo rm -rf /Library/Java/JavaVirtualMachines/jdk&lt;version&gt;.jdk</div><div class="line">sudo rm -rf /Library/PreferencePanes/JavaControlPanel.prefPane</div><div class="line">sudo rm -rf /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin</div></pre></td></tr></table></figure>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/my_blog/2015/12/03/Remove-jdk1-8-at-Mac-OSX筆記/#post-footer" class="postShorten-excerpt_link link">
+                                    Comment and share
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
+                                <a class="link-unstyled" href="/my_blog/2015/12/03/git-submodule指令筆記/">git submodule指令筆記</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Thu Dec 03 2015 18:49:41 GMT+0800">
+	
+		    Dec 03, 2015
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/git/">git</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <a id="more"></a>
+<h2 id="add-submodule"><a href="#add-submodule" class="headerlink" title="add submodule"></a>add submodule</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git submodule add http://github.com/tpope/vim-fugitive.git bundle/fugitive</div><div class="line">git add .</div><div class="line">git commit -m <span class="string">"Install Fugitive.vim bundle as a submodule."</span></div></pre></td></tr></table></figure>
+<h2 id="remove-submodule"><a href="#remove-submodule" class="headerlink" title="remove submodule"></a>remove submodule</h2><ol>
+<li>Delete the relevant section from the <strong>.gitmodules</strong> file.</li>
+<li>Stage the <strong>.gitmodules</strong> changes <strong>git add .gitmodules</strong></li>
+<li>Delete the relevant section from <strong>.git/config</strong>.</li>
+<li>Run <strong>git rm –cached path_to_submodule</strong> (no trailing slash).</li>
+<li>Run <strong>rm -rf .git/modules/path_to_submodule</strong></li>
+<li>commit <strong>git commit -m “Removed (submodule name)”</strong></li>
+<li>Delete the now untracked submodule files <strong>rm -rf path_to_submodule</strong></li>
+<li>git submodule sync</li>
+</ol>
+<h2 id="clone-a-project-with-git-submodule"><a href="#clone-a-project-with-git-submodule" class="headerlink" title="clone a project with git submodule"></a>clone a project with git submodule</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> &lt;project&gt;</div><div class="line">git submodule init</div><div class="line">git submodule update</div></pre></td></tr></table></figure>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/my_blog/2015/12/03/git-submodule指令筆記/#post-footer" class="postShorten-excerpt_link link">
+                                    Comment and share
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
         <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
             <div class="postShorten-wrap">
                 <div class="postShorten-header">
@@ -570,86 +675,6 @@
                                     Comment and share
                                 </a>
                             </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2015/12/03/Linux-Kernel-相關資源/">Linux Kernel 相關資源</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Dec 03 2015 18:01:33 GMT+0800">
-	
-		    Dec 03, 2015
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/linux/">linux</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <p>以下轉貼自Ptt LinuxDev版<br>作者:BitTorrent<br>
-                        
-                            <a href="/my_blog/2015/12/03/Linux-Kernel-相關資源/" class="postShorten-excerpt_link link">
-                                Continue reading
-                            </a>
-                            
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2015/12/03/Tree-with-DB-and-JAVA/">Tree with DB and JAVA</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Dec 03 2015 17:58:46 GMT+0800">
-	
-		    Dec 03, 2015
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/java/">java</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <p>以下轉貼至PTT JAVA討論版csieflyman<br>備份用<br>
-                        
-                            <a href="/my_blog/2015/12/03/Tree-with-DB-and-JAVA/" class="postShorten-excerpt_link link">
-                                Continue reading
-                            </a>
-                            
                         
                     </div>
                 

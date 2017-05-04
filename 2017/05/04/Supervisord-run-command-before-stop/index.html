@@ -6,25 +6,22 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="cwza&#39;s blog">
-    <title>微軟提供免費windows-VM - cwza&#39;s blog</title>
+    <title>Supervisord run command before stop - cwza&#39;s blog</title>
     <meta name="author" content="Cwza">
     
     
         <link rel="alternative" type="application/atom+xml" title="RSS" href="/my_blog/atom.xml">
     
-    <meta name="description" content="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/
-90天之後再輸入slmgr -rearm重新取得授權">
+    <meta name="description" content="Supervisord requires that the programs it is configured to run don’t daemonize themselves. Instead, they should run in the foreground and respond to the stop signal (TERM by default) by properly shutt">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="微軟提供免費windows-VM">
-<meta property="og:url" content="http://cwza.github.io/my_blog/2016/12/08/微軟提供免費windows-VM/index.html">
+<meta property="og:title" content="Supervisord run command before stop">
+<meta property="og:url" content="http://cwza.github.io/my_blog/2017/05/04/Supervisord-run-command-before-stop/index.html">
 <meta property="og:site_name" content="cwza's blog">
-<meta property="og:description" content="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/
-90天之後再輸入slmgr -rearm重新取得授權">
-<meta property="og:updated_time" content="2017-03-10T02:26:35.000Z">
+<meta property="og:description" content="Supervisord requires that the programs it is configured to run don’t daemonize themselves. Instead, they should run in the foreground and respond to the stop signal (TERM by default) by properly shutt">
+<meta property="og:updated_time" content="2017-05-04T05:49:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="微軟提供免費windows-VM">
-<meta name="twitter:description" content="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/
-90天之後再輸入slmgr -rearm重新取得授權">
+<meta name="twitter:title" content="Supervisord run command before stop">
+<meta name="twitter:description" content="Supervisord requires that the programs it is configured to run don’t daemonize themselves. Instead, they should run in the foreground and respond to the stop signal (TERM by default) by properly shutt">
     
     
     
@@ -228,19 +225,19 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title" itemprop="headline">
-            微軟提供免費windows-VM
+            Supervisord run command before stop
         </h1>
     
     <div class="post-meta">
-    <time itemprop="datePublished" content="Thu Dec 08 2016 13:55:57 GMT+0800">
+    <time itemprop="datePublished" content="Thu May 04 2017 14:46:57 GMT+0800">
 	
-		    Dec 08, 2016
+		    May 04, 2017
     	
     </time>
     
         <span>in </span>
         
-    <a class="category-link" href="/my_blog/categories/windows/">windows</a>
+    <a class="category-link" href="/my_blog/categories/linux/">linux</a>
 
 
     
@@ -249,8 +246,8 @@
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <p><a href="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/" target="_blank" rel="external">https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/</a></p>
-<p>90天之後再輸入slmgr -rearm重新取得授權</p>
+            <p>Supervisord requires that the programs it is configured to run don’t daemonize themselves. Instead, they should run in the foreground and respond to the stop signal (TERM by default) by properly shutting down.</p>
+<p>Use Following shell script to wrapper your background program.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"></div><div class="line"><span class="comment"># run something background</span></div><div class="line">./run &amp;</div><div class="line"><span class="comment"># get nearest running background pid</span></div><div class="line"><span class="variable">$PID</span>=$!</div><div class="line"></div><div class="line"><span class="comment"># Perform program exit housekeeping</span></div><div class="line"><span class="keyword">function</span> clean_up &#123;</div><div class="line">  <span class="comment"># dosomething for cleanup</span></div><div class="line">  rm -rf dump_file</div><div class="line">  <span class="comment"># remove trap</span></div><div class="line">  <span class="built_in">trap</span> - SIGHUP SIGINT SIGTERM SIGQUIT SIGKILL</div><div class="line">  <span class="built_in">exit</span> $?</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># Add trap for catch sistem signal</span></div><div class="line"><span class="built_in">trap</span> clean_up SIGHUP SIGINT SIGTERM SIGQUIT SIGKILL</div><div class="line"><span class="built_in">wait</span> <span class="variable">$PID</span></div></pre></td></tr></table></figure></p>
 
             
                 
@@ -263,7 +260,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/linux/">linux</a> <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/mac/">mac</a> <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/windows/">windows</a>
+    <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/linux/">linux</a> <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/shell/">shell</a> <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/supervisord/">supervisord</a>
 
             </div>
         
@@ -272,7 +269,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/01/19/Deploy-react-app-to-github-page/"  data-tooltip="Deploy react app to github page">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -280,7 +277,7 @@
             </li>
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2016/11/21/Docker筆記/" data-tooltip="Docker筆記">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/03/31/prometheus筆記/" data-tooltip="prometheus筆記">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right"></i>
@@ -295,17 +292,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/05/04/Supervisord-run-command-before-stop/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/05/04/Supervisord-run-command-before-stop/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/05/04/Supervisord-run-command-before-stop/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -351,7 +348,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/01/19/Deploy-react-app-to-github-page/"  data-tooltip="Deploy react app to github page">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -359,7 +356,7 @@
             </li>
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2016/11/21/Docker筆記/" data-tooltip="Docker筆記">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/03/31/prometheus筆記/" data-tooltip="prometheus筆記">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right"></i>
@@ -374,17 +371,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/05/04/Supervisord-run-command-before-stop/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/05/04/Supervisord-run-command-before-stop/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/05/04/Supervisord-run-command-before-stop/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -410,17 +407,17 @@
                 <div id="share-options-bar" class="share-options-bar" data-behavior="3">
     <ul class="share-options">
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/05/04/Supervisord-run-command-before-stop/">
                 <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/05/04/Supervisord-run-command-before-stop/">
                 <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/05/04/Supervisord-run-command-before-stop/">
                 <i class="fa fa-twitter"></i><span>Share on Twitter</span>
             </a>
         </li>

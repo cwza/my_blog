@@ -225,6 +225,53 @@
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
+                                <a class="link-unstyled" href="/my_blog/2017/05/04/Supervisord-run-command-before-stop/">Supervisord run command before stop</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Thu May 04 2017 14:46:57 GMT+0800">
+	
+		    May 04, 2017
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/linux/">linux</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <p>Supervisord requires that the programs it is configured to run don’t daemonize themselves. Instead, they should run in the foreground and respond to the stop signal (TERM by default) by properly shutting down.</p>
+<p>Use Following shell script to wrapper your background program.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"></div><div class="line"><span class="comment"># run something background</span></div><div class="line">./run &amp;</div><div class="line"><span class="comment"># get nearest running background pid</span></div><div class="line"><span class="variable">$PID</span>=$!</div><div class="line"></div><div class="line"><span class="comment"># Perform program exit housekeeping</span></div><div class="line"><span class="keyword">function</span> clean_up &#123;</div><div class="line">  <span class="comment"># dosomething for cleanup</span></div><div class="line">  rm -rf dump_file</div><div class="line">  <span class="comment"># remove trap</span></div><div class="line">  <span class="built_in">trap</span> - SIGHUP SIGINT SIGTERM SIGQUIT SIGKILL</div><div class="line">  <span class="built_in">exit</span> $?</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># Add trap for catch sistem signal</span></div><div class="line"><span class="built_in">trap</span> clean_up SIGHUP SIGINT SIGTERM SIGQUIT SIGKILL</div><div class="line"><span class="built_in">wait</span> <span class="variable">$PID</span></div></pre></td></tr></table></figure></p>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/my_blog/2017/05/04/Supervisord-run-command-before-stop/#post-footer" class="postShorten-excerpt_link link">
+                                    Comment and share
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
                                 <a class="link-unstyled" href="/my_blog/2016/12/08/微軟提供免費windows-VM/">微軟提供免費windows-VM</a>
                         
                     </h1>
@@ -691,47 +738,6 @@ vagrant筆記<br>
                         <p>glassfish可以在兩台實體機間做cluster<br>確保兩台機器上的application共享session……等狀態<br>兩台機器間會使用ssh做溝通隨時同步狀態，並在其中一台上面有DAS來管理cluster<br>
                         
                             <a href="/my_blog/2015/12/03/glassfish-cluster-between-two-machine/" class="postShorten-excerpt_link link">
-                                Continue reading
-                            </a>
-                            
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2015/12/03/apache-http-server做load-balance-at-CentOS/">apache http server做load balance at CentOS</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Dec 03 2015 17:27:59 GMT+0800">
-	
-		    Dec 03, 2015
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/apache/">apache</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <h2 id="在兩台虛擬機上各裝一個glassfish與測試application"><a href="#在兩台虛擬機上各裝一個glassfish與測試application" class="headerlink" title="在兩台虛擬機上各裝一個glassfish與測試application"></a>在兩台虛擬機上各裝一個glassfish與測試application</h2><p>事先放一個測試servlet /test/hello在n1, n2兩台機器上<br>裝glassfish要先裝java jdk並設環境變數</p>
-<h2 id="需要程式"><a href="#需要程式" class="headerlink" title="需要程式:"></a>需要程式:</h2>
-                        
-                            <a href="/my_blog/2015/12/03/apache-http-server做load-balance-at-CentOS/" class="postShorten-excerpt_link link">
                                 Continue reading
                             </a>
                             

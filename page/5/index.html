@@ -226,6 +226,111 @@
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
+                                <a class="link-unstyled" href="/my_blog/2015/12/03/npm指令筆記/">npm指令筆記</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Thu Dec 03 2015 19:27:16 GMT+0800">
+	
+		    Dec 03, 2015
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/javascript/">javascript</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <a id="more"></a>
+<h2 id="Node-js-的套件搜尋機制："><a href="#Node-js-的套件搜尋機制：" class="headerlink" title="Node.js 的套件搜尋機制："></a>Node.js 的套件搜尋機制：</h2><p>當 require 一個套件的時候，Node.js 會搜尋當前目錄的 node_modules 子資料夾和 NODE_PATH 環境變數所設定的目錄。所以套件可以選擇安裝在全域，也就是 NODE_PATH 所指定的目錄，或當前目錄的 node_modules 子資料夾。npm 也因此分成兩種模式：全域模式 (Global Mode) 管理 NODE_PATH 所指定的目錄套件，及本地模式 (Local Mode) 管理當前目錄的 node_modules子資料夾內的套件。</p>
+<p>如果安裝 Node.js 時沒有另外設定 prefix 參數，NODE_PATH 應設定為 /usr/local/lib/node_modules</p>
+<p>npm 最大的優點可能也是最大的缺點，即透過冗餘安裝來解決套件相依性問題。如果要安裝套件 A 和套件 B，而兩者都相依於套件 C，則 npm 會在套件 A 和套件 B 的 node_modules 資料夾內同時安裝套件 C。換句話說，套件 C 被安裝了兩次。這種設計的好處是不會有相依性問題，但缺點就是同樣的套件會被安裝多次，當有需要編譯的套件被冗餘安裝多次時，更新會變得很緩慢，幸好絕大多數的套件都不需要編譯。</p>
+<p>以上轉貼<a href="http://www.openfoundry.org/tw/tech-column/8537-npm-node-package-manager" target="_blank" rel="external">http://www.openfoundry.org/tw/tech-column/8537-npm-node-package-manager</a></p>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#以下指令預設為全域安裝，若想執行local安裝的話把-g拿掉即可</span></div><div class="line">npm search [關鍵字]</div><div class="line">npm install [套件名稱] -g</div><div class="line">npm uninstall [套件名稱] -g</div><div class="line">npm ls -g</div><div class="line">npm uninstall [套件名稱] -g</div><div class="line">npm outdated -g</div><div class="line">npm update [套件名稱] -g</div><div class="line">npm update -g</div></pre></td></tr></table></figure>
+<h2 id="dependency管理"><a href="#dependency管理" class="headerlink" title="dependency管理"></a>dependency管理</h2><p>詳情可見<a href="https://docs.npmjs.com/files/package.json" target="_blank" rel="external">https://docs.npmjs.com/files/package.json</a></p>
+<figure class="highlight js"><figcaption><span>package.json</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"name"</span>: <span class="string">"hexo-blog"</span>,</div><div class="line">  <span class="string">"version"</span>: <span class="string">"0.0.0"</span>,</div><div class="line">  <span class="string">"private"</span>: <span class="literal">true</span>,</div><div class="line">  <span class="string">"hexo"</span>: &#123;</div><div class="line">    <span class="string">"version"</span>: <span class="string">"3.1.1"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="string">"dependencies"</span>: &#123;</div><div class="line">    <span class="string">"hexo"</span>: <span class="string">"^3.1.0"</span>,</div><div class="line">    <span class="string">"hexo-deployer-git"</span>: <span class="string">"0.0.4"</span>,</div><div class="line">    <span class="string">"hexo-generator-archive"</span>: <span class="string">"^0.1.4"</span>,</div><div class="line">    <span class="string">"hexo-generator-category"</span>: <span class="string">"^0.1.2"</span>,</div><div class="line">    <span class="string">"hexo-generator-feed"</span>: <span class="string">"^1.0.3"</span>,</div><div class="line">    <span class="string">"hexo-generator-index"</span>: <span class="string">"^0.2.0"</span>,</div><div class="line">    <span class="string">"hexo-generator-sitemap"</span>: <span class="string">"^1.0.1"</span>,</div><div class="line">    <span class="string">"hexo-generator-tag"</span>: <span class="string">"^0.1.1"</span>,</div><div class="line">    <span class="string">"hexo-renderer-ejs"</span>: <span class="string">"^0.1.1"</span>,</div><div class="line">    <span class="string">"hexo-renderer-marked"</span>: <span class="string">"^0.2.8"</span>,</div><div class="line">    <span class="string">"hexo-renderer-org"</span>: <span class="string">"git+https://github.com/CodeFalling/hexo-renderer-org.git#emacs"</span>,</div><div class="line">    <span class="string">"hexo-renderer-stylus"</span>: <span class="string">"^0.3.0"</span>,</div><div class="line">    <span class="string">"hexo-server"</span>: <span class="string">"^0.1.3"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在安裝package時加上–safe表示安裝的同時自動更新package.json<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install [套件名稱] --safe</div><div class="line">npm update [套件名稱] --safe</div></pre></td></tr></table></figure></p>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/my_blog/2015/12/03/npm指令筆記/#post-footer" class="postShorten-excerpt_link link">
+                                    Comment and share
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
+                                <a class="link-unstyled" href="/my_blog/2015/12/03/nvm指令筆記/">nvm指令筆記</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Thu Dec 03 2015 19:23:18 GMT+0800">
+	
+		    Dec 03, 2015
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/my_blog/categories/javascript/">javascript</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <a id="more"></a>
+<h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><p>可做到node.js的多版本環境切換，類似pyenv</p>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install nvm</div></pre></td></tr></table></figure>
+<p>bash_profile加上<br><figure class="highlight bash"><figcaption><span>~/.bash_profile</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> NVM_DIR=~/.nvm</div><div class="line"><span class="built_in">source</span> $(brew --prefix nvm)/nvm.sh</div></pre></td></tr></table></figure></p>
+<p>以上設定會將node安裝在~/.nvm/versions/node/v4.2.2<br>npm的global library在~/.nvm/versions/node/v4.2.2/lib/node_modules/</p>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">nvm ls-remote</div><div class="line">nvm ls</div><div class="line">nvm install v4.2.2</div><div class="line">nvm deactivate</div><div class="line">nvm current</div><div class="line">nvm use v4.2.2</div><div class="line">nvm use system</div><div class="line">nvm <span class="built_in">alias</span> default v4.2.2</div><div class="line">nvm <span class="built_in">unalias</span> default</div></pre></td></tr></table></figure>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/my_blog/2015/12/03/nvm指令筆記/#post-footer" class="postShorten-excerpt_link link">
+                                    Comment and share
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
                                 <a class="link-unstyled" href="/my_blog/2015/12/03/git-config筆記/">git config筆記</a>
                         
                     </h1>
@@ -591,111 +696,6 @@
                         
                             <p>
                                 <a href="/my_blog/2015/12/03/Remove-eclipse-from-Mac-OSX/#post-footer" class="postShorten-excerpt_link link">
-                                    Comment and share
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2015/12/03/Remove-jdk1-8-at-Mac-OSX筆記/">Remove jdk1.8 at Mac OSX筆記</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Dec 03 2015 18:52:26 GMT+0800">
-	
-		    Dec 03, 2015
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/mac/">mac</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo rm -rf /Library/Java/JavaVirtualMachines/jdk&lt;version&gt;.jdk</div><div class="line">sudo rm -rf /Library/PreferencePanes/JavaControlPanel.prefPane</div><div class="line">sudo rm -rf /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin</div></pre></td></tr></table></figure>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/my_blog/2015/12/03/Remove-jdk1-8-at-Mac-OSX筆記/#post-footer" class="postShorten-excerpt_link link">
-                                    Comment and share
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2015/12/03/git-submodule指令筆記/">git submodule指令筆記</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Dec 03 2015 18:49:41 GMT+0800">
-	
-		    Dec 03, 2015
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/git/">git</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <a id="more"></a>
-<h2 id="add-submodule"><a href="#add-submodule" class="headerlink" title="add submodule"></a>add submodule</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git submodule add http://github.com/tpope/vim-fugitive.git bundle/fugitive</div><div class="line">git add .</div><div class="line">git commit -m <span class="string">"Install Fugitive.vim bundle as a submodule."</span></div></pre></td></tr></table></figure>
-<h2 id="remove-submodule"><a href="#remove-submodule" class="headerlink" title="remove submodule"></a>remove submodule</h2><ol>
-<li>Delete the relevant section from the <strong>.gitmodules</strong> file.</li>
-<li>Stage the <strong>.gitmodules</strong> changes <strong>git add .gitmodules</strong></li>
-<li>Delete the relevant section from <strong>.git/config</strong>.</li>
-<li>Run <strong>git rm –cached path_to_submodule</strong> (no trailing slash).</li>
-<li>Run <strong>rm -rf .git/modules/path_to_submodule</strong></li>
-<li>commit <strong>git commit -m “Removed (submodule name)”</strong></li>
-<li>Delete the now untracked submodule files <strong>rm -rf path_to_submodule</strong></li>
-<li>git submodule sync</li>
-</ol>
-<h2 id="clone-a-project-with-git-submodule"><a href="#clone-a-project-with-git-submodule" class="headerlink" title="clone a project with git submodule"></a>clone a project with git submodule</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> &lt;project&gt;</div><div class="line">git submodule init</div><div class="line">git submodule update</div></pre></td></tr></table></figure>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/my_blog/2015/12/03/git-submodule指令筆記/#post-footer" class="postShorten-excerpt_link link">
                                     Comment and share
                                 </a>
                             </p>

@@ -5,7 +5,7 @@
   <link href="/my_blog/atom.xml" rel="self"/>
   
   <link href="http://cwza.github.io/my_blog/"/>
-  <updated>2017-03-31T03:45:09.000Z</updated>
+  <updated>2017-05-04T05:49:56.000Z</updated>
   <id>http://cwza.github.io/my_blog/</id>
   
   <author>
@@ -14,6 +14,61 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Supervisord run command before stop</title>
+    <link href="http://cwza.github.io/my_blog/2017/05/04/Supervisord-run-command-before-stop/"/>
+    <id>http://cwza.github.io/my_blog/2017/05/04/Supervisord-run-command-before-stop/</id>
+    <published>2017-05-04T06:46:57.000Z</published>
+    <updated>2017-05-04T05:49:56.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Supervisord requires that the programs it is configured to run don’t daemonize themselves. Instead, they should run in the foreground and respond to the stop signal (TERM by default) by properly shutting down.</p>
+<p>Use Following shell script to wrapper your background program.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"></div><div class="line"><span class="comment"># run something background</span></div><div class="line">./run &amp;</div><div class="line"><span class="comment"># get nearest running background pid</span></div><div class="line"><span class="variable">$PID</span>=$!</div><div class="line"></div><div class="line"><span class="comment"># Perform program exit housekeeping</span></div><div class="line"><span class="keyword">function</span> clean_up &#123;</div><div class="line">  <span class="comment"># dosomething for cleanup</span></div><div class="line">  rm -rf dump_file</div><div class="line">  <span class="comment"># remove trap</span></div><div class="line">  <span class="built_in">trap</span> - SIGHUP SIGINT SIGTERM SIGQUIT SIGKILL</div><div class="line">  <span class="built_in">exit</span> $?</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># Add trap for catch sistem signal</span></div><div class="line"><span class="built_in">trap</span> clean_up SIGHUP SIGINT SIGTERM SIGQUIT SIGKILL</div><div class="line"><span class="built_in">wait</span> <span class="variable">$PID</span></div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Supervisord requires that the programs it is configured to run don’t daemonize themselves. Instead, they should run in the foreground and
+    
+    </summary>
+    
+      <category term="linux" scheme="http://cwza.github.io/my_blog/categories/linux/"/>
+    
+    
+      <category term="linux" scheme="http://cwza.github.io/my_blog/tags/linux/"/>
+    
+      <category term="shell" scheme="http://cwza.github.io/my_blog/tags/shell/"/>
+    
+      <category term="supervisord" scheme="http://cwza.github.io/my_blog/tags/supervisord/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>prometheus筆記</title>
+    <link href="http://cwza.github.io/my_blog/2017/03/31/prometheus%E7%AD%86%E8%A8%98/"/>
+    <id>http://cwza.github.io/my_blog/2017/03/31/prometheus筆記/</id>
+    <published>2017-03-31T06:46:57.000Z</published>
+    <updated>2017-03-31T06:56:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Histograms-vs-Summaries"><a href="#Histograms-vs-Summaries" class="headerlink" title="Histograms vs Summaries"></a>Histograms vs Summaries</h2><p>Histogram與Summaries都適合拿來observe request duration or response size.<br>使用histogram and summary時, 除了有_count與_sum的matrics以外, 還會有buckets or quantile<br>可以拿來計算quantiles</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Histograms-vs-Summaries&quot;&gt;&lt;a href=&quot;#Histograms-vs-Summaries&quot; class=&quot;headerlink&quot; title=&quot;Histograms vs Summaries&quot;&gt;&lt;/a&gt;Histograms vs Sum
+    
+    </summary>
+    
+      <category term="monitor" scheme="http://cwza.github.io/my_blog/categories/monitor/"/>
+    
+    
+      <category term="golang" scheme="http://cwza.github.io/my_blog/tags/golang/"/>
+    
+      <category term="prometheus" scheme="http://cwza.github.io/my_blog/tags/prometheus/"/>
+    
+      <category term="monitor" scheme="http://cwza.github.io/my_blog/tags/monitor/"/>
+    
+  </entry>
   
   <entry>
     <title>go test tool筆記</title>
@@ -216,31 +271,6 @@
   </entry>
   
   <entry>
-    <title>nginx connection limit bandwith limit rate limit</title>
-    <link href="http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/"/>
-    <id>http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/</id>
-    <published>2017-02-13T08:30:57.000Z</published>
-    <updated>2017-03-13T10:22:07.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="connection-limit"><a href="#connection-limit" class="headerlink" title="connection limit"></a>connection limit</h2><p>每一ip最多50連線數<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_conn connlimit 50;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-<h2 id="bandwith-limit"><a href="#bandwith-limit" class="headerlink" title="bandwith limit"></a>bandwith limit</h2><p>當流量超過500k時限制速度為50k<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_rate 50k;</div><div class="line">      limit_rate_after 500k;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-<h2 id="rate-limit"><a href="#rate-limit" class="headerlink" title="rate limit"></a>rate limit</h2><p>每秒最多50 request<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=50r/s;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;connection-limit&quot;&gt;&lt;a href=&quot;#connection-limit&quot; class=&quot;headerlink&quot; title=&quot;connection limit&quot;&gt;&lt;/a&gt;connection limit&lt;/h2&gt;&lt;p&gt;每一ip最多50連線數&lt;br
-    
-    </summary>
-    
-      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
-    
-    
-      <category term="nginx" scheme="http://cwza.github.io/my_blog/tags/nginx/"/>
-    
-  </entry>
-  
-  <entry>
     <title>nginx and ufw add rate limit</title>
     <link href="http://cwza.github.io/my_blog/2017/02/13/nginx-and-ufw-add-rate-limit/"/>
     <id>http://cwza.github.io/my_blog/2017/02/13/nginx-and-ufw-add-rate-limit/</id>
@@ -268,6 +298,31 @@
       <category term="firewall" scheme="http://cwza.github.io/my_blog/tags/firewall/"/>
     
       <category term="ubuntu" scheme="http://cwza.github.io/my_blog/tags/ubuntu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nginx connection limit bandwith limit rate limit</title>
+    <link href="http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/"/>
+    <id>http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/</id>
+    <published>2017-02-13T08:30:57.000Z</published>
+    <updated>2017-03-13T10:22:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="connection-limit"><a href="#connection-limit" class="headerlink" title="connection limit"></a>connection limit</h2><p>每一ip最多50連線數<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_conn connlimit 50;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="bandwith-limit"><a href="#bandwith-limit" class="headerlink" title="bandwith limit"></a>bandwith limit</h2><p>當流量超過500k時限制速度為50k<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_rate 50k;</div><div class="line">      limit_rate_after 500k;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="rate-limit"><a href="#rate-limit" class="headerlink" title="rate limit"></a>rate limit</h2><p>每秒最多50 request<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=50r/s;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;connection-limit&quot;&gt;&lt;a href=&quot;#connection-limit&quot; class=&quot;headerlink&quot; title=&quot;connection limit&quot;&gt;&lt;/a&gt;connection limit&lt;/h2&gt;&lt;p&gt;每一ip最多50連線數&lt;br
+    
+    </summary>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
+    
+    
+      <category term="nginx" scheme="http://cwza.github.io/my_blog/tags/nginx/"/>
     
   </entry>
   
@@ -520,62 +575,6 @@
   </entry>
   
   <entry>
-    <title>Deploy react app to github page</title>
-    <link href="http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/"/>
-    <id>http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/</id>
-    <published>2017-01-19T06:48:57.000Z</published>
-    <updated>2017-03-10T02:26:35.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Deploy-react-app-by-create-react-app"><a href="#Deploy-react-app-by-create-react-app" class="headerlink" title="Deploy react app by create-react-app"></a>Deploy react app by create-react-app</h2><p>Follow this guide to deploy react app to github pages.<br><a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#github-pages" target="_blank" rel="external">React Create App Readme</a></p>
-<h2 id="Do-something-to-let-github-pages-OK-with-SPA"><a href="#Do-something-to-let-github-pages-OK-with-SPA" class="headerlink" title="Do something to let github pages OK with SPA"></a>Do something to let github pages OK with SPA</h2><p>Github pages does not support SPA routings now, so you have to do followings:<br>Follow this guide to make SPA OK with github pages<br><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">spa github pages</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Deploy-react-app-by-create-react-app&quot;&gt;&lt;a href=&quot;#Deploy-react-app-by-create-react-app&quot; class=&quot;headerlink&quot; title=&quot;Deploy react app by 
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
-    
-    
-      <category term="github" scheme="http://cwza.github.io/my_blog/tags/github/"/>
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
-    
-      <category term="react" scheme="http://cwza.github.io/my_blog/tags/react/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Higher Order Component</title>
-    <link href="http://cwza.github.io/my_blog/2017/01/19/Higher-Order-Component/"/>
-    <id>http://cwza.github.io/my_blog/2017/01/19/Higher-Order-Component/</id>
-    <published>2017-01-19T06:48:57.000Z</published>
-    <updated>2017-03-10T02:26:35.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>A Simple Higher Order Component example</p>
-<h2 id="Simple-example"><a href="#Simple-example" class="headerlink" title="Simple example"></a>Simple example</h2><p>For loading spinner with different Component<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// HOC declaration</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">withLoadingSpinner</span>(<span class="params">Component</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">EnhancedComponent</span>(<span class="params">&#123; isLoading, ...props &#125;</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!isLoading) &#123;</div><div class="line">      <span class="keyword">return</span> &lt;Component &#123; ...props &#125; /&gt;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return &lt;LoadingSpinner /&gt;;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Usage</div><div class="line"></div><div class="line">const ListItemsWithLoadingIndicator = withLoadingSpinner(ListItems);</div><div class="line"></div><div class="line">&lt;ListItemsWithLoadingIndicator</div><div class="line">  isLoading=&#123;props.isLoading&#125;</div><div class="line">  list=&#123;props.list&#125;</div><div class="line">/&gt;</div></pre></td></tr></table></figure></p>
-<h1 id="Recompose"><a href="#Recompose" class="headerlink" title="Recompose"></a>Recompose</h1><p><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">https://github.com/rafrex/spa-github-pages</a><br>A React Library for HOC</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;A Simple Higher Order Component example&lt;/p&gt;
-&lt;h2 id=&quot;Simple-example&quot;&gt;&lt;a href=&quot;#Simple-example&quot; class=&quot;headerlink&quot; title=&quot;Simple example&quot;&gt;&lt;
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
-    
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
-    
-      <category term="react" scheme="http://cwza.github.io/my_blog/tags/react/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Nginx With Node And Https config</title>
     <link href="http://cwza.github.io/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/"/>
     <id>http://cwza.github.io/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/</id>
@@ -612,75 +611,58 @@
   </entry>
   
   <entry>
-    <title>微軟提供免費windows-VM</title>
-    <link href="http://cwza.github.io/my_blog/2016/12/08/%E5%BE%AE%E8%BB%9F%E6%8F%90%E4%BE%9B%E5%85%8D%E8%B2%BBwindows-VM/"/>
-    <id>http://cwza.github.io/my_blog/2016/12/08/微軟提供免費windows-VM/</id>
-    <published>2016-12-08T05:55:57.000Z</published>
+    <title>Higher Order Component</title>
+    <link href="http://cwza.github.io/my_blog/2017/01/19/Higher-Order-Component/"/>
+    <id>http://cwza.github.io/my_blog/2017/01/19/Higher-Order-Component/</id>
+    <published>2017-01-19T06:48:57.000Z</published>
     <updated>2017-03-10T02:26:35.000Z</updated>
     
-    <content type="html"><![CDATA[<p><a href="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/" target="_blank" rel="external">https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/</a></p>
-<p>90天之後再輸入slmgr -rearm重新取得授權</p>
+    <content type="html"><![CDATA[<p>A Simple Higher Order Component example</p>
+<h2 id="Simple-example"><a href="#Simple-example" class="headerlink" title="Simple example"></a>Simple example</h2><p>For loading spinner with different Component<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// HOC declaration</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">withLoadingSpinner</span>(<span class="params">Component</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">EnhancedComponent</span>(<span class="params">&#123; isLoading, ...props &#125;</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!isLoading) &#123;</div><div class="line">      <span class="keyword">return</span> &lt;Component &#123; ...props &#125; /&gt;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return &lt;LoadingSpinner /&gt;;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Usage</div><div class="line"></div><div class="line">const ListItemsWithLoadingIndicator = withLoadingSpinner(ListItems);</div><div class="line"></div><div class="line">&lt;ListItemsWithLoadingIndicator</div><div class="line">  isLoading=&#123;props.isLoading&#125;</div><div class="line">  list=&#123;props.list&#125;</div><div class="line">/&gt;</div></pre></td></tr></table></figure></p>
+<h1 id="Recompose"><a href="#Recompose" class="headerlink" title="Recompose"></a>Recompose</h1><p><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">https://github.com/rafrex/spa-github-pages</a><br>A React Library for HOC</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;&lt;a href=&quot;https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://developer.microsoft.com/
+      &lt;p&gt;A Simple Higher Order Component example&lt;/p&gt;
+&lt;h2 id=&quot;Simple-example&quot;&gt;&lt;a href=&quot;#Simple-example&quot; class=&quot;headerlink&quot; title=&quot;Simple example&quot;&gt;&lt;
     
     </summary>
     
-      <category term="windows" scheme="http://cwza.github.io/my_blog/categories/windows/"/>
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
     
     
-      <category term="linux" scheme="http://cwza.github.io/my_blog/tags/linux/"/>
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
     
-      <category term="windows" scheme="http://cwza.github.io/my_blog/tags/windows/"/>
-    
-      <category term="mac" scheme="http://cwza.github.io/my_blog/tags/mac/"/>
+      <category term="react" scheme="http://cwza.github.io/my_blog/tags/react/"/>
     
   </entry>
   
   <entry>
-    <title>Docker筆記</title>
-    <link href="http://cwza.github.io/my_blog/2016/11/21/Docker%E7%AD%86%E8%A8%98/"/>
-    <id>http://cwza.github.io/my_blog/2016/11/21/Docker筆記/</id>
-    <published>2016-11-21T06:31:57.000Z</published>
+    <title>Deploy react app to github page</title>
+    <link href="http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/"/>
+    <id>http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/</id>
+    <published>2017-01-19T06:48:57.000Z</published>
     <updated>2017-03-10T02:26:35.000Z</updated>
     
-    <content type="html"><![CDATA[<!-- toc -->
-<p>Docker is the world’s leading software containerization platform<br><a href="https://www.docker.com/" target="_blank" rel="external">Docker Official Site</a><br><a href="https://hub.docker.com/" target="_blank" rel="external">Docker Hub: search images from this site</a></p>
-<a id="more"></a>
-<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><p>Go to Official Site and click download.</p>
-<h1 id="Uninstall"><a href="#Uninstall" class="headerlink" title="Uninstall"></a>Uninstall</h1><h2 id="Uninstall-from-GUI"><a href="#Uninstall-from-GUI" class="headerlink" title="Uninstall from GUI"></a>Uninstall from GUI</h2><p>Choose  –&gt; Preferences from the menu bar, then click Uninstall / Reset on the Preferences dialog.</p>
-<h2 id="Uninstall-from-command"><a href="#Uninstall-from-command" class="headerlink" title="Uninstall from command"></a>Uninstall from command</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ /Applications/Docker.app/Contents/MacOS/Docker --uninstall</div><div class="line">Docker is running, exiting...</div><div class="line">Docker uninstalled successfully. You can move the Docker application to the trash.</div></pre></td></tr></table></figure>
-<h1 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h1><h2 id="Docker-run"><a href="#Docker-run" class="headerlink" title="Docker run"></a>Docker run</h2><ul>
-<li>-d #run in background(demen)</li>
-<li>-p 80:5000 #map host 80 port to container 5000 port</li>
-<li>-t -i #execute interactive terminal</li>
-<li>–name <container name=""></container></li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">docker run &lt;userID&gt;/&lt;imageName&gt; &lt;<span class="built_in">command</span>&gt; &lt;<span class="built_in">command</span> parameter&gt;</div><div class="line">docker run <span class="_">-d</span> -p 80:5000 training/webapp python app.py <span class="comment"># -p 80:5000 to map container 5000 port to host 80 post, -d to run in background</span></div><div class="line">docker run -t -i ubuntu:14.04 /bin/bash <span class="comment"># run interactive bash</span></div><div class="line">docker run <span class="_">-d</span> -P --name web training/webapp python app.py <span class="comment"># give container a name</span></div></pre></td></tr></table></figure>
-<h2 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">docker pull &lt;image&gt; <span class="comment"># pull image</span></div><div class="line">docker inspect &lt;container ID&gt; <span class="comment"># see the container specific info</span></div><div class="line">docker ps <span class="comment"># list current running container</span></div><div class="line">docker ps <span class="_">-a</span> <span class="comment"># list all container</span></div><div class="line">docker stop &lt;container name&gt; <span class="comment"># stop container</span></div><div class="line">docker rm <span class="_">-f</span> &lt;container name&gt;|&lt;container id&gt; <span class="comment"># remove container</span></div><div class="line">docker images <span class="comment"># list all images</span></div><div class="line">docker rmi &lt;imageID&gt;|&lt;imageName&gt; <span class="comment"># remove image</span></div><div class="line">docker build -t &lt;userID&gt;/&lt;imageName&gt; ./ <span class="comment"># build image according to Dockfile</span></div><div class="line">docker tag &lt;imageID&gt; &lt;userID&gt;/&lt;imageName&gt;:latest</div><div class="line">docker logs <span class="_">-f</span> &lt;container ID&gt; <span class="comment"># print stdout of container</span></div><div class="line"></div><div class="line">docker login</div><div class="line">docker push &lt;userID&gt;/&lt;imageName&gt;</div></pre></td></tr></table></figure>
-<h1 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># an easy example</span></div><div class="line">FROM docker/whalesay:latest <span class="comment"># use other image as base</span></div><div class="line">RUN apt-get -y update &amp;&amp; apt-get install -y fortunes <span class="comment"># run init command</span></div><div class="line">ENV POSTGRES_USER faceblock</div><div class="line">CMD /usr/games/fortune <span class="_">-a</span> | cowsay</div></pre></td></tr></table></figure>
-<h1 id="Container-Link"><a href="#Container-Link" class="headerlink" title="Container Link"></a>Container Link</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">docker run <span class="_">-d</span> --name db training/postgres <span class="comment"># creates a container called db, which contains a PostgreSQL database.</span></div><div class="line">docker run <span class="_">-d</span> -P --name web --link db:db training/webapp python app.py <span class="comment"># create a web container and link it with db container</span></div></pre></td></tr></table></figure>
+    <content type="html"><![CDATA[<h2 id="Deploy-react-app-by-create-react-app"><a href="#Deploy-react-app-by-create-react-app" class="headerlink" title="Deploy react app by create-react-app"></a>Deploy react app by create-react-app</h2><p>Follow this guide to deploy react app to github pages.<br><a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#github-pages" target="_blank" rel="external">React Create App Readme</a></p>
+<h2 id="Do-something-to-let-github-pages-OK-with-SPA"><a href="#Do-something-to-let-github-pages-OK-with-SPA" class="headerlink" title="Do something to let github pages OK with SPA"></a>Do something to let github pages OK with SPA</h2><p>Github pages does not support SPA routings now, so you have to do followings:<br>Follow this guide to make SPA OK with github pages<br><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">spa github pages</a></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;!-- toc --&gt;
-&lt;p&gt;Docker is the world’s leading software containerization platform&lt;br&gt;&lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker Official Site&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://hub.docker.com/&quot;&gt;Docker Hub: search images from this site&lt;/a&gt;&lt;/p&gt;
+      &lt;h2 id=&quot;Deploy-react-app-by-create-react-app&quot;&gt;&lt;a href=&quot;#Deploy-react-app-by-create-react-app&quot; class=&quot;headerlink&quot; title=&quot;Deploy react app by 
     
     </summary>
     
-      <category term="computer-science" scheme="http://cwza.github.io/my_blog/categories/computer-science/"/>
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
     
     
-      <category term="linux" scheme="http://cwza.github.io/my_blog/tags/linux/"/>
+      <category term="github" scheme="http://cwza.github.io/my_blog/tags/github/"/>
     
-      <category term="windows" scheme="http://cwza.github.io/my_blog/tags/windows/"/>
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
     
-      <category term="mac" scheme="http://cwza.github.io/my_blog/tags/mac/"/>
-    
-      <category term="docker" scheme="http://cwza.github.io/my_blog/tags/docker/"/>
+      <category term="react" scheme="http://cwza.github.io/my_blog/tags/react/"/>
     
   </entry>
   

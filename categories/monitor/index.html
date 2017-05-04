@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="cwza&#39;s blog">
-    <title>Archives: 2017/1 - cwza&#39;s blog</title>
+    <title>Category: monitor - cwza&#39;s blog</title>
     <meta name="author" content="Cwza">
     
     
@@ -14,7 +14,7 @@
     
     <meta property="og:type" content="blog">
 <meta property="og:title" content="cwza's blog">
-<meta property="og:url" content="http://cwza.github.io/my_blog/archives/2017/01/index.html">
+<meta property="og:url" content="http://cwza.github.io/my_blog/categories/monitor/index.html">
 <meta property="og:site_name" content="cwza's blog">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cwza's blog">
@@ -220,104 +220,24 @@
 <section class="postShorten-group main-content-wrap">
     
         
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/">USE TIMESTAMPTZ IN POSTGRES NOT TIMESTAMP</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Jan 19 2017 18:53:57 GMT+0800">
-	
-		    Jan 19, 2017
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/database/">database</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <p>ALWAYS USE TIMESTAMPTZ NOT USE TIMESTAMP IN POSTGRES.<br>SET timezone = ‘UTC’ IN pgsql/data/postgresql.conf.</p>
-                        
-                            <a href="/my_blog/2017/01/19/USE-TIMESTAMPTZ-IN-POSTGRES-NOT-TIMESTAMP/" class="postShorten-excerpt_link link">
-                                Continue reading
-                            </a>
-                            
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/">Nginx With Node And Https config</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Jan 19 2017 14:48:57 GMT+0800">
-	
-		    Jan 19, 2017
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/web/">web</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <p>Nginx With Node And Https config example<br>
-                        
-                            <a href="/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/" class="postShorten-excerpt_link link">
-                                Continue reading
-                            </a>
-                            
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
         <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
             <div class="postShorten-wrap">
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
-                                <a class="link-unstyled" href="/my_blog/2017/01/19/Higher-Order-Component/">Higher Order Component</a>
+                                <a class="link-unstyled" href="/my_blog/2017/03/31/prometheus筆記/">prometheus筆記</a>
                         
                     </h1>
                     <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Jan 19 2017 14:48:57 GMT+0800">
+    <time itemprop="datePublished" content="Fri Mar 31 2017 14:46:57 GMT+0800">
 	
-		    Jan 19, 2017
+		    Mar 31, 2017
     	
     </time>
     
         <span>in </span>
         
-    <a class="category-link" href="/my_blog/categories/javascript/">javascript</a>
+    <a class="category-link" href="/my_blog/categories/monitor/">monitor</a>
 
 
     
@@ -326,9 +246,7 @@
                 
                 
                     <div class="postShorten-content" itemprop="articleBody">
-                        <p>A Simple Higher Order Component example</p>
-<h2 id="Simple-example"><a href="#Simple-example" class="headerlink" title="Simple example"></a>Simple example</h2><p>For loading spinner with different Component<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// HOC declaration</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">withLoadingSpinner</span>(<span class="params">Component</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">EnhancedComponent</span>(<span class="params">&#123; isLoading, ...props &#125;</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!isLoading) &#123;</div><div class="line">      <span class="keyword">return</span> &lt;Component &#123; ...props &#125; /&gt;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return &lt;LoadingSpinner /&gt;;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Usage</div><div class="line"></div><div class="line">const ListItemsWithLoadingIndicator = withLoadingSpinner(ListItems);</div><div class="line"></div><div class="line">&lt;ListItemsWithLoadingIndicator</div><div class="line">  isLoading=&#123;props.isLoading&#125;</div><div class="line">  list=&#123;props.list&#125;</div><div class="line">/&gt;</div></pre></td></tr></table></figure></p>
-<h1 id="Recompose"><a href="#Recompose" class="headerlink" title="Recompose"></a>Recompose</h1><p><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">https://github.com/rafrex/spa-github-pages</a><br>A React Library for HOC</p>
+                        <h2 id="Histograms-vs-Summaries"><a href="#Histograms-vs-Summaries" class="headerlink" title="Histograms vs Summaries"></a>Histograms vs Summaries</h2><p>Histogram與Summaries都適合拿來observe request duration or response size.<br>使用histogram and summary時, 除了有_count與_sum的matrics以外, 還會有buckets or quantile<br>可以拿來計算quantiles</p>
 
                         
                             
@@ -336,54 +254,7 @@
                         
                         
                             <p>
-                                <a href="/my_blog/2017/01/19/Higher-Order-Component/#post-footer" class="postShorten-excerpt_link link">
-                                    Comment and share
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/my_blog/2017/01/19/Deploy-react-app-to-github-page/">Deploy react app to github page</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Jan 19 2017 14:48:57 GMT+0800">
-	
-		    Jan 19, 2017
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/my_blog/categories/javascript/">javascript</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <h2 id="Deploy-react-app-by-create-react-app"><a href="#Deploy-react-app-by-create-react-app" class="headerlink" title="Deploy react app by create-react-app"></a>Deploy react app by create-react-app</h2><p>Follow this guide to deploy react app to github pages.<br><a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#github-pages" target="_blank" rel="external">React Create App Readme</a></p>
-<h2 id="Do-something-to-let-github-pages-OK-with-SPA"><a href="#Do-something-to-let-github-pages-OK-with-SPA" class="headerlink" title="Do something to let github pages OK with SPA"></a>Do something to let github pages OK with SPA</h2><p>Github pages does not support SPA routings now, so you have to do followings:<br>Follow this guide to make SPA OK with github pages<br><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">spa github pages</a></p>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/my_blog/2017/01/19/Deploy-react-app-to-github-page/#post-footer" class="postShorten-excerpt_link link">
+                                <a href="/my_blog/2017/03/31/prometheus筆記/#post-footer" class="postShorten-excerpt_link link">
                                     Comment and share
                                 </a>
                             </p>

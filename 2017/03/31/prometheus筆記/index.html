@@ -6,25 +6,22 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="cwza&#39;s blog">
-    <title>微軟提供免費windows-VM - cwza&#39;s blog</title>
+    <title>prometheus筆記 - cwza&#39;s blog</title>
     <meta name="author" content="Cwza">
     
     
         <link rel="alternative" type="application/atom+xml" title="RSS" href="/my_blog/atom.xml">
     
-    <meta name="description" content="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/
-90天之後再輸入slmgr -rearm重新取得授權">
+    <meta name="description" content="Histograms vs SummariesHistogram與Summaries都適合拿來observe request duration or response size.使用histogram and summary時, 除了有_count與_sum的matrics以外, 還會有buckets or quantile可以拿來計算quantiles">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="微軟提供免費windows-VM">
-<meta property="og:url" content="http://cwza.github.io/my_blog/2016/12/08/微軟提供免費windows-VM/index.html">
+<meta property="og:title" content="prometheus筆記">
+<meta property="og:url" content="http://cwza.github.io/my_blog/2017/03/31/prometheus筆記/index.html">
 <meta property="og:site_name" content="cwza's blog">
-<meta property="og:description" content="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/
-90天之後再輸入slmgr -rearm重新取得授權">
-<meta property="og:updated_time" content="2017-03-10T02:26:35.000Z">
+<meta property="og:description" content="Histograms vs SummariesHistogram與Summaries都適合拿來observe request duration or response size.使用histogram and summary時, 除了有_count與_sum的matrics以外, 還會有buckets or quantile可以拿來計算quantiles">
+<meta property="og:updated_time" content="2017-03-31T06:56:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="微軟提供免費windows-VM">
-<meta name="twitter:description" content="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/
-90天之後再輸入slmgr -rearm重新取得授權">
+<meta name="twitter:title" content="prometheus筆記">
+<meta name="twitter:description" content="Histograms vs SummariesHistogram與Summaries都適合拿來observe request duration or response size.使用histogram and summary時, 除了有_count與_sum的matrics以外, 還會有buckets or quantile可以拿來計算quantiles">
     
     
     
@@ -228,19 +225,19 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title" itemprop="headline">
-            微軟提供免費windows-VM
+            prometheus筆記
         </h1>
     
     <div class="post-meta">
-    <time itemprop="datePublished" content="Thu Dec 08 2016 13:55:57 GMT+0800">
+    <time itemprop="datePublished" content="Fri Mar 31 2017 14:46:57 GMT+0800">
 	
-		    Dec 08, 2016
+		    Mar 31, 2017
     	
     </time>
     
         <span>in </span>
         
-    <a class="category-link" href="/my_blog/categories/windows/">windows</a>
+    <a class="category-link" href="/my_blog/categories/monitor/">monitor</a>
 
 
     
@@ -249,8 +246,7 @@
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <p><a href="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/" target="_blank" rel="external">https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/</a></p>
-<p>90天之後再輸入slmgr -rearm重新取得授權</p>
+            <h2 id="Histograms-vs-Summaries"><a href="#Histograms-vs-Summaries" class="headerlink" title="Histograms vs Summaries"></a>Histograms vs Summaries</h2><p>Histogram與Summaries都適合拿來observe request duration or response size.<br>使用histogram and summary時, 除了有_count與_sum的matrics以外, 還會有buckets or quantile<br>可以拿來計算quantiles</p>
 
             
                 
@@ -263,7 +259,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/linux/">linux</a> <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/mac/">mac</a> <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/windows/">windows</a>
+    <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/golang/">golang</a> <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/monitor/">monitor</a> <a class="tag tag--primary tag--small t-link" href="/my_blog/tags/prometheus/">prometheus</a>
 
             </div>
         
@@ -272,7 +268,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/01/19/Deploy-react-app-to-github-page/"  data-tooltip="Deploy react app to github page">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/05/04/Supervisord-run-command-before-stop/"  data-tooltip="Supervisord run command before stop">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -280,7 +276,7 @@
             </li>
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2016/11/21/Docker筆記/" data-tooltip="Docker筆記">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/03/31/go_test_tool筆記/" data-tooltip="go test tool筆記">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right"></i>
@@ -295,17 +291,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/31/prometheus筆記/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/31/prometheus筆記/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/31/prometheus筆記/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -351,7 +347,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/01/19/Deploy-react-app-to-github-page/"  data-tooltip="Deploy react app to github page">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/05/04/Supervisord-run-command-before-stop/"  data-tooltip="Supervisord run command before stop">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -359,7 +355,7 @@
             </li>
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2016/11/21/Docker筆記/" data-tooltip="Docker筆記">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/03/31/go_test_tool筆記/" data-tooltip="go test tool筆記">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right"></i>
@@ -374,17 +370,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/31/prometheus筆記/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/31/prometheus筆記/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/31/prometheus筆記/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -410,17 +406,17 @@
                 <div id="share-options-bar" class="share-options-bar" data-behavior="3">
     <ul class="share-options">
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/31/prometheus筆記/">
                 <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/31/prometheus筆記/">
                 <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2016/12/08/微軟提供免費windows-VM/">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/31/prometheus筆記/">
                 <i class="fa fa-twitter"></i><span>Share on Twitter</span>
             </a>
         </li>
