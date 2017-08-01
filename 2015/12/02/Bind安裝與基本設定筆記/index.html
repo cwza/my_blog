@@ -13,11 +13,13 @@
         <link rel="alternative" type="application/atom+xml" title="RSS" href="/my_blog/atom.xml">
     
     <meta name="description" content="此筆記為安裝在Debian上的步驟">
+<meta name="keywords" content="linux,bind9">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Bind安裝與基本設定筆記">
 <meta property="og:url" content="http://cwza.github.io/my_blog/2015/12/02/Bind安裝與基本設定筆記/index.html">
-<meta property="og:site_name" content="cwza's blog">
+<meta property="og:site_name" content="cwza&#39;s blog">
 <meta property="og:description" content="此筆記為安裝在Debian上的步驟">
+<meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-03-10T02:26:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Bind安裝與基本設定筆記">
@@ -249,7 +251,7 @@
             <p>此筆記為安裝在Debian上的步驟</p>
 <a id="more"></a>
 <h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝Bind9"><span class="toc-text">安裝Bind9</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定"><span class="toc-text">設定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用dig工具測試"><span class="toc-text">用dig工具測試</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
-<h2 id="安裝Bind9"><a href="#安裝Bind9" class="headerlink" title="安裝Bind9"></a>安裝Bind9</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">apt-get install <span class="built_in">bind</span>9</div><div class="line">apt-get install dnsutils</div><div class="line">service <span class="built_in">bind</span>9 restart</div><div class="line"> <span class="comment">#安裝完後會在/etc/bind底下</span></div></pre></td></tr></table></figure>
+<h2 id="安裝Bind9"><a href="#安裝Bind9" class="headerlink" title="安裝Bind9"></a>安裝Bind9</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">apt-get install bind9</div><div class="line">apt-get install dnsutils</div><div class="line">service bind9 restart</div><div class="line"> <span class="comment">#安裝完後會在/etc/bind底下</span></div></pre></td></tr></table></figure>
 <h2 id="設定"><a href="#設定" class="headerlink" title="設定"></a>設定</h2><p>主要設定檔: /etc/bind/named.conf.local<br>預設log會在/var/log/syslog</p>
 <p>named.conf.local加入以下兩個zone<br><figure class="highlight zone"><figcaption><span>named.conf.local</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//正解</div><div class="line">zone "abc.com.tw" <span class="keyword">IN</span> &#123;</div><div class="line">     type master<span class="comment">;</span></div><div class="line">     file "/etc/bind/db-abc.com.tw"<span class="comment">;</span></div><div class="line">     allow-update &#123; key example.com.<span class="comment">; &#125;;</span></div><div class="line">&#125;<span class="comment">;</span></div><div class="line">//反解</div><div class="line">zone "<span class="number">33</span>.<span class="number">22</span>.<span class="number">11</span>.in-addr.arpa" <span class="keyword">IN</span> &#123;</div><div class="line">     type master<span class="comment">;</span></div><div class="line">     file "/etc/bind/db-<span class="number">11</span>.<span class="number">22</span>.<span class="number">33</span>"<span class="comment">;</span></div><div class="line">&#125;<span class="comment">;</span></div><div class="line">//tsig key for DNS Dynamic upload</div><div class="line">key example.com. &#123;</div><div class="line">    algorithm hmac-md5<span class="comment">;</span></div><div class="line">    secret "Roa6+m+<span class="number">40</span>vuEHNJbMVTRjg=="<span class="comment">;</span></div><div class="line">&#125;<span class="comment">;</span></div></pre></td></tr></table></figure></p>
 <p>/etc/bind新增並編輯db-abc.com.tw<br><figure class="highlight zone"><figcaption><span>db-abc.com.tw</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$TTL</span>          <span class="number">86400</span></div><div class="line"><span class="meta">$ORIGIN</span> abc.com.tw.</div><div class="line">@          <span class="number">1</span>D <span class="keyword">IN</span> <span class="keyword">SOA</span>                    @ root.abc.com.tw. (</div><div class="line">                                        <span class="number">2005021801</span>          <span class="comment">; 修改序號</span></div><div class="line">                                        <span class="number">3</span>H                  <span class="comment">; refresh</span></div><div class="line">                                        <span class="number">15</span>M                 <span class="comment">; retry</span></div><div class="line">                                        <span class="number">1</span>W                  <span class="comment">; expiry</span></div><div class="line">                                        <span class="number">1</span>D )                <span class="comment">; minimum</span></div><div class="line">										</div><div class="line">@                   <span class="keyword">IN</span> <span class="keyword">NS</span>         dns.abc.com.tw.</div><div class="line">dns.abc.com.tw.     <span class="keyword">IN</span> <span class="keyword">A</span>          <span class="number">11.22.33.100</span></div><div class="line"></div><div class="line"><span class="comment">;設定 MX record</span></div><div class="line">@                   <span class="keyword">IN</span> <span class="keyword">MX</span> <span class="number">10</span>      ms1</div><div class="line">@                   <span class="keyword">IN</span> <span class="keyword">MX</span> <span class="number">20</span>      ms2</div><div class="line">ms1                 <span class="keyword">IN</span> <span class="keyword">A</span>          <span class="number">11.22.33.69</span></div><div class="line">ms2                 <span class="keyword">IN</span> <span class="keyword">A</span>          <span class="number">11.22.33.70</span></div><div class="line"></div><div class="line">www                 <span class="number">10</span> <span class="keyword">IN</span> <span class="keyword">A</span>       <span class="number">11.22.33.85</span>     <span class="comment">;www 做 load balancing</span></div><div class="line">www                 <span class="number">10</span> <span class="keyword">IN</span> <span class="keyword">A</span>       <span class="number">11.22.33.86</span>     <span class="comment">;www 做 load balancing</span></div><div class="line">web                 <span class="keyword">IN</span> <span class="keyword">CNAME</span>      www             <span class="comment">;讓 web.abc.com.tw 也指到 www</span></div></pre></td></tr></table></figure></p>
@@ -301,17 +303,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -380,17 +382,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -416,17 +418,17 @@
                 <div id="share-options-bar" class="share-options-bar" data-behavior="3">
     <ul class="share-options">
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
                 <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
                 <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2015/12/02/Bind安裝與基本設定筆記/">
                 <i class="fa fa-twitter"></i><span>Share on Twitter</span>
             </a>
         </li>

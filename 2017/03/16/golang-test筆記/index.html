@@ -12,16 +12,18 @@
     
         <link rel="alternative" type="application/atom+xml" title="RSS" href="/my_blog/atom.xml">
     
-    <meta name="description" content="Table Driven Test1234567891011121314func TestAdd(t * testing.T) &amp;#123;  case := map[string]struct&amp;#123; A, B, Expected int&amp;#125; &amp;#123;    &quot;foo&quot;: &amp;#123;1, 1, 2&amp;#125;,    &quot;bar&quot;: &amp;#123;1, -1, 0&amp;#125;,">
+    <meta name="description" content="Table Driven Test1234567891011121314151617func TestAdd(t * testing.T) &amp;#123;  tcs := []struct&amp;#123;     Name string     A, B, Expected int  &amp;#125;&amp;#123;    &amp;#123;&quot;foo&quot;, 1, 1, 2&amp;#125;,    &amp;#123;&quot;bar&quot;,">
+<meta name="keywords" content="golang,test">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="golang test 筆記">
 <meta property="og:url" content="http://cwza.github.io/my_blog/2017/03/16/golang-test筆記/index.html">
-<meta property="og:site_name" content="cwza's blog">
-<meta property="og:description" content="Table Driven Test1234567891011121314func TestAdd(t * testing.T) &amp;#123;  case := map[string]struct&amp;#123; A, B, Expected int&amp;#125; &amp;#123;    &quot;foo&quot;: &amp;#123;1, 1, 2&amp;#125;,    &quot;bar&quot;: &amp;#123;1, -1, 0&amp;#125;,">
-<meta property="og:updated_time" content="2017-03-17T05:30:59.000Z">
+<meta property="og:site_name" content="cwza&#39;s blog">
+<meta property="og:description" content="Table Driven Test1234567891011121314151617func TestAdd(t * testing.T) &amp;#123;  tcs := []struct&amp;#123;     Name string     A, B, Expected int  &amp;#125;&amp;#123;    &amp;#123;&quot;foo&quot;, 1, 1, 2&amp;#125;,    &amp;#123;&quot;bar&quot;,">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-08-01T01:23:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="golang test 筆記">
-<meta name="twitter:description" content="Table Driven Test1234567891011121314func TestAdd(t * testing.T) &amp;#123;  case := map[string]struct&amp;#123; A, B, Expected int&amp;#125; &amp;#123;    &quot;foo&quot;: &amp;#123;1, 1, 2&amp;#125;,    &quot;bar&quot;: &amp;#123;1, -1, 0&amp;#125;,">
+<meta name="twitter:description" content="Table Driven Test1234567891011121314151617func TestAdd(t * testing.T) &amp;#123;  tcs := []struct&amp;#123;     Name string     A, B, Expected int  &amp;#125;&amp;#123;    &amp;#123;&quot;foo&quot;, 1, 1, 2&amp;#125;,    &amp;#123;&quot;bar&quot;,">
     
     
     
@@ -246,7 +248,7 @@
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <h1 id="Table-Driven-Test"><a href="#Table-Driven-Test" class="headerlink" title="Table Driven Test"></a>Table Driven Test</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAdd</span><span class="params">(t * testing.T)</span></span> &#123;</div><div class="line">  <span class="keyword">case</span> := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">struct</span>&#123; A, B, Expected <span class="keyword">int</span>&#125; &#123;</div><div class="line">    <span class="string">"foo"</span>: &#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>&#125;,</div><div class="line">    <span class="string">"bar"</span>: &#123;<span class="number">1</span>, <span class="number">-1</span>, <span class="number">0</span>&#125;,</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">for</span> k, tc := <span class="keyword">range</span> cases &#123;</div><div class="line">    actual := tc.A + tc.B</div><div class="line">    <span class="keyword">if</span> actual != expected &#123;</div><div class="line">      t.Errorf(</div><div class="line">        <span class="string">"%s %d + %d = %d, exected %d"</span>,</div><div class="line">        k, tc.A, tc.B, actual, tc.Expected)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+            <h1 id="Table-Driven-Test"><a href="#Table-Driven-Test" class="headerlink" title="Table Driven Test"></a>Table Driven Test</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAdd</span><span class="params">(t * testing.T)</span></span> &#123;</div><div class="line">  tcs := []<span class="keyword">struct</span>&#123; </div><div class="line">    Name <span class="keyword">string</span> </div><div class="line">    A, B, Expected <span class="keyword">int</span></div><div class="line">  &#125;&#123;</div><div class="line">    &#123;<span class="string">"foo"</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>&#125;,</div><div class="line">    &#123;<span class="string">"bar"</span>, <span class="number">1</span>, <span class="number">-1</span>, <span class="number">0</span>&#125;,</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">for</span> _, tc := <span class="keyword">range</span> tcs &#123;</div><div class="line">    t.Run(tc.Name, <span class="function"><span class="keyword">func</span><span class="params">(t *testing.T)</span></span> &#123;</div><div class="line">      actual := tc.A + tc.B</div><div class="line">      <span class="keyword">if</span> actual != expected &#123;</div><div class="line">        t.Errorf(<span class="string">"%d + %d = %d, exected %d"</span>, tc.A, tc.B, actual, tc.Expected)</div><div class="line">      &#125;</div><div class="line">    &#125;)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="Test-fixtures"><a href="#Test-fixtures" class="headerlink" title="Test fixtures"></a>Test fixtures</h2><p>go test set pwd as package directory<br>use relative path “test-fixtures” directory as a place to store test data(loading config, model data, binary data …etc)<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAdd</span><span class="params">(t *testing.T)</span></span> &#123;</div><div class="line">  data := filepath.Join(<span class="string">"test-fixtures"</span>, <span class="string">"daa_data.json"</span>)</div><div class="line">  <span class="comment">// Do something with data</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h2 id="Golden-files-Test-flag"><a href="#Golden-files-Test-flag" class="headerlink" title="Golden files(Test flag)"></a>Golden files(Test flag)</h2><p>expected output放在.golden file中<br>當update flag為true時, 代表需要更新expected output file<br>Very useful to test complex structures<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> update = flag.Bool(<span class="string">"update"</span>, <span class="literal">false</span>, <span class="string">"update golden files"</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAdd</span><span class="params">(t *testing.T)</span></span> &#123;</div><div class="line">  actual := doSomething(tc)</div><div class="line">  golden := filepath.Join(<span class="string">"test-fixtures"</span>, tc.Name+<span class="string">".golden"</span>)</div><div class="line">  <span class="keyword">if</span> *update &#123;</div><div class="line">    ioUtil.WriteFile(golden, actual, <span class="number">0644</span>)</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  expected, _ := ioutil.ReadFile(golden)</div><div class="line">  <span class="keyword">if</span> !bytes.Equal(actual, expected) &#123;</div><div class="line">    <span class="comment">//FAIL!</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">go <span class="built_in">test</span></div><div class="line">go <span class="built_in">test</span> -update</div></pre></td></tr></table></figure>
@@ -312,17 +314,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2017/03/16/golang-test筆記/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2017/03/16/golang-test筆記/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2017/03/16/golang-test筆記/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -391,17 +393,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2017/03/16/golang-test筆記/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2017/03/16/golang-test筆記/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2017/03/16/golang-test筆記/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -427,17 +429,17 @@
                 <div id="share-options-bar" class="share-options-bar" data-behavior="3">
     <ul class="share-options">
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2017/03/16/golang-test筆記/">
                 <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2017/03/16/golang-test筆記/">
                 <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/16/golang-test筆記/">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2017/03/16/golang-test筆記/">
                 <i class="fa fa-twitter"></i><span>Share on Twitter</span>
             </a>
         </li>

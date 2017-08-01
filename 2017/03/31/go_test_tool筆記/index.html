@@ -12,19 +12,18 @@
     
         <link rel="alternative" type="application/atom+xml" title="RSS" href="/my_blog/atom.xml">
     
-    <meta name="description" content="run all test except vendor1go test $(go list ./... | grep -v /vendor/)
-go tool cover123go test -coverprofile coverage.txt &amp;lt;package name&amp;gt;go tool cover -html=coverage.txt -o coverage.htmlchrome co">
+    <meta name="description" content="run all test except vendor1go test $(go list ./... | grep -v /vendor/) go tool cover123go test -coverprofile coverage.txt &amp;lt;package name&amp;gt;go tool cover -html=coverage.txt -o coverage.htmlchrome co">
+<meta name="keywords" content="golang,test">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="go test tool筆記">
 <meta property="og:url" content="http://cwza.github.io/my_blog/2017/03/31/go_test_tool筆記/index.html">
-<meta property="og:site_name" content="cwza's blog">
-<meta property="og:description" content="run all test except vendor1go test $(go list ./... | grep -v /vendor/)
-go tool cover123go test -coverprofile coverage.txt &amp;lt;package name&amp;gt;go tool cover -html=coverage.txt -o coverage.htmlchrome co">
+<meta property="og:site_name" content="cwza&#39;s blog">
+<meta property="og:description" content="run all test except vendor1go test $(go list ./... | grep -v /vendor/) go tool cover123go test -coverprofile coverage.txt &amp;lt;package name&amp;gt;go tool cover -html=coverage.txt -o coverage.htmlchrome co">
+<meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-03-31T03:45:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="go test tool筆記">
-<meta name="twitter:description" content="run all test except vendor1go test $(go list ./... | grep -v /vendor/)
-go tool cover123go test -coverprofile coverage.txt &amp;lt;package name&amp;gt;go tool cover -html=coverage.txt -o coverage.htmlchrome co">
+<meta name="twitter:description" content="run all test except vendor1go test $(go list ./... | grep -v /vendor/) go tool cover123go test -coverprofile coverage.txt &amp;lt;package name&amp;gt;go tool cover -html=coverage.txt -o coverage.htmlchrome co">
     
     
     
@@ -251,7 +250,7 @@ go tool cover123go test -coverprofile coverage.txt &amp;lt;package name&amp;gt;g
         <div class="main-content-wrap">
             <h2 id="run-all-test-except-vendor"><a href="#run-all-test-except-vendor" class="headerlink" title="run all test except vendor"></a>run all test except vendor</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go <span class="built_in">test</span> $(go list ./... | grep -v /vendor/)</div></pre></td></tr></table></figure>
 <h2 id="go-tool-cover"><a href="#go-tool-cover" class="headerlink" title="go tool cover"></a>go tool cover</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">go <span class="built_in">test</span> -coverprofile coverage.txt &lt;package name&gt;</div><div class="line">go tool cover -html=coverage.txt -o coverage.html</div><div class="line">chrome coverage.html</div></pre></td></tr></table></figure>
-<h2 id="example-script-to-run-all-package-test-and-generate-coverage-file"><a href="#example-script-to-run-all-package-test-and-generate-coverage-file" class="headerlink" title="example script to run all package test and generate coverage file"></a>example script to run all package test and generate coverage file</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/env bash</span></div><div class="line"></div><div class="line"><span class="built_in">set</span> <span class="_">-e</span></div><div class="line">out=<span class="string">"coverage.txt"</span></div><div class="line">tmp=<span class="string">"profile.coverage.out"</span></div><div class="line">except=<span class="string">"example|testproto"</span></div><div class="line"></div><div class="line">: &gt; <span class="variable">$out</span></div><div class="line"></div><div class="line">i=0</div><div class="line"><span class="keyword">for</span> d <span class="keyword">in</span> $(go list ./... | grep -v vendor); <span class="keyword">do</span></div><div class="line">    <span class="comment"># except some package</span></div><div class="line">    <span class="keyword">if</span> [[ <span class="variable">$d</span> =~ <span class="variable">$except</span> ]]; <span class="keyword">then</span></div><div class="line">        <span class="built_in">continue</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"TESTS FOR: for \033[0;35m<span class="variable">$&#123;d&#125;</span>\033[0m"</span></div><div class="line">    go <span class="built_in">test</span> -v -coverprofile=<span class="variable">$tmp</span> <span class="variable">$d</span></div><div class="line">    <span class="keyword">if</span> [ <span class="_">-f</span> <span class="variable">$tmp</span> ]; <span class="keyword">then</span></div><div class="line">        <span class="comment"># remove mode:xxx if not first package for go tool cover</span></div><div class="line">        <span class="keyword">if</span> [ <span class="string">"<span class="variable">$i</span>"</span> != 0 ]; <span class="keyword">then</span></div><div class="line">            sed -i <span class="string">''</span> <span class="_">-e</span> <span class="string">'/^mode:/d'</span> ./<span class="variable">$tmp</span></div><div class="line">        <span class="keyword">fi</span></div><div class="line">        cat <span class="variable">$tmp</span> &gt;&gt; <span class="variable">$out</span></div><div class="line">        rm <span class="variable">$tmp</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">""</span></div><div class="line">    ((i++))</div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
+<h2 id="example-script-to-run-all-package-test-and-generate-coverage-file"><a href="#example-script-to-run-all-package-test-and-generate-coverage-file" class="headerlink" title="example script to run all package test and generate coverage file"></a>example script to run all package test and generate coverage file</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/env bash</span></div><div class="line"></div><div class="line"><span class="built_in">set</span> -e</div><div class="line">out=<span class="string">"coverage.txt"</span></div><div class="line">tmp=<span class="string">"profile.coverage.out"</span></div><div class="line">except=<span class="string">"example|testproto"</span></div><div class="line"></div><div class="line">: &gt; <span class="variable">$out</span></div><div class="line"></div><div class="line">i=0</div><div class="line"><span class="keyword">for</span> d <span class="keyword">in</span> $(go list ./... | grep -v vendor); <span class="keyword">do</span></div><div class="line">    <span class="comment"># except some package</span></div><div class="line">    <span class="keyword">if</span> [[ <span class="variable">$d</span> =~ <span class="variable">$except</span> ]]; <span class="keyword">then</span></div><div class="line">        <span class="built_in">continue</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    <span class="built_in">echo</span> -e <span class="string">"TESTS FOR: for \033[0;35m<span class="variable">$&#123;d&#125;</span>\033[0m"</span></div><div class="line">    go <span class="built_in">test</span> -v -coverprofile=<span class="variable">$tmp</span> <span class="variable">$d</span></div><div class="line">    <span class="keyword">if</span> [ -f <span class="variable">$tmp</span> ]; <span class="keyword">then</span></div><div class="line">        <span class="comment"># remove mode:xxx if not first package for go tool cover</span></div><div class="line">        <span class="keyword">if</span> [ <span class="string">"<span class="variable">$i</span>"</span> != 0 ]; <span class="keyword">then</span></div><div class="line">            sed -i <span class="string">''</span> -e <span class="string">'/^mode:/d'</span> ./<span class="variable">$tmp</span></div><div class="line">        <span class="keyword">fi</span></div><div class="line">        cat <span class="variable">$tmp</span> &gt;&gt; <span class="variable">$out</span></div><div class="line">        rm <span class="variable">$tmp</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">""</span></div><div class="line">    ((i++))</div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
             
                 
 
@@ -295,17 +294,17 @@ go tool cover123go test -coverprofile coverage.txt &amp;lt;package name&amp;gt;g
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2017/03/31/go_test_tool筆記/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2017/03/31/go_test_tool筆記/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2017/03/31/go_test_tool筆記/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -374,17 +373,17 @@ go tool cover123go test -coverprofile coverage.txt &amp;lt;package name&amp;gt;g
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2017/03/31/go_test_tool筆記/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2017/03/31/go_test_tool筆記/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2017/03/31/go_test_tool筆記/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -410,17 +409,17 @@ go tool cover123go test -coverprofile coverage.txt &amp;lt;package name&amp;gt;g
                 <div id="share-options-bar" class="share-options-bar" data-behavior="3">
     <ul class="share-options">
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2017/03/31/go_test_tool筆記/">
                 <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2017/03/31/go_test_tool筆記/">
                 <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/03/31/go_test_tool筆記/">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2017/03/31/go_test_tool筆記/">
                 <i class="fa fa-twitter"></i><span>Share on Twitter</span>
             </a>
         </li>

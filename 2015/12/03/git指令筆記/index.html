@@ -13,11 +13,13 @@
         <link rel="alternative" type="application/atom+xml" title="RSS" href="/my_blog/atom.xml">
     
     <meta name="description" content="基本上一版本：HEAD^, 上兩版本HEAD~2, 上三版本HEAD~3…etc1234git add [file]git add -Agit commit -m [comment]git push">
+<meta name="keywords" content="git">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="git指令筆記">
 <meta property="og:url" content="http://cwza.github.io/my_blog/2015/12/03/git指令筆記/index.html">
-<meta property="og:site_name" content="cwza's blog">
+<meta property="og:site_name" content="cwza&#39;s blog">
 <meta property="og:description" content="基本上一版本：HEAD^, 上兩版本HEAD~2, 上三版本HEAD~3…etc1234git add [file]git add -Agit commit -m [comment]git push">
+<meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-03-10T02:26:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git指令筆記">
@@ -251,8 +253,8 @@
 <a id="more"></a>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#比較unstaged &amp; staged的檔案</span></div><div class="line">git diff</div><div class="line"></div><div class="line"><span class="comment">#比較staged &amp; committed檔案</span></div><div class="line">git diff --cached</div><div class="line"></div><div class="line">git rm file</div><div class="line">git mv &lt;file_name&gt; &lt;new_file_name&gt;</div><div class="line"></div><div class="line"><span class="comment">#更動最後一筆commit(message 或 add file)</span></div><div class="line">git commit --amend</div><div class="line"></div><div class="line"><span class="comment">#staged to unstaged</span></div><div class="line">git reset HEAD &lt;file&gt;</div><div class="line"></div><div class="line"><span class="comment">#modified to staged</span></div><div class="line">git checkout -- &lt;file&gt;</div><div class="line"></div><div class="line">git pull origin == git fetch + git merge</div><div class="line">git fetch origin master</div><div class="line">git push origin master</div><div class="line"></div><div class="line">git status</div><div class="line">git <span class="built_in">log</span></div><div class="line">git show &lt;SHA-1&gt;</div><div class="line">git reflog</div><div class="line">git <span class="built_in">log</span> -g</div></pre></td></tr></table></figure>
 <h2 id="fetch"><a href="#fetch" class="headerlink" title="fetch"></a>fetch</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git fetch &lt;remote&gt; &lt;rbranch&gt;:&lt;lbranch&gt;</div></pre></td></tr></table></figure>
-<h2 id="tag"><a href="#tag" class="headerlink" title="tag"></a>tag</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git tag <span class="_">-a</span> v1.4</div><div class="line">git show v1.4</div><div class="line">git tag <span class="_">-a</span> v1.2 9fceb02</div><div class="line">git push origin v1.5</div><div class="line">git push origin --tags</div></pre></td></tr></table></figure>
-<h2 id="branch"><a href="#branch" class="headerlink" title="branch"></a>branch</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">git branch testing</div><div class="line">git checkout testing</div><div class="line"></div><div class="line">create branch and checkout to it</div><div class="line">git checkout -b testing</div><div class="line"></div><div class="line">git branch <span class="_">-d</span> testing</div><div class="line">git branch -D testing</div></pre></td></tr></table></figure>
+<h2 id="tag"><a href="#tag" class="headerlink" title="tag"></a>tag</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git tag -a v1.4</div><div class="line">git show v1.4</div><div class="line">git tag -a v1.2 9fceb02</div><div class="line">git push origin v1.5</div><div class="line">git push origin --tags</div></pre></td></tr></table></figure>
+<h2 id="branch"><a href="#branch" class="headerlink" title="branch"></a>branch</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">git branch testing</div><div class="line">git checkout testing</div><div class="line"></div><div class="line">create branch and checkout to it</div><div class="line">git checkout -b testing</div><div class="line"></div><div class="line">git branch -d testing</div><div class="line">git branch -D testing</div></pre></td></tr></table></figure>
 <h2 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h2><p>根據兩個branch最新commit物件與共同parent的commit物件合併後，再建立新commit物件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git merge testing</div><div class="line">git mergetool</div><div class="line"><span class="comment">#merge若遇到conflict，需要手動修改檔案後再add &gt; commit</span></div></pre></td></tr></table></figure></p>
 <h2 id="rebase"><a href="#rebase" class="headerlink" title="rebase"></a>rebase</h2><p>根據兩個branch共同parent的commit物件作patch，再將patch打在rebase對象的最新commit上<br><strong>一旦分支中的提交物件發佈到公共倉庫，就千萬不要對該分支進行衍合操作</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git rebase master</div><div class="line"><span class="comment">#rebase若遇到conflict，需要手動修改檔案後再git rebase --continue，或git rebase --abort放棄rebase</span></div></pre></td></tr></table></figure></p>
 <h2 id="remote"><a href="#remote" class="headerlink" title="remote"></a>remote</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">git remote add &lt;name&gt; https://xxxx/xxx.git</div><div class="line">git fetch origin</div><div class="line">git checkout -b develop origin/develop</div><div class="line">git push remote [master]:[master]</div><div class="line"></div><div class="line"><span class="comment">#刪除remote的branch</span></div><div class="line">git push origin --delete &lt;branch_name&gt;</div></pre></td></tr></table></figure>
@@ -306,17 +308,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2015/12/03/git指令筆記/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2015/12/03/git指令筆記/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2015/12/03/git指令筆記/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -385,17 +387,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2015/12/03/git指令筆記/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2015/12/03/git指令筆記/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2015/12/03/git指令筆記/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -421,17 +423,17 @@
                 <div id="share-options-bar" class="share-options-bar" data-behavior="3">
     <ul class="share-options">
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2015/12/03/git指令筆記/">
                 <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2015/12/03/git指令筆記/">
                 <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/03/git指令筆記/">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2015/12/03/git指令筆記/">
                 <i class="fa fa-twitter"></i><span>Share on Twitter</span>
             </a>
         </li>

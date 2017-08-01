@@ -13,11 +13,13 @@
         <link rel="alternative" type="application/atom+xml" title="RSS" href="/my_blog/atom.xml">
     
     <meta name="description" content="學生時代筆記，可能有誤？">
+<meta name="keywords" content="c++">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="C++ Class Memory Layout 筆記">
 <meta property="og:url" content="http://cwza.github.io/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/index.html">
-<meta property="og:site_name" content="cwza's blog">
+<meta property="og:site_name" content="cwza&#39;s blog">
 <meta property="og:description" content="學生時代筆記，可能有誤？">
+<meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-03-10T02:26:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ Class Memory Layout 筆記">
@@ -248,9 +250,9 @@
         <div class="main-content-wrap">
             <p>學生時代筆記，可能有誤？</p>
 <a id="more"></a>
-<h2 id="不考慮virtual-function"><a href="#不考慮virtual-function" class="headerlink" title="不考慮virtual function"></a>不考慮virtual function</h2><figure class="highlight cpp"><figcaption><span>c++ sample class</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Base &#123;</div><div class="line">    <span class="keyword">public</span>:</div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span></span>;</div><div class="line">    <span class="keyword">private</span>:</div><div class="line">        <span class="keyword">int</span> i;</div><div class="line">        <span class="keyword">static</span> <span class="keyword">int</span> si;</div><div class="line">&#125;</div><div class="line">Base base = Base()</div></pre></td></tr></table></figure>
+<h2 id="不考慮virtual-function"><a href="#不考慮virtual-function" class="headerlink" title="不考慮virtual function"></a>不考慮virtual function</h2><figure class="highlight cpp"><figcaption><span>c++ sample class</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span> &#123;</span></div><div class="line">    <span class="keyword">public</span>:</div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span></span>;</div><div class="line">    <span class="keyword">private</span>:</div><div class="line">        <span class="keyword">int</span> i;</div><div class="line">        <span class="keyword">static</span> <span class="keyword">int</span> si;</div><div class="line">&#125;</div><div class="line">Base base = Base()</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><figcaption><span>object memory layout</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">base:</div><div class="line">  int i</div><div class="line"></div><div class="line">Out Of base(like global):</div><div class="line">  static int si</div><div class="line">  void foo(this) //this pointer point to reference object</div></pre></td></tr></table></figure>
-<h2 id="考慮繼承與virtual-function"><a href="#考慮繼承與virtual-function" class="headerlink" title="考慮繼承與virtual function"></a>考慮繼承與virtual function</h2><figure class="highlight cpp"><figcaption><span>c++ sample class</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Base &#123;</div><div class="line">    <span class="keyword">public</span>:</div><div class="line">        <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span></span>;</div><div class="line">    <span class="keyword">private</span>:</div><div class="line">        <span class="keyword">int</span> i;</div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> Derived : Base &#123;</div><div class="line">    <span class="keyword">public</span>:</div><div class="line">        <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span></span>;</div><div class="line">    <span class="keyword">private</span>:</div><div class="line">        <span class="keyword">int</span> j;</div><div class="line">&#125;</div><div class="line">Base *base = <span class="keyword">new</span> Derived();</div><div class="line">base.foo(); <span class="comment">//會呼叫Derived的foo</span></div></pre></td></tr></table></figure>
+<h2 id="考慮繼承與virtual-function"><a href="#考慮繼承與virtual-function" class="headerlink" title="考慮繼承與virtual function"></a>考慮繼承與virtual function</h2><figure class="highlight cpp"><figcaption><span>c++ sample class</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span> &#123;</span></div><div class="line">    <span class="keyword">public</span>:</div><div class="line">        <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span></span>;</div><div class="line">    <span class="keyword">private</span>:</div><div class="line">        <span class="keyword">int</span> i;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span> Base &#123;</div><div class="line">    <span class="keyword">public</span>:</div><div class="line">        <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span></span>;</div><div class="line">    <span class="keyword">private</span>:</div><div class="line">        <span class="keyword">int</span> j;</div><div class="line">&#125;</div><div class="line">Base *base = <span class="keyword">new</span> Derived();</div><div class="line">base.foo(); <span class="comment">//會呼叫Derived的foo</span></div></pre></td></tr></table></figure>
 <figure class="highlight plain"><figcaption><span>object memory layout</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">base:</div><div class="line">  Vtable* vtable</div><div class="line">  int i</div><div class="line"></div><div class="line">derived:</div><div class="line">  Base portion:</div><div class="line">    Vtable* vtable</div><div class="line">    int i</div><div class="line">  int j</div><div class="line"></div><div class="line">vtable:</div><div class="line">  function pointer</div><div class="line">  function pointer</div><div class="line">  ...</div></pre></td></tr></table></figure>
 <p>Compiler在編譯期間會對Base與Derived的vtable塞入其foo的function pointer<br>Base vtable 塞 Base的foo的function pointer(compiled time)<br>Derived vtable 塞 Derived的foo的function pointer(compiled time)<br>當runtime時確定base的type後base.foo會根據derived裡的vtable去找到foo的真正位置</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="http://www.learncpp.com/cpp-tutorial/125-the-virtual-table/" target="_blank" rel="external">The virtual table</a></p>
@@ -298,17 +300,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -377,17 +379,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -413,17 +415,17 @@
                 <div id="share-options-bar" class="share-options-bar" data-behavior="3">
     <ul class="share-options">
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
                 <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
                 <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2015/12/03/C-Class-Memory-Layout-筆記/">
                 <i class="fa fa-twitter"></i><span>Share on Twitter</span>
             </a>
         </li>

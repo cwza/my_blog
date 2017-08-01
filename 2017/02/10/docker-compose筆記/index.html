@@ -12,19 +12,18 @@
     
         <link rel="alternative" type="application/atom+xml" title="RSS" href="/my_blog/atom.xml">
     
-    <meta name="description" content="Container之間有關係時可以用docker command中的–link搞定當有多個Container需要連結時我們會希望能撰寫一份設定檔定義Container之間的關係然後執行就好這就是docker-compose在做的事撰寫docker-compose.yml定義各Container link relation然後run docker-compose up -d
-Command1dock">
+    <meta name="description" content="Container之間有關係時可以用docker command中的–link搞定當有多個Container需要連結時我們會希望能撰寫一份設定檔定義Container之間的關係然後執行就好這就是docker-compose在做的事撰寫docker-compose.yml定義各Container link relation然後run docker-compose up -d Command1dock">
+<meta name="keywords" content="docker">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="docker compose筆記">
 <meta property="og:url" content="http://cwza.github.io/my_blog/2017/02/10/docker-compose筆記/index.html">
-<meta property="og:site_name" content="cwza's blog">
-<meta property="og:description" content="Container之間有關係時可以用docker command中的–link搞定當有多個Container需要連結時我們會希望能撰寫一份設定檔定義Container之間的關係然後執行就好這就是docker-compose在做的事撰寫docker-compose.yml定義各Container link relation然後run docker-compose up -d
-Command1dock">
+<meta property="og:site_name" content="cwza&#39;s blog">
+<meta property="og:description" content="Container之間有關係時可以用docker command中的–link搞定當有多個Container需要連結時我們會希望能撰寫一份設定檔定義Container之間的關係然後執行就好這就是docker-compose在做的事撰寫docker-compose.yml定義各Container link relation然後run docker-compose up -d Command1dock">
+<meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-03-10T02:26:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker compose筆記">
-<meta name="twitter:description" content="Container之間有關係時可以用docker command中的–link搞定當有多個Container需要連結時我們會希望能撰寫一份設定檔定義Container之間的關係然後執行就好這就是docker-compose在做的事撰寫docker-compose.yml定義各Container link relation然後run docker-compose up -d
-Command1dock">
+<meta name="twitter:description" content="Container之間有關係時可以用docker command中的–link搞定當有多個Container需要連結時我們會希望能撰寫一份設定檔定義Container之間的關係然後執行就好這就是docker-compose在做的事撰寫docker-compose.yml定義各Container link relation然後run docker-compose up -d Command1dock">
     
     
     
@@ -250,7 +249,7 @@ Command1dock">
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
             <p>Container之間有關係時可以用docker command中的–link搞定<br>當有多個Container需要連結時我們會希望能撰寫一份設定檔定義Container之間的關係然後執行就好<br>這就是docker-compose在做的事<br>撰寫docker-compose.yml定義各Container link relation<br>然後run docker-compose up -d</p>
-<h2 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker-compose <span class="_">-f</span> ./docker-compose.yml up <span class="_">-d</span></div></pre></td></tr></table></figure>
+<h2 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker-compose -f ./docker-compose.yml up -d</div></pre></td></tr></table></figure>
 <h2 id="docker-compose-yml-example"><a href="#docker-compose-yml-example" class="headerlink" title="docker-compose.yml example"></a>docker-compose.yml example</h2><p>以下設定表示<br>faceblock是ap server<br>zombodb_postgres是postgres database<br>zombodb_elastic是elasticsearch database<br>faceblock相依於zombodb_postgres<br>zombodb_postgres相依於zombodb_elastic<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">faceblock:</div><div class="line">  build: ./faceblock <span class="comment"># DockerFile location</span></div><div class="line">  ports: <span class="comment"># export ports</span></div><div class="line">   - <span class="string">"3001:3000"</span></div><div class="line">   - <span class="string">"3043:443"</span></div><div class="line">  links: <span class="comment"># dependency</span></div><div class="line">   - zombodb_postgres</div><div class="line">  entrypoint: /execute.sh</div><div class="line"></div><div class="line">zombodb_postgres:</div><div class="line">  build: ./postgres</div><div class="line">  ports:</div><div class="line">   - <span class="string">"5432:5432"</span></div><div class="line">  links:</div><div class="line">   - zombodb_elastic</div><div class="line">  restart: always <span class="comment"># auto restart while exit</span></div><div class="line"></div><div class="line">zombodb_elastic:</div><div class="line">  build: ./elasticsearch</div><div class="line">  ports:</div><div class="line">   - <span class="string">"9200:9200"</span></div><div class="line">   - <span class="string">"9300:9300"</span></div><div class="line">  restart: always</div></pre></td></tr></table></figure></p>
 
             
@@ -273,7 +272,7 @@ Command1dock">
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/"  data-tooltip="nginx connection limit bandwith limit rate limit">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/02/13/nginx-and-ufw-add-rate-limit/"  data-tooltip="nginx and ufw add rate limit">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -296,17 +295,17 @@ Command1dock">
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/02/10/docker-compose筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2017/02/10/docker-compose筆記/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/02/10/docker-compose筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2017/02/10/docker-compose筆記/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/02/10/docker-compose筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2017/02/10/docker-compose筆記/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -352,7 +351,7 @@ Command1dock">
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/"  data-tooltip="nginx connection limit bandwith limit rate limit">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/my_blog/2017/02/13/nginx-and-ufw-add-rate-limit/"  data-tooltip="nginx and ufw add rate limit">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -375,17 +374,17 @@ Command1dock">
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/02/10/docker-compose筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2017/02/10/docker-compose筆記/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/02/10/docker-compose筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2017/02/10/docker-compose筆記/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/02/10/docker-compose筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2017/02/10/docker-compose筆記/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -411,17 +410,17 @@ Command1dock">
                 <div id="share-options-bar" class="share-options-bar" data-behavior="3">
     <ul class="share-options">
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2017/02/10/docker-compose筆記/">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2017/02/10/docker-compose筆記/">
                 <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2017/02/10/docker-compose筆記/">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2017/02/10/docker-compose筆記/">
                 <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2017/02/10/docker-compose筆記/">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2017/02/10/docker-compose筆記/">
                 <i class="fa fa-twitter"></i><span>Share on Twitter</span>
             </a>
         </li>

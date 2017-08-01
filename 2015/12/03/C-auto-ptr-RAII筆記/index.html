@@ -12,19 +12,18 @@
     
         <link rel="alternative" type="application/atom+xml" title="RSS" href="/my_blog/atom.xml">
     
-    <meta name="description" content="學生時代筆記，可能有誤？
-Resource Acquisition Is InitializationC++中利用物件離開scope即會自動呼叫destructor的特性(stack)，使資源類型物件在使用完或有exception跳出時能自動將資源釋放Java中常見的try catch block中finally{close資源}的寫法在C++中就不需要了若是必須使用pointer而非物件時，可以">
+    <meta name="description" content="學生時代筆記，可能有誤？ Resource Acquisition Is InitializationC++中利用物件離開scope即會自動呼叫destructor的特性(stack)，使資源類型物件在使用完或有exception跳出時能自動將資源釋放Java中常見的try catch block中finally{close資源}的寫法在C++中就不需要了若是必須使用pointer而非物件時，可以">
+<meta name="keywords" content="c++">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="C++ auto_ptr & RAII筆記">
+<meta property="og:title" content="C++ auto_ptr &amp; RAII筆記">
 <meta property="og:url" content="http://cwza.github.io/my_blog/2015/12/03/C-auto-ptr-RAII筆記/index.html">
-<meta property="og:site_name" content="cwza's blog">
-<meta property="og:description" content="學生時代筆記，可能有誤？
-Resource Acquisition Is InitializationC++中利用物件離開scope即會自動呼叫destructor的特性(stack)，使資源類型物件在使用完或有exception跳出時能自動將資源釋放Java中常見的try catch block中finally{close資源}的寫法在C++中就不需要了若是必須使用pointer而非物件時，可以">
+<meta property="og:site_name" content="cwza&#39;s blog">
+<meta property="og:description" content="學生時代筆記，可能有誤？ Resource Acquisition Is InitializationC++中利用物件離開scope即會自動呼叫destructor的特性(stack)，使資源類型物件在使用完或有exception跳出時能自動將資源釋放Java中常見的try catch block中finally{close資源}的寫法在C++中就不需要了若是必須使用pointer而非物件時，可以">
+<meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-03-10T02:26:35.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C++ auto_ptr & RAII筆記">
-<meta name="twitter:description" content="學生時代筆記，可能有誤？
-Resource Acquisition Is InitializationC++中利用物件離開scope即會自動呼叫destructor的特性(stack)，使資源類型物件在使用完或有exception跳出時能自動將資源釋放Java中常見的try catch block中finally{close資源}的寫法在C++中就不需要了若是必須使用pointer而非物件時，可以">
+<meta name="twitter:title" content="C++ auto_ptr &amp; RAII筆記">
+<meta name="twitter:description" content="學生時代筆記，可能有誤？ Resource Acquisition Is InitializationC++中利用物件離開scope即會自動呼叫destructor的特性(stack)，使資源類型物件在使用完或有exception跳出時能自動將資源釋放Java中常見的try catch block中finally{close資源}的寫法在C++中就不需要了若是必須使用pointer而非物件時，可以">
     
     
     
@@ -250,7 +249,7 @@ Resource Acquisition Is InitializationC++中利用物件離開scope即會自動�
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
             <p>學生時代筆記，可能有誤？</p>
-<h2 id="Resource-Acquisition-Is-Initialization"><a href="#Resource-Acquisition-Is-Initialization" class="headerlink" title="Resource Acquisition Is Initialization"></a>Resource Acquisition Is Initialization</h2><p>C++中利用物件離開scope即會自動呼叫destructor的特性(stack)，使資源類型物件在使用完或有exception跳出時能自動將資源釋放<br>Java中常見的try catch block中finally{close資源}的寫法在C++中就不需要了<br>若是必須使用pointer而非物件時，可以在資源物件中宣告該pointer，實際使用還是用資源物件即可<br><a id="more"></a><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> AutoFile &#123;</div><div class="line">  AutoFile(String path) &#123;</div><div class="line">  File *file = open(path);</div><div class="line">  &#125;</div><div class="line">  ~AutoFile() &#123;</div><div class="line">  file.close()</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="comment">//即使不呼叫close()釋放file，當程式離開foo()時自然會呼叫</span></div><div class="line">  AutoFile file = AutoFile(<span class="string">"/temp/test.txt"</span>);</div><div class="line">  <span class="comment">//dosomething</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="Resource-Acquisition-Is-Initialization"><a href="#Resource-Acquisition-Is-Initialization" class="headerlink" title="Resource Acquisition Is Initialization"></a>Resource Acquisition Is Initialization</h2><p>C++中利用物件離開scope即會自動呼叫destructor的特性(stack)，使資源類型物件在使用完或有exception跳出時能自動將資源釋放<br>Java中常見的try catch block中finally{close資源}的寫法在C++中就不需要了<br>若是必須使用pointer而非物件時，可以在資源物件中宣告該pointer，實際使用還是用資源物件即可<br><a id="more"></a><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AutoFile</span> &#123;</span></div><div class="line">  AutoFile(String path) &#123;</div><div class="line">  File *file = open(path);</div><div class="line">  &#125;</div><div class="line">  ~AutoFile() &#123;</div><div class="line">  file.close()</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="comment">//即使不呼叫close()釋放file，當程式離開foo()時自然會呼叫</span></div><div class="line">  AutoFile file = AutoFile(<span class="string">"/temp/test.txt"</span>);</div><div class="line">  <span class="comment">//dosomething</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h2 id="C-auto-ptr"><a href="#C-auto-ptr" class="headerlink" title="C++ auto_ptr"></a>C++ auto_ptr</h2><p>利用RAII包出來的pointer，實際上仍是個物件，利用operator overloading實作pointer的oprator，藉以模擬pointer行為<br>由於仍然是個物件，並會在destructor時執行delete <em>ptr，所以能做到不需手動呼叫delete的功能<br>需注意的是因destructor呼叫的一律是delete </em>ptr，所以陣列無法使用auto_ptr(需要delete []*)<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</div><div class="line">     Auto_ptr&lt;Object&gt; a = <span class="keyword">new</span> Object();</div><div class="line">     <span class="built_in">cout</span>&lt;&lt;a-&gt;output()</div><div class="line">     <span class="comment">//用完不需delete他，當成是離開foo()即會自動呼叫auto_ptr中destructor裡面的delete</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
             
@@ -296,17 +295,17 @@ Resource Acquisition Is InitializationC++中利用物件離開scope即會自動�
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -375,17 +374,17 @@ Resource Acquisition Is InitializationC++中利用物件離開scope即會自動�
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -411,17 +410,17 @@ Resource Acquisition Is InitializationC++中利用物件離開scope即會自動�
                 <div id="share-options-bar" class="share-options-bar" data-behavior="3">
     <ul class="share-options">
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://cwza.github.io/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
                 <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://cwza.github.io/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
                 <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://cwza.github.io/my_blog/2015/12/03/C-auto-ptr-RAII筆記/">
                 <i class="fa fa-twitter"></i><span>Share on Twitter</span>
             </a>
         </li>
