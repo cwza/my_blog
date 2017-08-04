@@ -273,6 +273,31 @@
   </entry>
   
   <entry>
+    <title>nginx connection limit bandwith limit rate limit</title>
+    <link href="http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/"/>
+    <id>http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/</id>
+    <published>2017-02-13T08:30:57.000Z</published>
+    <updated>2017-03-13T10:22:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="connection-limit"><a href="#connection-limit" class="headerlink" title="connection limit"></a>connection limit</h2><p>每一ip最多50連線數<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_conn connlimit 50;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="bandwith-limit"><a href="#bandwith-limit" class="headerlink" title="bandwith limit"></a>bandwith limit</h2><p>當流量超過500k時限制速度為50k<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_rate 50k;</div><div class="line">      limit_rate_after 500k;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="rate-limit"><a href="#rate-limit" class="headerlink" title="rate limit"></a>rate limit</h2><p>每秒最多50 request<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=50r/s;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;connection-limit&quot;&gt;&lt;a href=&quot;#connection-limit&quot; class=&quot;headerlink&quot; title=&quot;connection limit&quot;&gt;&lt;/a&gt;connection limit&lt;/h2&gt;&lt;p&gt;每一ip最多50連線數&lt;br
+    
+    </summary>
+    
+      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
+    
+    
+      <category term="nginx" scheme="http://cwza.github.io/my_blog/tags/nginx/"/>
+    
+  </entry>
+  
+  <entry>
     <title>nginx and ufw add rate limit</title>
     <link href="http://cwza.github.io/my_blog/2017/02/13/nginx-and-ufw-add-rate-limit/"/>
     <id>http://cwza.github.io/my_blog/2017/02/13/nginx-and-ufw-add-rate-limit/</id>
@@ -300,31 +325,6 @@
       <category term="firewall" scheme="http://cwza.github.io/my_blog/tags/firewall/"/>
     
       <category term="ubuntu" scheme="http://cwza.github.io/my_blog/tags/ubuntu/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>nginx connection limit bandwith limit rate limit</title>
-    <link href="http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/"/>
-    <id>http://cwza.github.io/my_blog/2017/02/13/nginx-connection-limit-bandwith-limit-rate-limit/</id>
-    <published>2017-02-13T08:30:57.000Z</published>
-    <updated>2017-03-13T10:22:07.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="connection-limit"><a href="#connection-limit" class="headerlink" title="connection limit"></a>connection limit</h2><p>每一ip最多50連線數<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_conn connlimit 50;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-<h2 id="bandwith-limit"><a href="#bandwith-limit" class="headerlink" title="bandwith limit"></a>bandwith limit</h2><p>當流量超過500k時限制速度為50k<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_conn_zone <span class="variable">$binary_remote_addr</span> zone=connlimit:10m;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_rate 50k;</div><div class="line">      limit_rate_after 500k;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-<h2 id="rate-limit"><a href="#rate-limit" class="headerlink" title="rate limit"></a>rate limit</h2><p>每秒最多50 request<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">limit_req_zone <span class="variable">$binary_remote_addr</span> zone=one:10m rate=50r/s;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    <span class="comment"># ...</span></div><div class="line">    location / &#123;</div><div class="line">      limit_req zone=one burst=5 nodelay;</div><div class="line">      <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># ...</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;connection-limit&quot;&gt;&lt;a href=&quot;#connection-limit&quot; class=&quot;headerlink&quot; title=&quot;connection limit&quot;&gt;&lt;/a&gt;connection limit&lt;/h2&gt;&lt;p&gt;每一ip最多50連線數&lt;br
-    
-    </summary>
-    
-      <category term="web" scheme="http://cwza.github.io/my_blog/categories/web/"/>
-    
-    
-      <category term="nginx" scheme="http://cwza.github.io/my_blog/tags/nginx/"/>
     
   </entry>
   
@@ -605,34 +605,6 @@
   </entry>
   
   <entry>
-    <title>Deploy react app to github page</title>
-    <link href="http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/"/>
-    <id>http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/</id>
-    <published>2017-01-19T06:48:57.000Z</published>
-    <updated>2017-03-10T02:26:35.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Deploy-react-app-by-create-react-app"><a href="#Deploy-react-app-by-create-react-app" class="headerlink" title="Deploy react app by create-react-app"></a>Deploy react app by create-react-app</h2><p>Follow this guide to deploy react app to github pages.<br><a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#github-pages" target="_blank" rel="external">React Create App Readme</a></p>
-<h2 id="Do-something-to-let-github-pages-OK-with-SPA"><a href="#Do-something-to-let-github-pages-OK-with-SPA" class="headerlink" title="Do something to let github pages OK with SPA"></a>Do something to let github pages OK with SPA</h2><p>Github pages does not support SPA routings now, so you have to do followings:<br>Follow this guide to make SPA OK with github pages<br><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">spa github pages</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Deploy-react-app-by-create-react-app&quot;&gt;&lt;a href=&quot;#Deploy-react-app-by-create-react-app&quot; class=&quot;headerlink&quot; title=&quot;Deploy react app by 
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
-    
-    
-      <category term="github" scheme="http://cwza.github.io/my_blog/tags/github/"/>
-    
-      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
-    
-      <category term="react" scheme="http://cwza.github.io/my_blog/tags/react/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Nginx With Node And Https config</title>
     <link href="http://cwza.github.io/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/"/>
     <id>http://cwza.github.io/my_blog/2017/01/19/Nginx-With-Node-And-Https-config/</id>
@@ -665,6 +637,34 @@
       <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
     
       <category term="web" scheme="http://cwza.github.io/my_blog/tags/web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Deploy react app to github page</title>
+    <link href="http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/"/>
+    <id>http://cwza.github.io/my_blog/2017/01/19/Deploy-react-app-to-github-page/</id>
+    <published>2017-01-19T06:48:57.000Z</published>
+    <updated>2017-03-10T02:26:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Deploy-react-app-by-create-react-app"><a href="#Deploy-react-app-by-create-react-app" class="headerlink" title="Deploy react app by create-react-app"></a>Deploy react app by create-react-app</h2><p>Follow this guide to deploy react app to github pages.<br><a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#github-pages" target="_blank" rel="external">React Create App Readme</a></p>
+<h2 id="Do-something-to-let-github-pages-OK-with-SPA"><a href="#Do-something-to-let-github-pages-OK-with-SPA" class="headerlink" title="Do something to let github pages OK with SPA"></a>Do something to let github pages OK with SPA</h2><p>Github pages does not support SPA routings now, so you have to do followings:<br>Follow this guide to make SPA OK with github pages<br><a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="external">spa github pages</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Deploy-react-app-by-create-react-app&quot;&gt;&lt;a href=&quot;#Deploy-react-app-by-create-react-app&quot; class=&quot;headerlink&quot; title=&quot;Deploy react app by 
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/categories/javascript/"/>
+    
+    
+      <category term="github" scheme="http://cwza.github.io/my_blog/tags/github/"/>
+    
+      <category term="javascript" scheme="http://cwza.github.io/my_blog/tags/javascript/"/>
+    
+      <category term="react" scheme="http://cwza.github.io/my_blog/tags/react/"/>
     
   </entry>
   
